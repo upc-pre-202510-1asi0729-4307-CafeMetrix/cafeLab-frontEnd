@@ -1,0 +1,102 @@
+<div class="payment-container">
+  <div class="header">
+    <button routerLink="/planes" class="back-button">
+      <span class="arrow-left">←</span>
+      Volver a planes
+    </button>
+    <h2>Proceso de Pago</h2>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Plan info a la izquierda -->
+    <div class="left-section">
+      <div class="plan-info">
+        <h3>Plan Barista</h3>
+        <div class="price">s/.19/mes</div>
+        <ul class="features">
+          <li>Sesiones de cata</li>
+          <li>Librería de defectos</li>
+          <li>Correlación Tueste-Sabor</li>
+          <li>Calibración de Molienda</li>
+          <li>Recetas</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Formulario de pago a la derecha -->
+    <div class="right-section">
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+        <div class="form-section">
+          <h4>Complete sus datos</h4>
+          
+          <div class="card-selection">
+            <div class="card-option" [class.selected]="selectedCard === 'visa'" (click)="selectCard('visa')">
+              <img src="assets/visa-logo.png" alt="Visa">
+            </div>
+            <div class="card-option" [class.selected]="selectedCard === 'mastercard'" (click)="selectCard('mastercard')">
+              <img src="assets/mastercard-logo.png" alt="Mastercard">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email" 
+              placeholder="example@com"
+              [class.invalid]="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched">
+          </div>
+
+          <div class="form-group">
+            <label>Información de tarjeta</label>
+            <input 
+              type="text" 
+              formControlName="cardNumber" 
+              placeholder="0000 0000 0000 0000"
+              [class.invalid]="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <input 
+                type="text" 
+                formControlName="expiryDate" 
+                placeholder="MM/YY"
+                [class.invalid]="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched">
+            </div>
+            <div class="form-group half">
+              <input 
+                type="text" 
+                formControlName="cvc" 
+                placeholder="CVC"
+                [class.invalid]="paymentForm.get('cvc')?.invalid && paymentForm.get('cvc')?.touched">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nombre del titular</label>
+            <input 
+              type="text" 
+              formControlName="cardholderName" 
+              placeholder="abc..."
+              [class.invalid]="paymentForm.get('cardholderName')?.invalid && paymentForm.get('cardholderName')?.touched">
+          </div>
+
+          <div class="form-group">
+            <label>País</label>
+            <select 
+              formControlName="country"
+              [class.invalid]="paymentForm.get('country')?.invalid && paymentForm.get('country')?.touched">
+              <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button" [disabled]="paymentForm.invalid">
+          Continuar
+        </button>
+      </form>
+    </div>
+  </div>
+</div> 

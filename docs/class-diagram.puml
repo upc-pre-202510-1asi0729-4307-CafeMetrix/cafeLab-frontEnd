@@ -1,0 +1,322 @@
+@startuml
+!type=class
+skinparam monochrome true
+
+' User Role Enum
+
+
+' Bounded Context: User Management
+package "User Management" {
+  class User {
+    - id: String
+    - email: String
+    - password: String
+    - name: String
+    - role: UserRole
+    - experience: String
+    - plan: Plan
+  }
+  User << (E, #..#) >>
+
+  class Plan {
+    - id: String
+    - name: String
+    - price: Float
+    - features: List<String>
+  }
+  Plan << (E, #..#) >>
+
+  User "1" -- "0..1" Plan : subscribes to
+
+    enum UserRole {
+      BARISTA
+      OWNER
+    }
+
+}
+
+' Bounded Context: Green Coffee Management
+package "Green Coffee Management" {
+  class Supplier {
+    - id: String
+    - name: String
+    - location: String
+    - contact: String
+    - coffeeTypes: List<String>
+    - evaluations: List<Float>
+  }
+  Supplier << (E, #..#) >>
+
+  class CoffeeLot {
+    - id: String
+    - traceabilityCode: String
+    - origin: String
+    - variety: String
+    - process: String
+    - altitude: Float
+    - weight: Float
+    - status: String
+    - statusUpdates: List<StatusUpdate>
+  }
+  CoffeeLot << (E, #..#) >>
+
+  class StatusUpdate {
+    - timestamp: DateTime
+    - status: String
+    - responsible: User
+  }
+  StatusUpdate << (V, #..#) >>
+
+  class Certification {
+    - id: String
+    - type: String
+    - documentation: String
+    - lotId: String
+  }
+  Certification << (E, #..#) >>
+
+  Supplier "1" -- "0..*" CoffeeLot : provides
+  CoffeeLot "1" -- "0..*" Certification : has
+  StatusUpdate "0..*" -- "1" CoffeeLot : updates
+  StatusUpdate "0..*" -- "1" User : responsible
+  User "1" -- "0..*" Supplier : manages
+}
+
+' Bounded Context: Roasting
+package "Roasting" {
+  class RoastProfile {
+    - id: String
+    - userId: String
+    - name: String
+    - initialTemperature: Float
+    - curve: String
+    - time: Float
+    - development: Float
+  }
+  RoastProfile << (E, #..#) >>
+
+  class RoastSession {
+    - id: String
+    - lotId: String
+    - profileId: String
+    - startTimestamp: DateTime
+    - temperatureReadings: List<Float>
+    - timeReadings: List<Float>
+    - realCurve: String
+  }
+  RoastSession << (E, #..#) >>
+
+  class RoastDefect {
+    - id: String
+    - name: String
+    - description: String
+    - visualCharacteristics: String
+    - causes: List<String>
+    - solutions: List<String>
+  }
+  RoastDefect << (E, #..#) >>
+
+  class ComparisonReport {
+    - id: String
+    - sessionIds: List<String>
+    - metricsCompared: Map<String, Float>
+  }
+  ComparisonReport << (V, #..#) >>
+
+  User "1" -- "0..*" RoastProfile : creates
+  RoastProfile "1" -- "0..*" RoastSession : used in
+  CoffeeLot "1" -- "0..*" RoastSession : used in
+  RoastSession "0..*" -- "1" ComparisonReport : compared in
+}
+
+' Bounded Context: Sensory Evaluation
+package "Sensory Evaluation" {
+  class CuppingSession {
+    - id: String
+    - evaluatorIds: List<String>
+    - date: DateTime
+  }
+  CuppingSession << (E, #..#) >>
+
+  class SensoryEvaluation {
+    - id: String
+    - lotId: String
+    - roastSessionId: String
+    - cuppingSessionId: String
+    - attributes: Map<String, Float>
+    - scores: Map<String, Float>
+    - timestamp: DateTime
+  }
+  SensoryEvaluation << (E, #..#) >>
+
+  class SensoryChart {
+    - evaluationId: String
+    - dataPoints: Map<String, Float>
+    - chartType: String
+  }
+  SensoryChart << (V, #..#) >>
+
+  CoffeeLot "1" -- "0..*" SensoryEvaluation : evaluated in
+  RoastSession "1" -- "0..*" SensoryEvaluation : evaluated in
+  CuppingSession "1" -- "0..*" SensoryEvaluation : contains
+  SensoryEvaluation "1" -- "1" SensoryChart : visualized as
+}
+
+' Bounded Context: Preparation
+package "Preparation" {
+  class Recipe {
+    - id: String
+    - userId: String
+    - name: String
+    - method: String
+    - ratio: Float
+    - temperature: Float
+    - time: Float
+    - grindSetting: String
+    - lotId: String
+    - permissions: List<String>
+  }
+  Recipe << (E, #..#) >>
+
+  class GrindCalibration {
+    - id: String
+    - userId: String
+    - equipment: String
+    - grindSetting: String
+    - timestamp: DateTime
+    - image: String
+    - extractionTime: Float
+  }
+  GrindCalibration << (E, #..#) >>
+
+  class Beverage {
+    - id: String
+    - userId: String
+    - name: String
+    - category: String
+    - ingredients: List<String>
+    - method: String
+    - presentation: String
+    - photo: String
+  }
+  Beverage << (E, #..#) >>
+
+  User "1" -- "0..*" Recipe : creates
+  User "1" -- "0..*" GrindCalibration : documents
+  User "1" -- "0..*" Beverage : creates
+  Recipe "0..*" -- "1" CoffeeLot : associated with
+}
+
+' Bounded Context: Administration
+package "Administration" {
+  class Inventory {
+    - id: String
+    - items: Map<CoffeeLot, Float>
+    - movements: List<Movement>
+    - alerts: List<String>
+  }
+  Inventory << (E, #..#) >>
+
+  class Movement {
+    - timestamp: DateTime
+    - lotId: String
+    - quantity: Float
+    - type: String
+  }
+  Movement << (V, #..#) >>
+
+  class Cost {
+    - id: String
+    - lotId: String
+    - categories: Map<String, Float>
+    - totalCost: Float
+    - costPerKilo: Float
+    - costPerCup: Float
+    - margin: Float
+  }
+  Cost << (E, #..#) >>
+
+  class PerformanceAnalysis {
+    - id: String
+    - lotId: String
+    - metrics: Map<String, Float>
+  }
+  PerformanceAnalysis << (E, #..#) >>
+
+  class TraceabilityReport {
+    - id: String
+    - lotId: String
+    - chainDetails: String
+    - commercialSheet: String
+  }
+  TraceabilityReport << (E, #..#) >>
+
+  Inventory "1" -- "0..*" CoffeeLot : tracks
+  Movement "0..*" -- "1" Inventory : belongs to
+  Movement "0..*" -- "1" CoffeeLot : affects
+  CoffeeLot "1" -- "0..1" Cost : incurs
+  CoffeeLot "1" -- "0..1" PerformanceAnalysis : analyzed in
+  CoffeeLot "1" -- "0..1" TraceabilityReport : documented in
+}
+
+' Bounded Context: Landing Page
+package "Landing Page" {
+  class ContactForm {
+    - id: String
+    - name: String
+    - email: String
+    - message: String
+    - timestamp: DateTime
+  }
+  ContactForm << (E, #..#) >>
+}
+
+' Bounded Context: CRM Context
+package "CRM Context" {
+  class Customer {
+    - id: CustomerId
+    - name: String
+    - email: String
+    - address: Address
+  }
+  Customer << (E, #..#) >>
+}
+
+' Bounded Context: Sales Context
+package "Sales Context" {
+  class Sale {
+    - id: String
+    - saleDate: DateTime
+    - customerId: String
+    - deliveryAddress: DeliveryAddress
+    - saleItems: List<SaleItem>
+    + addSaleItem(item: SaleItem)
+    + setDeliveryAddress(address: DeliveryAddress)
+    + calculateTotal(): Float
+  }
+  Sale << (E, #..#) >>
+
+  class DeliveryAddress {
+    - street: String
+    - city: String
+  }
+  DeliveryAddress << (V, #..#) >>
+
+  class SaleItem {
+    - lotId: String
+    - quantity: Float
+    - price: Float
+  }
+  SaleItem << (E, #..#) >>
+
+  Sale "1" -- "1" DeliveryAddress : contains
+  Sale "1" -- "0..*" SaleItem : contains
+}
+
+' Cross-context relationships
+User "1" -- "0..*" Customer : manages
+TraceabilityReport "0..*" -- "1" Customer : delivered to
+Sale "0..*" -- "1" Customer : sold to
+SaleItem "0..*" -- "1" CoffeeLot : references
+
+@enduml

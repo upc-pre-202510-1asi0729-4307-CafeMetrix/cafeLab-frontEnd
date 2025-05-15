@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "id": "o_1747175160698",
+      "name": "Ricardo Sosa",
+      "email": "sosa@gmail.com",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "Sosa",
+      "experience": "",
+      "paymentMethod": "visa",
+      "profilePicture": "",
+      "hasPlan": true,
+      "plan": "complete"
+    },
+    {
+      "id": "b_1747175951535",
+      "name": "Luis Millones",
+      "email": "lucho@gmail.com",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "paymentMethod": "visa",
+      "profilePicture": "",
+      "hasPlan": true,
+      "plan": "barista"
+    },
+    {
+      "id": "b_1747200748270",
+      "name": "Sergio Ramos",
+      "email": "sergio@gmail.com",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "paymentMethod": "mastercard",
+      "profilePicture": "",
+      "hasPlan": true,
+      "plan": "barista"
+    },
+    {
+      "id": "b_1747234304535",
+      "name": "Wilmer Casas",
+      "email": "wilmer@gmail.com",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "paymentMethod": "visa",
+      "profilePicture": "",
+      "hasPlan": true,
+      "plan": "barista"
+    }
+  ]
+}

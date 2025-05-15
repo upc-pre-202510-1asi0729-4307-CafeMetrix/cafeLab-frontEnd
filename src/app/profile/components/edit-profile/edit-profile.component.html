@@ -1,0 +1,162 @@
+<div class="profile-container">
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <button class="home-btn" (click)="goToHome()">{{ 'profile.home' | translate }}</button>
+    <span class="breadcrumb-separator">></span>
+    <span class="breadcrumb-item active">{{ 'profile.profile' | translate }}</span>
+  </div>
+
+  <div class="profile-content">
+    <!-- Sección de foto de perfil -->
+    <div class="profile-image-section">
+      <div class="profile-image-container">
+        <div class="profile-image" [style.backgroundImage]="'url(' + (previewImage || defaultProfilePic) + ')'">
+        </div>
+        <button class="custom-button upload-photo-btn" (click)="triggerFileInput()">
+          {{ 'profile.upload_photo' | translate }}
+          <i class="pi pi-upload"></i>
+        </button>
+        <input
+          type="file"
+          #fileInput
+          accept="image/*"
+          style="display: none"
+          (change)="handleFileUpload($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Sección de formulario -->
+    <div class="profile-form-section">
+      <!-- Fila 1: Nombre y Apellidos -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">{{ 'profile.firstname' | translate }}</label>
+          <div class="input-with-edit">
+            <input
+              id="nombre"
+              type="text"
+              [(ngModel)]="profile.name"
+              [disabled]="!editingName"
+              class="w-full"
+            />
+            <button class="edit-btn" (click)="toggleEdit('name')">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apellidos">{{ 'profile.lastname' | translate }}</label>
+          <div class="input-with-edit">
+            <input
+              id="apellidos"
+              type="text"
+              [(ngModel)]="profile.lastname"
+              [disabled]="!editingLastname"
+              class="w-full"
+            />
+            <button class="edit-btn" (click)="toggleEdit('lastname')">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila 2: Email y/o Cafetería -->
+      <div class="form-row centered-row">
+        <div class="form-group" *ngIf="isOwner">
+          <label for="cafeteriaName">{{ 'profile.cafe_name' | translate }}</label>
+          <div class="input-with-edit">
+            <input
+              id="cafeteriaName"
+              type="text"
+              [(ngModel)]="profile.cafeteriaName"
+              [disabled]="!editingCafeteria"
+              class="w-full"
+            />
+            <button class="edit-btn" (click)="toggleEdit('cafeteria')">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group centered-input">
+          <label for="email">{{ 'profile.email' | translate }}</label>
+          <div class="input-with-edit">
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="profile.email"
+              [disabled]="!editingEmail"
+              class="w-full"
+            />
+            <button class="edit-btn" (click)="toggleEdit('email')">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Método de pago -->
+      <div class="payment-section" [ngClass]="{ 'has-error': validationErrors.paymentMethod }">
+        <label class="required-field">{{ 'profile.payment_method' | translate }}</label>
+        <div class="payment-options">
+          <div class="payment-option">
+            <input
+              type="radio"
+              id="visa"
+              name="paymentMethod"
+              value="visa"
+              [(ngModel)]="profile.paymentMethod"
+              required
+            />
+            <label for="visa" class="payment-card" [ngClass]="{ 'selected': profile.paymentMethod === 'visa' }">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" />
+            </label>
+          </div>
+
+          <div class="payment-option">
+            <input
+              type="radio"
+              id="mastercard"
+              name="paymentMethod"
+              value="mastercard"
+              [(ngModel)]="profile.paymentMethod"
+              required
+            />
+            <label for="mastercard" class="payment-card" [ngClass]="{ 'selected': profile.paymentMethod === 'mastercard' }">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" />
+            </label>
+          </div>
+        </div>
+        <!-- Mensaje de error cuando no se selecciona método de pago -->
+        <div *ngIf="validationErrors.paymentMethod" class="payment-error">
+          {{ validationErrors.paymentMethod }}
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button
+          class="custom-button save-btn"
+          (click)="saveProfile()"
+        >
+          {{ 'profile.save' | translate }}
+        </button>
+
+        <button
+          *ngIf="showPlanButton && profile.paymentMethod"
+          class="custom-button select-plan-btn"
+          (click)="goToSelectPlan()"
+        >
+          {{ 'profile.select_plan' | translate }}
+        </button>
+      </div>
+
+      <div *ngIf="message" [ngClass]="['message', messageType]">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+</div>

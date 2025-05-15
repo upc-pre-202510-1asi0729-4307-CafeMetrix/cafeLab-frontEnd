@@ -1,0 +1,130 @@
+<div class="signup-page">
+  <div class="signup-content">
+    <div class="form-container">
+      <div class="signup-card">
+        <h2>{{ 'signup.title_barista' | translate }}</h2>
+
+        <form [formGroup]="signupForm" (ngSubmit)="signup()">
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>{{ 'signup.fullname' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="name"
+                required>
+              <mat-error *ngIf="signupForm.get('name')?.errors?.['required']">
+                {{ 'signup.error_required_name' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>{{ 'signup.email' | translate }}</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                required>
+              <mat-error *ngIf="signupForm.get('email')?.errors?.['required']">
+                {{ 'signup.error_required_email' | translate }}
+              </mat-error>
+              <mat-error *ngIf="signupForm.get('email')?.errors?.['email']">
+                {{ 'signup.error_invalid_email' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>{{ 'signup.experience' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="experience">
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>{{ 'signup.password' | translate }}</mat-label>
+              <input
+                matInput
+                [type]="hidePassword ? 'password' : 'text'"
+                formControlName="password"
+                required>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hidePassword = !hidePassword"
+                type="button">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="signupForm.get('password')?.errors?.['required']">
+                {{ 'signup.error_required_password' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>{{ 'signup.confirm_password' | translate }}</mat-label>
+              <input
+                matInput
+                [type]="hideConfirmPassword ? 'password' : 'text'"
+                formControlName="confirmPassword"
+                required>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hideConfirmPassword = !hideConfirmPassword"
+                type="button">
+                <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">
+                {{ 'signup.error_required_confirm' | translate }}
+              </mat-error>
+              <mat-error *ngIf="signupForm.get('confirmPassword')?.errors?.['passwordMismatch']">
+                {{ 'signup.error_password_mismatch' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <div class="checkbox-container">
+              <mat-checkbox
+                formControlName="termsAccepted"
+                required
+                color="primary"
+                class="custom-checkbox">
+                {{ 'signup.accept_terms' | translate }}
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn-secondary"
+              (click)="goBack()">{{ 'common.back' | translate }}</button>
+            <button
+              type="submit"
+              class="custom-button"
+              [disabled]="signupForm.invalid || isSubmitting">
+              {{ isSubmitting ? ('signup.registering' | translate) : ('signup.register' | translate) }}
+            </button>
+          </div>
+
+          <div *ngIf="error" class="error-message">
+            {{ error }}
+          </div>
+
+          <div *ngIf="success" class="success-message">
+            {{ success }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

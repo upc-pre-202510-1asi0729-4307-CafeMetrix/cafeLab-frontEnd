@@ -1,0 +1,191 @@
+.login-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Fondo que cubre toda la pantalla */
+.background-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('public/signin.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+/* Contenedor central para la tarjeta de login */
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+  z-index: 1;
+}
+
+/* Estilos para la tarjeta de login */
+.login-card {
+  width: 100%;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 16px !important;
+  background-color: white;
+}
+
+::ng-deep .mat-mdc-card {
+  border-radius: 16px !important;
+  padding: 10px;
+}
+
+::ng-deep .mat-mdc-card-content {
+  padding: 1.5rem 2rem !important;
+}
+
+::ng-deep .mat-mdc-card-header {
+  justify-content: center;
+  padding: 1.5rem 1rem 0.5rem !important;
+}
+
+.w-full {
+  width: 100%;
+}
+
+h2 {
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Estilos para los campos de entrada */
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-input-element {
+  padding: 0.75rem 0 !important;
+  font-size: 1rem !important;
+}
+
+::ng-deep .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-flex {
+  border-radius: 8px !important;
+}
+
+.form-actions {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+/* Estilo personalizado para el botón */
+.custom-button {
+  width: 100%;
+  height: auto;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: #4c4c3d;
+  color: white;
+  border: none;
+  border-radius: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button:hover:not(:disabled) {
+  background-color: white;
+  color: #4D6443;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button:active:not(:disabled) {
+  background-color: transparent;
+  color: #4D6443;
+  border: 1px solid #4D6443;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #7a7a68;
+  border: none;
+  color: white;
+}
+
+.button-submitting {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.registration-links {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.registration-links p {
+  margin-bottom: 0.5rem;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.links-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.custom-link {
+  color: #4c4c3d;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+}
+
+.custom-link:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
+.error-message {
+  margin-top: 1.5rem;
+  color: #e53935;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  background-color: rgba(229, 57, 53, 0.08);
+  border-radius: 6px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .content-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}

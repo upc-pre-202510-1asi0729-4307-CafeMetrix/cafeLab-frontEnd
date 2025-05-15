@@ -1,0 +1,17 @@
+<div class="dashboard-placeholder">
+  <h1>Dashboard de Dueño de Cafetería</h1>
+  <p>Esta página será desarrollada por otro equipo.</p>
+
+  <div class="user-info">
+    <h3>Información del Usuario:</h3>
+    <p><strong>Nombre:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Rol:</strong> {{ user.role === 'barista' ? 'Barista' : 'Dueño de Cafetería' }}</p>
+    <p><strong>Plan:</strong> {{ getPlanName(user.plan) }}</p>
+    <p><strong>Cafetería:</strong> {{ user.cafeteriaName || 'No especificado' }}</p>
+    <p><strong>Método de Pago:</strong> {{ getPaymentMethodName(user.paymentMethod) }}</p>
+    <p *ngIf="user.experience"><strong>Experiencia:</strong> {{ user.experience }}</p>
+  </div>
+
+  <button (click)="logout()" class="logout-btn">Cerrar Sesión</button>
+</div>

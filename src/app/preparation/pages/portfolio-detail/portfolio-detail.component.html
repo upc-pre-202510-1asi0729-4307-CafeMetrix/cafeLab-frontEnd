@@ -1,0 +1,42 @@
+<!-- Espacio reservado para el navbar -->
+<div style="height: 60px;"></div>
+
+<div class="container">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a routerLink="/dashboard">Inicio</a> &gt; <a routerLink="/recipes">Bebidas</a> &gt; <span>{{ portfolio?.name }}</span>
+  </div>
+
+  <!-- Encabezado del portafolio -->
+  <div class="portfolio-header">
+    <h1 class="portfolio-title">{{ portfolio?.name }}</h1>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" class="action-button" (click)="openAddRecipesDialog()">
+        <mat-icon>add</mat-icon> Añadir recetas
+      </button>
+      <button mat-raised-button color="accent" class="action-button" (click)="openEditDialog()">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+      <button mat-raised-button color="warn" class="action-button" (click)="deletePortfolio()">
+        <mat-icon>delete</mat-icon> Eliminar
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de recetas del portafolio -->
+  <div class="recipes-grid" *ngIf="portfolioRecipes.length > 0">
+    <mat-card class="recipe-card" *ngFor="let recipe of portfolioRecipes">
+      <button mat-icon-button class="remove-button" (click)="removeRecipeFromPortfolio(recipe.id)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <img mat-card-image [src]="recipe.image" [alt]="recipe.name" class="recipe-img">
+      <mat-card-content>
+        <h3 class="recipe-title">{{ recipe.name }}</h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="no-recipes" *ngIf="portfolioRecipes.length === 0">
+    <p>Este portafolio aún no tiene recetas. Añade algunas usando el botón "Añadir recetas".</p>
+  </div>
+</div>

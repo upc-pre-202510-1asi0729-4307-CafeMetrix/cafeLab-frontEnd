@@ -1,0 +1,383 @@
+{
+    "portfolios": [
+      {
+        "id": 1,
+        "name": "Portafolio para el concurso de LatteArt",
+        "createdAt": "2023-07-15T10:30:00.000Z"
+      },
+      {
+        "id": 3,
+        "name": "Portafolio 3",
+        "createdAt": "2023-09-10T08:20:00.000Z"
+      },
+      {
+        "id": 4,
+        "name": "Portafolio 4",
+        "createdAt": "2023-10-05T16:45:00.000Z" 
+      },
+      {
+        "name": "portafolio 5",
+        "createdAt": "2025-05-14T17:35:52.220Z",
+        "id": 5
+      }
+    ],
+    "recipes": [
+      {
+        "name": "Latte",
+        "image": "https://www.nescafe.com/pe/sites/default/files/2023-06/Nes_Web3_RDP_CommunityCard_CaramelLatte_1066x1066.jpg",
+        "preparationTime": "5 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Leche",
+            "quantity": "120",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso",
+          "Calentar la leche a 65°C",
+          "Verter la leche sobre el espresso"
+        ],
+        "updated": "2025-05-14T10:17:01.613Z",
+        "id": 1
+      },
+      {
+        "name": "Mocha",
+        "image": "https://images.immediate.co.uk/production/volatile/sites/2/2021/11/Mocha-1fc71f7.png?quality=90&resize=556,505",
+        "preparationTime": "7 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Leche",
+            "quantity": "100",
+            "unit": "ml"
+          },
+          {
+            "name": "Chocolate",
+            "quantity": "20",
+            "unit": "g"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso",
+          "Derretir el chocolate",
+          "Añadir el espresso al chocolate derretido",
+          "Calentar la leche y verterla sobre la mezcla"
+        ],
+        "updated": "2025-05-14T11:47:36.671Z",
+        "id": 2
+      },
+      {
+        "name": "Cappuccino",
+        "image": "https://www.allrecipes.com/thmb/chsZz0jqIHWYz39ViZR-9k_BkkE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8624835-how-to-make-a-cappuccino-beauty-4x3-0301-13d55eaad60b42058f24369c292d4ccb.jpg",
+        "preparationTime": "5 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Leche",
+            "quantity": "60",
+            "unit": "ml"
+          },
+          {
+            "name": "Espuma de leche",
+            "quantity": "60",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso",
+          "Calentar la leche y crear espuma",
+          "Verter la leche sobre el espresso",
+          "Agregar la espuma al final"
+        ],
+        "updated": "2025-05-14T11:48:11.377Z",
+        "id": 3
+      },
+      {
+        "name": "Flat White",
+        "image": "https://imag.bonviveur.com/flat-white.jpg",
+        "preparationTime": "5 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso doble",
+            "quantity": "60",
+            "unit": "ml"
+          },
+          {
+            "name": "Leche",
+            "quantity": "120",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso doble",
+          "Calentar la leche creando microespuma",
+          "Verter la leche sobre el espresso"
+        ],
+        "type": "extraction",
+        "lotId": "",
+        "roastProfileId": "",
+        "extractionMethod": "french-press",
+        "grindSize": "fino",
+        "ratio": "",
+        "cuppingSessionId": "",
+        "tips": "Hola",
+        "updated": "2025-05-14T17:15:42.315Z",
+        "id": 4
+      },
+      {
+        "name": "Macchiato",
+        "image": "https://www.recetasderechupete.com/wp-content/uploads/2022/01/Expresso-macchiato-1200x828.jpg",
+        "preparationTime": "3 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Espuma de leche",
+            "quantity": "10",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso",
+          "Añadir una pequeña cantidad de espuma de leche"
+        ],
+        "updated": "2025-05-14T11:53:09.567Z",
+        "id": 6
+      },
+      {
+        "name": "Cortado",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmhaOjoBiRqQ0K7Q5nmQyz-SZbnEI5cp8Dog&s",
+        "preparationTime": "4 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Leche",
+            "quantity": "30",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso",
+          "Calentar la leche",
+          "Verter la leche sobre el espresso en proporción 1:1"
+        ],
+        "updated": "2025-05-14T11:53:28.055Z",
+        "id": 7
+      },
+      {
+        "name": "Cafe Bombon",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT10XmpQFFOMgULNprJRiS_n7LTnd7TBq3sVQ&s",
+        "preparationTime": "4 min",
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Leche condensada",
+            "quantity": "30",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Poner la leche condensada en el vaso",
+          "Verter el espresso lentamente sobre la leche condensada"
+        ],
+        "updated": "2025-05-14T11:54:00.183Z",
+        "id": 8
+      },
+      {
+        "name": "Lungo",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu4ZcrXrDrs_LkL1r4QJ93yflFWrOsSI7ceA&s",
+        "preparationTime": "3 min",
+        "portfolioId": 1,
+        "ingredients": [
+          {
+            "name": "Café molido",
+            "quantity": "18",
+            "unit": "g"
+          },
+          {
+            "name": "Agua",
+            "quantity": "60",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Extraer el café durante más tiempo que un espresso normal",
+          "El resultado es un café más largo pero menos concentrado"
+        ],
+        "updated": "2025-05-14T10:15:20.831Z",
+        "id": 9
+      },
+      {
+        "name": "Ristretto",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDPIfZtUaGr2hcBmzH58e3YSyefbFVW4UjZQ&s",
+        "preparationTime": "2 min",
+        "portfolioId": 1,
+        "ingredients": [
+          {
+            "name": "Café molido",
+            "quantity": "18",
+            "unit": "g"
+          },
+          {
+            "name": "Agua",
+            "quantity": "15",
+            "unit": "ml"
+          }
+        ],
+        "steps": [
+          "Extraer el café con menor cantidad de agua",
+          "El resultado es un café más concentrado y aromático"
+        ],
+        "updated": "2025-05-14T10:57:25.369Z",
+        "id": 10
+      },
+      {
+        "name": "Affogato",
+        "image": "https://eu-central-1-jde.graphassets.com/AiQ00hd1mTUe8afHSH6YFz/output=format:webp/wg8y9ZWR5ehEnsQRns4o",
+        "preparationTime": "5 min",
+        "portfolioId": 1,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Helado de vainilla",
+            "quantity": "1",
+            "unit": "bola"
+          }
+        ],
+        "steps": [
+          "Colocar una bola de helado en un vaso",
+          "Verter el espresso caliente sobre el helado justo antes de servir"
+        ],
+        "updated": "2025-05-14T11:50:46.951Z",
+        "id": 11
+      },
+      {
+        "name": "Shakerato",
+        "image": "https://imag.bonviveur.com/shakerato-casero.jpg",
+        "preparationTime": "6 min",
+        "portfolioId": 1,
+        "ingredients": [
+          {
+            "name": "Café espresso",
+            "quantity": "30",
+            "unit": "ml"
+          },
+          {
+            "name": "Hielo",
+            "quantity": "5",
+            "unit": "cubos"
+          },
+          {
+            "name": "Azúcar",
+            "quantity": "1",
+            "unit": "cucharadita"
+          }
+        ],
+        "steps": [
+          "Preparar un espresso",
+          "Poner el café, hielo y azúcar en una coctelera",
+          "Agitar vigorosamente",
+          "Colar en una copa de martini"
+        ],
+        "updated": "2025-05-14T11:51:30.416Z",
+        "id": 12
+      },
+      {
+        "name": "Mochachino",
+        "image": "https://cdn0.uncomo.com/es/posts/7/4/3/como_hacer_mocachino_casero_32347_600_square.jpg",
+        "preparationTime": 2,
+        "portfolioId": null,
+        "ingredients": [
+          {
+            "name": "Agua",
+            "quantity": 123,
+            "unit": "ml"
+          },
+          {
+            "name": "Café",
+            "quantity": 12,
+            "unit": "gr"
+          }
+        ],
+        "steps": [
+          "1. Preparar",
+          "2. dsisd",
+          "3.d awd"
+        ],
+        "updated": "2025-05-14T10:45:13.529Z",
+        "id": 13
+      },
+      {
+        "name": "ad",
+        "image": "https://via.placeholder.com/400x300?text=Café",
+        "lotId": "",
+        "extractionMethod": "cold-brew",
+        "grindSize": "fino",
+        "roastProfileId": "perfil-a",
+        "ratio": "1:16",
+        "cuppingSessionId": "sesion-x",
+        "portfolioId": null,
+        "waterAmount": 123,
+        "waterUnit": "ml",
+        "coffeeAmount": 12,
+        "coffeeUnit": "gr",
+        "ingredientType": "leche-entera",
+        "ingredientAmount": "",
+        "ingredientUnit": "gr",
+        "preparationTime": 12,
+        "steps": [],
+        "tips": "",
+        "type": "extraction",
+        "ingredients": [
+          {
+            "name": "Agua",
+            "quantity": 123,
+            "unit": "ml"
+          },
+          {
+            "name": "Café",
+            "quantity": 12,
+            "unit": "gr"
+          }
+        ],
+        "created": "2025-05-14T17:04:30.790Z",
+        "id": 14
+      }
+    ]
+  }

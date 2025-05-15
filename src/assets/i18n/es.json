@@ -1,0 +1,86 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "drinks": "Bebidas"
+  },
+  "search": {
+    "placeholder": "Buscar bebida",
+    "search": "Buscar..."
+  },
+  "portfolio": {
+    "title": "Portafolios",
+    "create": "Crear Portafolio",
+    "edit": "Editar Portafolio",
+    "delete": "Eliminar Portafolio",
+    "add_recipes": "Añadir recetas",
+    "no_recipes": "Este portafolio aún no tiene recetas. Añade algunas usando el botón \"Añadir recetas\".",
+    "delete_confirmation": "¿Estás seguro de que deseas eliminar este portafolio? Todas las recetas asociadas dejarán de estar relacionadas.",
+    "name_label": "Nombre de Portafolio",
+    "actions": {
+      "save": "Guardar",
+      "create": "Crear",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "messages": {
+      "updated": "Portafolio actualizado correctamente",
+      "deleted": "Portafolio eliminado correctamente",
+      "error_loading": "Error al cargar el portafolio",
+      "error_updating": "Error al actualizar el portafolio",
+      "error_deleting": "Error al eliminar el portafolio"
+    }
+  },
+  "recipes": {
+    "title": "Bebidas sin portafolio asociado",
+    "create": "Crear Bebida",
+    "add_to_portfolio": "Añadir recetas al portafolio",
+    "no_available": "No hay recetas disponibles para añadir.",
+    "actions": {
+      "add": "Añadir recetas",
+      "remove": "Eliminar del portafolio"
+    },
+    "messages": {
+      "added": "Recetas añadidas correctamente",
+      "removed": "Receta eliminada del portafolio",
+      "error_loading": "Error al cargar las recetas",
+      "error_adding": "Error al añadir recetas al portafolio",
+      "error_removing": "Error al eliminar las asociaciones de recetas"
+    },
+    "creation": {
+      "title": "Crear Receta",
+      "name": "Nombre de la Receta",
+      "name_placeholder": "Ingrese el nombre de la receta",
+      "name_required": "El nombre es requerido",
+      "extraction_coffee": "Café",
+      "extraction_espresso": "Espresso",
+      "upload_image": "Subir Imagen",
+      "lote": "Lote",
+      "tueste": "Tueste",
+      "cata": "Cata",
+      "portfolio": "Portafolio",
+      "no_portfolio": "Sin portafolio",
+      "molienda": "Molienda",
+      "ratio": "Ratio",
+      "tiempo": "Tiempo",
+      "tiempo_placeholder": "Tiempo de preparación",
+      "ingredientes": "Ingredientes",
+      "ingrediente": "Ingrediente",
+      "medida": "Medida",
+      "add_ingredient": "Agregar Ingrediente",
+      "pasos": "Pasos de Preparación",
+      "pasos_placeholder": "Describe los pasos para preparar la bebida",
+      "consejos": "Consejos",
+      "consejos_placeholder": "Agrega consejos útiles",
+      "submit": "Guardar Receta",
+      "success": "Receta creada con éxito",
+      "error": "Error al crear la receta"
+    }
+  },
+  "navbar": {
+    "home": "Inicio",
+    "features": "Funcionalidades",
+    "contact": "Contáctanos",
+    "profile": "Perfil"
+  }
+} 

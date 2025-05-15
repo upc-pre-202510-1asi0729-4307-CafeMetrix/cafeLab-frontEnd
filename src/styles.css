@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Estilos para el diálogo de filtros */
+.dialog-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.filter-dialog-panel {
+  border-radius: 12px !important;
+}
+
+.filter-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 12px !important;
+  background-color: #F3F3F3 !important;
+}

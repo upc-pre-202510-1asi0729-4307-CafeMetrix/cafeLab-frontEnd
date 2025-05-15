@@ -7,8 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
 
 interface SesionCata {
   nombre: string;
@@ -49,12 +51,25 @@ export class SesionesCataComponent {
     { nombre: 'Cata Orgánica', fecha: '2024-02-20', origen: 'México', variedad: 'Typica', favorito: true }
   ];
 
+  constructor(private dialog: MatDialog) {}
+
   toggleFavorito(sesion: SesionCata) {
     sesion.favorito = !sesion.favorito;
   }
 
   mostrarFiltros() {
-    // Implementar lógica de filtros
+    const dialogRef = this.dialog.open(FiltroDialogComponent, {
+      width: '600px',
+      backdropClass: 'dialog-backdrop',
+      panelClass: 'filter-dialog-panel'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Aquí implementaremos la lógica de filtrado
+        console.log('Filtros aplicados:', result);
+      }
+    });
   }
 
   verDetalle(sesion: SesionCata) {

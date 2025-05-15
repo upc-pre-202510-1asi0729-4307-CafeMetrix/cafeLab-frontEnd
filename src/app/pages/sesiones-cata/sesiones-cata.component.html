@@ -3,8 +3,11 @@
   <div class="breadcrumb">
     <a routerLink="/welcome-barista">Inicio</a>
     <mat-icon>chevron_right</mat-icon>
-    <span [class.active]="!mostrarComparacion">Sesiones de Cata</span>
+    <ng-container *ngIf="!mostrarComparacion">
+      <span class="active">Sesiones de Cata</span>
+    </ng-container>
     <ng-container *ngIf="mostrarComparacion">
+      <a (click)="toggleComparacion()" class="breadcrumb-link">Sesiones de Cata</a>
       <mat-icon>chevron_right</mat-icon>
       <span class="active">Comparación de Múltiples Catas</span>
     </ng-container>

@@ -11,7 +11,11 @@
   top: 2rem;
   left: 2rem;
   background-color: #414535 !important;
-  color: white;
+  color: #FFFFFF !important;
+}
+
+.exit-button .mat-icon {
+  color: #FFFFFF !important;
 }
 
 .cards-container {

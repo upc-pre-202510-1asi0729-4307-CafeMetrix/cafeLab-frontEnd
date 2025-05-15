@@ -38,7 +38,7 @@
 .action-card {
   cursor: pointer;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  height: 200px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +57,7 @@ mat-card-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 160px;
   width: 100%;
   padding: 1rem !important;
 }
@@ -70,12 +70,14 @@ mat-card-content {
 
 .card-title {
   text-align: center;
-  margin-top: 1rem;
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
   color: #414535;
-  font-size: 1.2rem;
-  padding: 0 1rem;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  margin-top: auto;
+  line-height: 1.2;
+  width: 100%;
 }
 
 @media (max-width: 768px) {

@@ -1,15 +1,44 @@
 import { Routes } from '@angular/router';
 import { SelectPaymentComponent } from './pages/select-payment/select-payment.component';
+import { WelcomeBaristaComponent } from './pages/welcome-barista/welcome-barista.component';
 
 export const routes: Routes = [
-  // ... otras rutas ...
+  {
+    path: 'welcome-barista',
+    component: WelcomeBaristaComponent
+  },
   {
     path: 'select-payment',
     component: SelectPaymentComponent
   },
   {
+    path: 'sesiones-cata',
+    redirectTo: 'welcome-barista',
+    pathMatch: 'full'
+  },
+  {
+    path: 'libreria-defectos',
+    redirectTo: 'welcome-barista',
+    pathMatch: 'full'
+  },
+  {
+    path: 'correlacion-tueste-sabor',
+    redirectTo: 'welcome-barista',
+    pathMatch: 'full'
+  },
+  {
+    path: 'calibracion-molienda',
+    redirectTo: 'welcome-barista',
+    pathMatch: 'full'
+  },
+  {
+    path: 'recetas',
+    redirectTo: 'welcome-barista',
+    pathMatch: 'full'
+  },
+  {
     path: '',
-    redirectTo: 'select-payment',
+    redirectTo: 'welcome-barista',
     pathMatch: 'full'
   }
 ];

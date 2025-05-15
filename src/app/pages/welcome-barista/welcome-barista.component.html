@@ -1,1 +1,61 @@
-<p>welcome-barista works!</p>
+<app-navbar></app-navbar>
+
+<div class="welcome-container">
+  <button mat-raised-button color="warn" class="exit-button">
+    <mat-icon>exit_to_app</mat-icon>
+    Salir
+  </button>
+
+  <div class="cards-container">
+    <!-- Primera fila -->
+    <div class="cards-row">
+      <div class="card-wrapper">
+        <mat-card class="action-card" routerLink="/sesiones-cata">
+          <mat-card-content>
+            <img src="../../../assets/sesiones-cata-icon.png" alt="Sesiones de Cata">
+          </mat-card-content>
+          <h3 class="card-title">Sesiones de Cata</h3>
+        </mat-card>
+      </div>
+
+      <div class="card-wrapper">
+        <mat-card class="action-card" routerLink="/libreria-defectos">
+          <mat-card-content>
+            <img src="../../../assets/libreria-defectos-icon.png" alt="Librería de Defectos">
+          </mat-card-content>
+          <h3 class="card-title">Librería de Defectos</h3>
+        </mat-card>
+      </div>
+
+      <div class="card-wrapper">
+        <mat-card class="action-card" routerLink="/correlacion-tueste-sabor">
+          <mat-card-content>
+            <img src="../../../assets/tueste-sabor-icon.png" alt="Correlación Tueste - Sabor">
+          </mat-card-content>
+          <h3 class="card-title">Correlación Tueste - Sabor</h3>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Segunda fila -->
+    <div class="cards-row">
+      <div class="card-wrapper">
+        <mat-card class="action-card" routerLink="/calibracion-molienda">
+          <mat-card-content>
+            <img src="../../../assets/calibracion-molienda-icon.png" alt="Calibración de Molienda">
+          </mat-card-content>
+          <h3 class="card-title">Calibración de Molienda</h3>
+        </mat-card>
+      </div>
+
+      <div class="card-wrapper">
+        <mat-card class="action-card" routerLink="/recetas">
+          <mat-card-content>
+            <img src="../../../assets/recetas-icon.png" alt="Recetas">
+          </mat-card-content>
+          <h3 class="card-title">Recetas</h3>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { Router } from '@angular/router';
 
+interface Recommendation {
+  message: string;
+  type: 'success' | 'warning' | 'info';
+}
+
 @Component({
   selector: 'app-production-cost-page',
   standalone: true,
@@ -37,6 +42,11 @@ export class ProductionCostPageComponent {
   totalSteps = 4;
   isSubmitting = false;
   readonly CUPS_PER_KG = 20; // Constante para el cálculo de costo por taza
+  isSuccess = false;
+  registrationCode = '';
+  readonly EXPECTED_MARGIN = 45; // Margen potencial esperado en porcentaje
+  readonly TRANSPORT_COST_THRESHOLD = 10; // Porcentaje máximo esperado para costos de transporte
+  recommendations: Recommendation[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -149,6 +159,16 @@ export class ProductionCostPageComponent {
     return this.costPerKg / this.CUPS_PER_KG;
   }
 
+  get potentialMargin(): number {
+    const suggestedPrice = this.suggestedPrice;
+    const costPerKg = this.costPerKg;
+    return ((suggestedPrice - costPerKg) / suggestedPrice) * 100;
+  }
+
+  get suggestedPrice(): number {
+    return this.costPerKg * (1 + this.EXPECTED_MARGIN / 100);
+  }
+
   getPercentage(value: number): number {
     return (value / this.grandTotal) * 100;
   }
@@ -201,11 +221,19 @@ export class ProductionCostPageComponent {
   onSubmit(): void {
     if (this.firstFormGroup.valid && this.directCostsForm.valid && this.indirectCostsForm.valid) {
       this.isSubmitting = true;
-      // Here you would typically call your backend service
-      // For now, we'll just simulate a submission
+      
+      // Generar código de registro
+      const year = new Date().getFullYear();
+      const random = Math.floor(10000 + Math.random() * 90000);
+      this.registrationCode = `RC-${year}-${random}`;
+
+      // Generar recomendaciones
+      this.generateRecommendations();
+
+      // Simular envío al backend
       setTimeout(() => {
         this.isSubmitting = false;
-        this.router.navigate(['/']);
+        this.isSuccess = true;
       }, 1000);
     }
   }
@@ -231,6 +259,49 @@ export class ProductionCostPageComponent {
       this.firstFormGroup.patchValue(data.firstStep);
       this.directCostsForm.patchValue(data.directCosts);
       this.indirectCostsForm.patchValue(data.indirectCosts);
+    }
+  }
+
+  onExit(): void {
+    this.router.navigate(['/']);
+  }
+
+  onPrint(): void {
+    window.print();
+  }
+
+  private generateRecommendations(): void {
+    this.recommendations = [];
+
+    // Analizar margen potencial
+    if (this.potentialMargin >= this.EXPECTED_MARGIN) {
+      this.recommendations.push({
+        message: 'El margen potencial está dentro del rango esperado.',
+        type: 'success'
+      });
+    } else {
+      this.recommendations.push({
+        message: 'El margen potencial está por debajo del objetivo. Considere optimizar costos o ajustar precios.',
+        type: 'warning'
+      });
+    }
+
+    // Analizar costos de transporte
+    const transportPercentage = this.getPercentage(this.transportTotal);
+    if (transportPercentage > this.TRANSPORT_COST_THRESHOLD) {
+      this.recommendations.push({
+        message: `Los costos de transporte representan ${transportPercentage.toFixed(1)}% del total. Considere optimizar la logística.`,
+        type: 'warning'
+      });
+    }
+
+    // Analizar eficiencia de procesamiento
+    const processingPercentage = this.getPercentage(this.processingTotal);
+    if (processingPercentage > 30) {
+      this.recommendations.push({
+        message: 'Los costos de procesamiento son elevados. Evalúe la eficiencia de los equipos y procesos.',
+        type: 'info'
+      });
     }
   }
 }

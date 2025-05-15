@@ -433,3 +433,191 @@ mat-error {
     font-size: 1.5rem;
   }
 }
+
+/* Success Screen Styles */
+.success-screen {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.success-message {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 20px;
+  background-color: #B4A88C;
+  border-radius: 8px;
+  color: white;
+}
+
+.success-message h2 {
+  color: white;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.registration-code {
+  margin: 10px 0 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+}
+
+.success-content {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.metrics-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.metric-card {
+  background: white;
+  border: 1px solid #393737;
+  border-radius: 8px;
+}
+
+.metric-card mat-card-content {
+  padding: 20px;
+}
+
+.metric-card h3 {
+  color: #414535;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+}
+
+.metric-value {
+  color: #414535;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.recommendations-column {
+  flex: 2;
+}
+
+.recommendations-card {
+  background: white;
+  border: 1px solid #393737;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.recommendations-card mat-card-header {
+  padding: 20px 20px 0;
+}
+
+.recommendations-card mat-card-content {
+  padding: 20px;
+}
+
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+}
+
+.check-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.recommendation-item.info {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+.recommendation-item.warning {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.recommendation-item.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .success-content {
+    flex-direction: column;
+  }
+
+  .metrics-column {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .metric-card {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .success-screen {
+    padding: 20px;
+  }
+
+  .metrics-column {
+    flex-direction: column;
+  }
+
+  .metric-card {
+    width: 100%;
+  }
+
+  .success-message h2 {
+    font-size: 1.2rem;
+  }
+
+  .registration-code {
+    font-size: 1rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .success-screen {
+    padding: 0;
+  }
+
+  .button-container {
+    display: none;
+  }
+
+  .success-message {
+    background-color: transparent;
+    color: #414535;
+  }
+
+  .success-message h2 {
+    color: #414535;
+  }
+
+  .metric-card,
+  .recommendations-card {
+    break-inside: avoid;
+  }
+}

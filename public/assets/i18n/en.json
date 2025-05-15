@@ -1,3 +1,55 @@
 {
-
+  "login": {
+    "title": "Sign In",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
+    "submit": "Sign In",
+    "submitting": "Signing in...",
+    "no_account": "Don't have an account?",
+    "register_barista": "Register as Barista",
+    "register_owner": "Register as Owner",
+    "error_empty_fields": "Please complete all fields",
+    "error_invalid_credentials": "Invalid credentials",
+    "error_login": "An error occurred while signing in"
+  },
+  "signup": {
+    "title_barista": "Barista Registration",
+    "title_owner": "Coffee Shop Owner Registration",
+    "fullname": "Full Name",
+    "email": "Email",
+    "experience": "Experience (e.g. 2 years)",
+    "owner_experience": "Experience (e.g. 5 years)",
+    "cafe_name": "Coffee Shop Name",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "accept_terms": "I accept the terms and conditions",
+    "register": "Register",
+    "registering": "Registering...",
+    "error_password_mismatch": "Passwords do not match",
+    "error_email_exists": "This email is already registered",
+    "error_registration": "An error occurred during registration. Please try again.",
+    "success_message": "Registration successful! Redirecting to complete your profile..."
+  },
+  "profile": {
+    "home": "Home",
+    "profile": "Profile",
+    "complete_profile": "Complete your profile",
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "email": "Email",
+    "cafe_name": "Coffee Shop Name",
+    "upload_photo": "Upload Profile Photo",
+    "change_photo": "Change Photo",
+    "payment_method": "Payment Method",
+    "payment_required": "Please select a payment method",
+    "required_fields": "Please complete all required fields",
+    "save": "Save",
+    "select_plan": "Select a Plan",
+    "success_update": "Profile updated successfully",
+    "error_update": "An error occurred while updating your profile. Please try again."
+  },
+  "common": {
+    "back": "Back",
+    "required_field": "This field is required"
+  }
 }

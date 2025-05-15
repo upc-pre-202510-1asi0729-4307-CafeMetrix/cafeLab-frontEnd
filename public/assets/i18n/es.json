@@ -1,3 +1,55 @@
 {
-
+  "login": {
+    "title": "Iniciar Sesión",
+    "email_placeholder": "Correo electrónico",
+    "password_placeholder": "Contraseña",
+    "submit": "Iniciar Sesión",
+    "submitting": "Iniciando sesión...",
+    "no_account": "¿No tienes una cuenta?",
+    "register_barista": "Regístrate como Barista",
+    "register_owner": "Regístrate como Dueño",
+    "error_empty_fields": "Por favor, completa todos los campos",
+    "error_invalid_credentials": "Credenciales incorrectas",
+    "error_login": "Ocurrió un error al iniciar sesión"
+  },
+  "signup": {
+    "title_barista": "Registro de Barista",
+    "title_owner": "Registro de Dueño de Cafetería",
+    "fullname": "Nombre completo",
+    "email": "Correo electrónico",
+    "experience": "Experiencia (ej: 2 años)",
+    "owner_experience": "Experiencia (ej: 5 años)",
+    "cafe_name": "Nombre de cafetería",
+    "password": "Contraseña",
+    "confirm_password": "Confirmar contraseña",
+    "accept_terms": "Acepto los términos y condiciones",
+    "register": "Registrarme",
+    "registering": "Registrando...",
+    "error_password_mismatch": "Las contraseñas no coinciden",
+    "error_email_exists": "El correo electrónico ya está registrado",
+    "error_registration": "Ocurrió un error durante el registro. Por favor, intenta nuevamente.",
+    "success_message": "¡Registro exitoso! Redirigiendo para completar tu perfil..."
+  },
+  "profile": {
+    "home": "Inicio",
+    "profile": "Perfil",
+    "complete_profile": "Completa tu perfil",
+    "firstname": "Nombre",
+    "lastname": "Apellidos",
+    "email": "Correo electrónico",
+    "cafe_name": "Nombre de la Cafetería",
+    "upload_photo": "Subir Foto de Perfil",
+    "change_photo": "Cambiar Foto",
+    "payment_method": "Método de Pago",
+    "payment_required": "Por favor selecciona un método de pago",
+    "required_fields": "Por favor completa todos los campos requeridos",
+    "save": "Guardar",
+    "select_plan": "Seleccionar un Plan",
+    "success_update": "Perfil actualizado correctamente",
+    "error_update": "Ocurrió un error al actualizar tu perfil. Por favor intenta de nuevo."
+  },
+  "common": {
+    "back": "Volver",
+    "required_field": "Este campo es obligatorio"
+  }
 }

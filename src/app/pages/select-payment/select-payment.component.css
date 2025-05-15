@@ -1,33 +1,159 @@
 .payment-container {
-  max-width: 1200px;
-  margin: 2rem auto;
   padding: 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 64px; /* Add space for navbar */
+}
+
+.payment-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #FFFFFF !important;
+}
+
+.back-button {
+  background-color: #414535 !important;
+  color: #F8F8F8 !important;
+  position: absolute;
+  left: 2rem;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 1rem 0;
+}
+
+mat-card-title {
+  color: #414535;
+  text-align: center;
+  margin: 0 auto !important;
+}
+
+.plan-info {
+  background-color: #C68F61 !important;
+  text-align: center;
+  padding-top: 1.5rem;
+}
+
+.plan-info mat-card-title {
+  text-align: center;
+  color: #414535;
+  margin-bottom: 1.5rem !important;
+  font-size: 1.5rem;
+}
+
+.plan-info mat-card-subtitle {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.plan-info mat-card-content,
+.plan-info mat-card-subtitle,
+.plan-info .features li {
+  color: #F2E3BC !important;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+}
+
+.payment-form {
+  padding: 1rem;
+}
+
+.payment-form h3 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  color: #414535;
+  text-align: center;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  color: #414535;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  background-color: #6B6B6B !important;
+  color: white;
+  width: auto;
+  padding: 0.5rem 2rem;
+  margin: 1rem auto;
+  display: block;
+}
+
+.card-selection {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.card-option {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  min-width: 100px;
+}
+
+.card-option img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.card-option.selected {
+  border-color: #414535;
+  border-width: 2px;
 }
 
 .header {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
-}
-
-.back-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  background: none;
-  color: #4a5568;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-}
-
-.back-button:hover {
-  color: #2d3748;
 }
 
 .arrow-left {
@@ -40,110 +166,20 @@ h2 {
   text-align: center;
 }
 
-.content-wrapper {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-}
-
-.left-section {
-  flex: 1;
-}
-
-.right-section {
-  flex: 2;
-}
-
-.plan-info {
-  background: #f8f3ed;
-  padding: 1.5rem;
-  border-radius: 8px;
-  position: sticky;
-  top: 2rem;
-}
-
-.plan-info h3 {
-  color: #4a4a4a;
-  margin-bottom: 1rem;
-}
-
-.price {
-  font-size: 1.5rem;
-  color: #2c5282;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
 .features {
   list-style: none;
   padding: 0;
 }
 
 .features li {
-  margin: 0.5rem 0;
-  color: #666;
   display: flex;
   align-items: center;
-}
-
-.features li::before {
-  content: "✓";
-  color: #48bb78;
-  margin-right: 0.5rem;
-}
-
-.payment-form {
-  margin-top: 0;
-}
-
-.form-section {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-}
-
-.card-selection {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.card-option {
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.card-option.selected {
-  border-color: #4299e1;
-  background: #ebf8ff;
-}
-
-.card-option img {
-  height: 30px;
-  object-fit: contain;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-row {
-  display: flex;
-  gap: 1rem;
-}
-
-.form-group.half {
-  flex: 1;
-}
-
-label {
-  display: block;
   margin-bottom: 0.5rem;
-  color: #4a5568;
-  font-weight: 500;
+}
+
+.features li mat-icon {
+  margin-right: 0.5rem;
+  color: #F2E3BC !important;
 }
 
 input, select {
@@ -165,36 +201,17 @@ input.invalid, select.invalid {
   border-color: #e53e3e;
 }
 
-.submit-button {
-  width: 100%;
-  padding: 1rem;
-  background: #48bb78;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-  background: #38a169;
-}
-
-.submit-button:disabled {
-  background: #a0aec0;
-  cursor: not-allowed;
-}
-
 @media (max-width: 768px) {
   .content-wrapper {
     flex-direction: column;
   }
   
-  .left-section,
-  .right-section {
-    flex: 1;
+  .half-width {
     width: 100%;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
   }
 } 

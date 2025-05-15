@@ -1,12 +1,30 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-select-payment',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule
+  ],
   templateUrl: './select-payment.component.html',
   styleUrls: ['./select-payment.component.css']
 })
@@ -46,5 +64,28 @@ export class SelectPaymentComponent {
         this.markFormGroupTouched(control);
       }
     });
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.paymentForm.get(controlName);
+    if (control?.hasError('required')) {
+      return 'Este campo es requerido';
+    }
+    if (control?.hasError('email')) {
+      return 'Email inválido';
+    }
+    if (control?.hasError('pattern')) {
+      switch (controlName) {
+        case 'cardNumber':
+          return 'Número de tarjeta inválido';
+        case 'expiryDate':
+          return 'Fecha inválida (MM/YY)';
+        case 'cvc':
+          return 'CVC inválido';
+        default:
+          return 'Formato inválido';
+      }
+    }
+    return '';
   }
 } 

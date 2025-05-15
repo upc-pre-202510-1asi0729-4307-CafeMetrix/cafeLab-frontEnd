@@ -1,3 +1,75 @@
+.mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #618985 !important;
+  padding: 0 2rem;
+}
+
+.mat-toolbar a.mat-button,
+.mat-toolbar button.mat-button {
+  color: #F8F8F8;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.mat-toolbar a.mat-raised-button {
+  background-color: #414535 !important;
+  color: #F8F8F8;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.logo-container {
+  padding: 8px;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links a.mat-button,
+.nav-links button.mat-button {
+  background-color: #414535 !important;
+  color: #F8F8F8 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.nav-links a.mat-raised-button {
+  background-color: #414535 !important;
+  color: #F8F8F8 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 0.5rem;
+  }
+  
+  .logo {
+    height: 32px;
+  }
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;

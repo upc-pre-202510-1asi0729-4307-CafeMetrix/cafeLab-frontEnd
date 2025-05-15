@@ -1,0 +1,91 @@
+<div class="sesiones-container">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a routerLink="/welcome-barista">Inicio</a>
+    <mat-icon>chevron_right</mat-icon>
+    <span [class.active]="!mostrarComparacion">Sesiones de Cata</span>
+    <ng-container *ngIf="mostrarComparacion">
+      <mat-icon>chevron_right</mat-icon>
+      <span class="active">Comparación de Múltiples Catas</span>
+    </ng-container>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="main-content" *ngIf="!mostrarComparacion">
+    <!-- Barra de búsqueda y acciones -->
+    <div class="actions-bar">
+      <div class="search-section">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Buscar sesiones de cata</mat-label>
+          <input matInput [(ngModel)]="searchText" placeholder="Buscar por nombre, origen...">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <button mat-icon-button (click)="mostrarFiltros()" class="filter-button">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+
+      <button mat-raised-button class="compare-button" (click)="toggleComparacion()">
+        Comparar múltiples catas
+      </button>
+    </div>
+
+    <!-- Tabla de sesiones -->
+    <table mat-table [dataSource]="sesiones" class="mat-elevation-z8">
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let sesion">{{sesion.nombre}}</td>
+      </ng-container>
+
+      <!-- Fecha Column -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let sesion">{{sesion.fecha}}</td>
+      </ng-container>
+
+      <!-- Origen Column -->
+      <ng-container matColumnDef="origen">
+        <th mat-header-cell *matHeaderCellDef>Origen</th>
+        <td mat-cell *matCellDef="let sesion">{{sesion.origen}}</td>
+      </ng-container>
+
+      <!-- Variedad Column -->
+      <ng-container matColumnDef="variedad">
+        <th mat-header-cell *matHeaderCellDef>Variedad</th>
+        <td mat-cell *matCellDef="let sesion">{{sesion.variedad}}</td>
+      </ng-container>
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let sesion">
+          <button mat-icon-button (click)="toggleFavorito(sesion)">
+            <mat-icon [class.favorito]="sesion.favorito">
+              {{sesion.favorito ? 'star' : 'star_border'}}
+            </mat-icon>
+          </button>
+          <button mat-icon-button (click)="verDetalle(sesion)">
+            <mat-icon>search</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- Botón de nueva cata -->
+    <div class="new-cata-button-container">
+      <button mat-raised-button routerLink="/nueva-cata" class="new-cata-button">
+        Iniciar una nueva cata
+      </button>
+    </div>
+  </div>
+
+  <!-- Vista de comparación -->
+  <div class="comparison-view" *ngIf="mostrarComparacion">
+    <!-- Aquí irá el contenido de la vista de comparación -->
+  </div>
+</div> 

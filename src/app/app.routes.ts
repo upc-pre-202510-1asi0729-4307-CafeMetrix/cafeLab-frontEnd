@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { SelectPaymentComponent } from './pages/select-payment/select-payment.component';
 import { WelcomeBaristaComponent } from './pages/welcome-barista/welcome-barista.component';
+import { SesionesCataComponent } from './pages/sesiones-cata/sesiones-cata.component';
 
 export const routes: Routes = [
   {
@@ -13,8 +14,7 @@ export const routes: Routes = [
   },
   {
     path: 'sesiones-cata',
-    redirectTo: 'welcome-barista',
-    pathMatch: 'full'
+    component: SesionesCataComponent
   },
   {
     path: 'libreria-defectos',

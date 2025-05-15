@@ -1,0 +1,50 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  margin-bottom: 20px;
+  color: #414535;
+}
+
+.step-content {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  color: #414535;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+  max-width: 400px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.action-button {
+  background-color: #414535;
+  color: white;
+  min-width: 120px;
+}
+
+/* Override Material styles */
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: #414535;
+}
+
+::ng-deep .mat-step-header .mat-step-label.mat-step-label-active {
+  color: #414535;
+}

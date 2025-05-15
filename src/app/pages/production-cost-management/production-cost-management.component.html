@@ -1,0 +1,51 @@
+<div class="container">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <span>Inicio</span>
+  </div>
+
+  <!-- Stepper -->
+  <mat-stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <ng-template matStepLabel>1. Selección de lote</ng-template>
+      <div class="step-content">
+        <h2>Selección del lote</h2>
+        <form [formGroup]="firstFormGroup">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Seleccione un lote</mat-label>
+            <mat-select formControlName="selectedLot">
+              <mat-option value="lot1">Lote 1</mat-option>
+              <mat-option value="lot2">Lote 2</mat-option>
+              <mat-option value="lot3">Lote 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>2. Costos directos</ng-template>
+      <p>Este paso está en desarrollo...</p>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>3. Costos indirectos</ng-template>
+      <p>Este paso está en desarrollo...</p>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>4. Resumen</ng-template>
+      <p>Este paso está en desarrollo...</p>
+    </mat-step>
+  </mat-stepper>
+
+  <!-- Buttons -->
+  <div class="button-container">
+    <button mat-raised-button class="action-button">
+      Cancelar
+    </button>
+    <button mat-raised-button class="action-button" [disabled]="!firstFormGroup.valid">
+      Continuar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="dialog-container">
+  <h2 class="dialog-title">Registrar consumo</h2>
+
+  <div class="dialog-content">
+    <!-- Columna izquierda - Formulario -->
+    <div class="form-column">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input matInput type="date" [(ngModel)]="date">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Lote</mat-label>
+        <mat-select [(ngModel)]="selectedLot">
+          @for (lot of lots; track lot) {
+            <mat-option [value]="lot">{{lot}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Producto Final</mat-label>
+        <input matInput [(ngModel)]="productName">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Cantidad Usada (kg)</mat-label>
+        <input matInput type="number" [(ngModel)]="quantity">
+      </mat-form-field>
+    </div>
+
+    <!-- Columna derecha - Cards -->
+    <div class="info-column">
+      <div class="info-card">
+        <h3>Resumen de lote</h3>
+        <mat-card>
+          <mat-card-content>
+            <!-- Aquí irá el contenido del resumen -->
+            <p>Cantidad inicial: 10kg</p>
+            <p>Cantidad usada: 2kg</p>
+            <p>Cantidad restante: 8kg</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="info-card">
+        <h3>Movimientos anteriores</h3>
+        <mat-card>
+          <mat-card-content>
+            <!-- Aquí irán los movimientos anteriores -->
+            <p>12/03/24 - Consumo: 1kg</p>
+            <p>10/03/24 - Consumo: 1kg</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-raised-button class="submit-button" (click)="onSubmit()">
+      Registrar consumo
+    </button>
+  </div>
+</div> 

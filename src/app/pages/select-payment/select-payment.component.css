@@ -31,6 +31,8 @@ mat-card-title {
   color: #414535;
   text-align: center;
   margin: 0 auto !important;
+  font-weight: bolder  !important; 
+  font-size: 2rem !important;
 }
 
 .plan-info {
@@ -44,6 +46,7 @@ mat-card-title {
   color: #414535;
   margin-bottom: 1.5rem !important;
   font-size: 1.5rem;
+  font-weight: bold !important;
 }
 
 .plan-info mat-card-subtitle {

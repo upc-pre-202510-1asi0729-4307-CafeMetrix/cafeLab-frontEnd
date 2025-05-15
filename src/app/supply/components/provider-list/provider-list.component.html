@@ -1,0 +1,169 @@
+<div class="provider-container">
+  <div class="breadcrumb">
+    <a routerLink="/inicio">{{ 'navbar.home' | translate }}</a> &gt; {{ 'supply.providers.title' | translate }}
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div class="search-container">
+    <div class="search-box">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="{{ 'supply.providers.search_placeholder' | translate }}" (keyup.enter)="searchProviders()">
+      <button class="search-button" (click)="searchProviders()">
+        <i class="material-icons">search</i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Listado de proveedores -->
+  <div class="table-container" *ngIf="!showProviderDetails && !showEditModal">
+    <div *ngIf="loading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Cargando...</p>
+    </div>
+    
+    <table class="provider-table" *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>{{ 'supply.providers.columns.name' | translate }}</th>
+          <th>{{ 'supply.providers.columns.email' | translate }}</th>
+          <th>{{ 'supply.providers.columns.phone' | translate }}</th>
+          <th>{{ 'supply.providers.columns.location' | translate }}</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="providers.length === 0">
+          <td colspan="6" class="empty-message">No hay proveedores registrados</td>
+        </tr>
+        <tr *ngFor="let provider of providers">
+          <td>{{ provider.name }}</td>
+          <td>{{ provider.email }}</td>
+          <td>{{ provider.phone }}</td>
+          <td>{{ provider.location }}</td>
+          <td class="action-cell">
+            <button class="action-button" (click)="viewProviderDetails(provider)">
+              <i class="material-icons">search</i>
+            </button>
+          </td>
+          <td class="action-cell">
+            <button class="action-button" (click)="editProvider(provider)">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vista detalle de proveedor -->
+  <div *ngIf="showProviderDetails" class="provider-details">
+    <div class="breadcrumb">
+      <a routerLink="/inicio">Inicio</a> &gt; 
+      <a (click)="closeProviderDetails()" style="cursor: pointer;">Proveedores</a> &gt; 
+      {{ selectedProvider?.name }}
+    </div>
+
+    <h2>Detalles del Proveedor</h2>
+
+    <div class="detail-group">
+      <label>Nombre:</label>
+      <p>{{ selectedProvider?.name }}</p>
+    </div>
+
+    <div class="detail-group">
+      <label>Correo Electrónico:</label>
+      <p>{{ selectedProvider?.email }}</p>
+    </div>
+
+    <div class="detail-group">
+      <label>Teléfono:</label>
+      <p>{{ selectedProvider?.phone }}</p>
+    </div>
+
+    <div class="detail-group">
+      <label>Ubicación:</label>
+      <p>{{ selectedProvider?.location }}</p>
+    </div>
+  </div>
+
+  <!-- Modal para registrar proveedor -->
+  <div *ngIf="showRegisterModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="back-button" (click)="showRegisterModal = false">
+        <i class="material-icons">arrow_back</i> Nuevo Proveedor
+      </div>
+      
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+      
+      <form (ngSubmit)="registerProvider()" #providerForm="ngForm">
+        <div class="form-group">
+          <label for="name">{{ 'supply.providers.columns.name' | translate }}</label>
+          <input type="text" id="name" [(ngModel)]="newProvider.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">{{ 'supply.providers.columns.email' | translate }}</label>
+          <input type="email" id="email" [(ngModel)]="newProvider.email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">{{ 'supply.providers.columns.phone' | translate }}</label>
+          <input type="tel" id="phone" [(ngModel)]="newProvider.phone" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="location">{{ 'supply.providers.columns.location' | translate }}</label>
+          <input type="text" id="location" [(ngModel)]="newProvider.location" name="location" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para editar proveedor -->
+  <div *ngIf="showEditModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="back-button" (click)="closeEditModal()">
+        <i class="material-icons">arrow_back</i> Editar Proveedor
+      </div>
+      
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+      
+      <form (ngSubmit)="saveProviderChanges()" #editForm="ngForm">
+        <div class="form-group">
+          <label for="edit-name">{{ 'supply.providers.columns.name' | translate }}</label>
+          <input type="text" id="edit-name" [(ngModel)]="editingProvider.name" name="name" required>
+          <i class="material-icons edit-field-icon">edit</i>
+        </div>
+        <div class="form-group">
+          <label for="edit-email">{{ 'supply.providers.columns.email' | translate }}</label>
+          <input type="email" id="edit-email" [(ngModel)]="editingProvider.email" name="email" required>
+          <i class="material-icons edit-field-icon">edit</i>
+        </div>
+        <div class="form-group">
+          <label for="edit-phone">{{ 'supply.providers.columns.phone' | translate }}</label>
+          <input type="tel" id="edit-phone" [(ngModel)]="editingProvider.phone" name="phone" required>
+          <i class="material-icons edit-field-icon">edit</i>
+        </div>
+        <div class="form-group">
+          <label for="edit-location">{{ 'supply.providers.columns.location' | translate }}</label>
+          <input type="text" id="edit-location" [(ngModel)]="editingProvider.location" name="location" required>
+          <i class="material-icons edit-field-icon">edit</i>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="register-container" *ngIf="!showProviderDetails && !showEditModal">
+    <button class="register-button" (click)="showRegisterModal = true">{{ 'supply.providers.register_button' | translate }}</button>
+  </div>
+</div> 

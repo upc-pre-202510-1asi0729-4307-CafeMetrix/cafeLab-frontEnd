@@ -1,3 +1,22 @@
 {
-
+  "supply": {
+    "providers": {
+      "title": "Proveedores",
+      "breadcrumb": "Inicio > Proveedores",
+      "search_placeholder": "Buscar proveedor...",
+      "columns": {
+        "name": "Nombre",
+        "email": "Correo",
+        "phone": "Número Telf.",
+        "location": "Ubicación"
+      },
+      "register_button": "Registrar Proveedor"
+    }
+  },
+  "navbar": {
+    "home": "Inicio",
+    "features": "Funcionalidades",
+    "contact": "Contáctanos",
+    "profile": "Perfil"
+  }
 }

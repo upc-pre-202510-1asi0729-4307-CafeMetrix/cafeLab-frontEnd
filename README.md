@@ -1,59 +1,45 @@
-# CafeLabFrontEnd
+# Café Lab - Front End
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+Este es un proyecto de front-end para Café Lab, una aplicación para la gestión de laboratorios de café.
 
-## Development server
+## Requisitos previos
 
-To start a local development server, run:
+- Node.js (versión 16 o superior)
+- Angular CLI (versión 19)
 
-```bash
-ng serve
-```
+## Instalación
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Clona el repositorio
+2. Instala las dependencias:
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Ejecución
+
+1. Inicia el servidor JSON para la API falsa:
 
 ```bash
-ng generate --help
+npm run server
 ```
 
-## Building
-
-To build the project run:
+2. En otra terminal, inicia la aplicación Angular:
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+3. Navega a `http://localhost:4200/` en tu navegador.
 
-## Running unit tests
+## Características
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Gestión de proveedores
+- Internacionalización (Español/Inglés)
+- Diseño responsive
 
-```bash
-ng test
-```
+## Estructura del proyecto
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `src/app/`: Código fuente de la aplicación
+- `server/`: API falsa con JSON Server
+- `public/assets/i18n/`: Archivos de traducción

@@ -1,0 +1,318 @@
+<div class="lot-container">
+  <div class="breadcrumb">
+    <a routerLink="/inicio">Inicio</a> &gt; Lotes de Café
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div class="search-container">
+    <div class="search-box">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar lote..." (keyup.enter)="searchLots()">
+      <button class="search-button" (click)="searchLots()">
+        <i class="material-icons">search</i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Listado de lotes -->
+  <div class="table-container" *ngIf="!showLotDetails && !showEditModal">
+    <div *ngIf="loading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Cargando...</p>
+    </div>
+    
+    <table class="lot-table" *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Altitud</th>
+          <th>Proveedor</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="lots.length === 0">
+          <td colspan="6" class="empty-message">No hay lotes registrados</td>
+        </tr>
+        <tr *ngFor="let lot of lots">
+          <td>{{ lot.name }}</td>
+          <td>{{ lot.type }}</td>
+          <td>{{ lot.altitude }}</td>
+          <td>{{ lot.providerName }}</td>
+          <td class="action-cell">
+            <button class="action-button" (click)="viewLotDetails(lot)">
+              <i class="material-icons">search</i>
+            </button>
+          </td>
+          <td class="action-cell">
+            <button class="action-button" (click)="editLot(lot)">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vista detalle de lote -->
+  <div *ngIf="showLotDetails" class="lot-details">
+    <div class="breadcrumb">
+      <a routerLink="/inicio">Inicio</a> &gt; 
+      <a (click)="closeLotDetails()" style="cursor: pointer;">Lotes de Café</a> &gt; 
+      {{ selectedLot?.name }}
+    </div>
+
+    <h2>Información del Lote</h2>
+
+    <div class="detail-row">
+      <div class="detail-group">
+        <label>Nombre:</label>
+        <p>{{ selectedLot?.name }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Proceso:</label>
+        <p>{{ selectedLot?.process }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Cantidad:</label>
+        <p>{{ selectedLot?.weight }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Origen:</label>
+        <p>{{ selectedLot?.origin }}</p>
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-group">
+        <label>Fecha Producción:</label>
+        <p>{{ selectedLot?.productionDate }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Tipo de Café:</label>
+        <p>{{ selectedLot?.type }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Altitud:</label>
+        <p>{{ selectedLot?.altitude }}</p>
+      </div>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-group">
+        <label>Proveedor:</label>
+        <p>{{ selectedLot?.providerName || 'No asignado' }}</p>
+      </div>
+    </div>
+
+    <div class="certifications-section">
+      <h3>Certificaciones:</h3>
+      <ul class="certifications-list">
+        <li *ngFor="let cert of selectedLot?.certifications">
+          {{ cert }}
+        </li>
+        <li *ngIf="!selectedLot?.certifications?.length">No hay certificaciones registradas</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Modal para registrar lote -->
+  <div *ngIf="showRegisterModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="back-button" (click)="showRegisterModal = false">
+        <i class="material-icons">arrow_back</i> Nuevo Lote de Café
+      </div>
+      
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+      
+      <form (ngSubmit)="registerLot()" #lotForm="ngForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" [(ngModel)]="newLot.name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="type">Tipo de Café</label>
+            <select id="type" [(ngModel)]="newLot.type" name="type" required>
+              <option value="" disabled selected>Seleccionar tipo</option>
+              <option *ngFor="let type of coffeeTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="process">Proceso</label>
+            <select id="process" [(ngModel)]="newLot.process" name="process" required>
+              <option value="" disabled selected>Seleccionar proceso</option>
+              <option *ngFor="let process of processTypes" [value]="process">{{ process }}</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="altitude">Altitud</label>
+            <input type="text" id="altitude" [(ngModel)]="newLot.altitude" name="altitude" placeholder="msnm" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="weight">Peso</label>
+            <input type="text" id="weight" [(ngModel)]="newLot.weight" name="weight" placeholder="kg" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="origin">Origen</label>
+            <input type="text" id="origin" [(ngModel)]="newLot.origin" name="origin" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="provider">Proveedor</label>
+            <select id="provider" [(ngModel)]="newLot.providerId" name="providerId" required (change)="onProviderChange($event)">
+              <option value="" disabled selected>Seleccionar proveedor</option>
+              <option *ngFor="let provider of providers" [value]="provider.id">{{ provider.name }}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Certificaciones</label>
+          <div class="certifications-container">
+            <div class="certification-input">
+              <select [(ngModel)]="newCertification" name="newCertification">
+                <option value="" disabled selected>Seleccionar certificación</option>
+                <option *ngFor="let cert of certificationsOptions" [value]="cert">{{ cert }}</option>
+              </select>
+              <button type="button" class="add-button" (click)="addCertification(newCertification)">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+            <div class="certifications-tags">
+              <div *ngFor="let cert of newLot.certifications; let i = index" class="certification-tag">
+                {{ cert }}
+                <button type="button" class="remove-tag" (click)="removeCertification(i)">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Registrar Lote</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para editar lote -->
+  <div *ngIf="showEditModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="back-button" (click)="closeEditModal()">
+        <i class="material-icons">arrow_back</i> Editar Lote de Café
+      </div>
+      
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+      
+      <form (ngSubmit)="saveLotChanges()" #editForm="ngForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-name">Nombre</label>
+            <input type="text" id="edit-name" [(ngModel)]="editingLot.name" name="name" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-type">Tipo de Café</label>
+            <select id="edit-type" [(ngModel)]="editingLot.type" name="type" required>
+              <option value="" disabled>Seleccionar tipo</option>
+              <option *ngFor="let type of coffeeTypes" [value]="type">{{ type }}</option>
+            </select>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-process">Proceso</label>
+            <select id="edit-process" [(ngModel)]="editingLot.process" name="process" required>
+              <option value="" disabled>Seleccionar proceso</option>
+              <option *ngFor="let process of processTypes" [value]="process">{{ process }}</option>
+            </select>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-altitude">Altitud</label>
+            <input type="text" id="edit-altitude" [(ngModel)]="editingLot.altitude" name="altitude" placeholder="msnm" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-weight">Peso</label>
+            <input type="text" id="edit-weight" [(ngModel)]="editingLot.weight" name="weight" placeholder="kg" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-origin">Origen</label>
+            <input type="text" id="edit-origin" [(ngModel)]="editingLot.origin" name="origin" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-provider">Proveedor</label>
+            <select id="edit-provider" [(ngModel)]="editingLot.providerId" name="providerId" required (change)="onEditProviderChange($event)">
+              <option value="" disabled>Seleccionar proveedor</option>
+              <option *ngFor="let provider of providers" [value]="provider.id">{{ provider.name }}</option>
+            </select>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Certificaciones</label>
+          <div class="certifications-container">
+            <div class="certification-input">
+              <select [(ngModel)]="newCertification" name="editCertification">
+                <option value="" disabled selected>Seleccionar certificación</option>
+                <option *ngFor="let cert of certificationsOptions" [value]="cert">{{ cert }}</option>
+              </select>
+              <button type="button" class="add-button" (click)="addCertificationToEdit(newCertification)">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+            <div class="certifications-tags">
+              <div *ngFor="let cert of editingLot.certifications; let i = index" class="certification-tag">
+                {{ cert }}
+                <button type="button" class="remove-tag" (click)="removeCertificationFromEdit(i)">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="register-container" *ngIf="!showLotDetails && !showEditModal">
+    <button class="register-button" (click)="showRegisterModal = true">Registrar Lote</button>
+  </div>
+</div> 

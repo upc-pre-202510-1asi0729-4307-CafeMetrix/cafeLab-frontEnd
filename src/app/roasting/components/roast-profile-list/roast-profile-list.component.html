@@ -1,0 +1,224 @@
+<div class="profile-container">
+  <div class="breadcrumb">
+    <a routerLink="/inicio">Inicio</a> &gt; Perfiles de tueste
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div class="filters-container">
+    <div class="search-box">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar perfil..." (keyup.enter)="searchProfiles()">
+      <button class="search-button" (click)="searchProfiles()">
+        <i class="material-icons">search</i>
+      </button>
+    </div>
+
+    <div class="filter-controls">
+      <button class="filter-button" [class.active]="showFavoritesOnly" (click)="toggleShowFavorites()">
+        <i class="material-icons">filter_list</i>
+        <span *ngIf="showFavoritesOnly">Favoritos</span>
+        <span *ngIf="!showFavoritesOnly">Filtrar</span>
+      </button>
+
+      <button class="sort-button" (click)="toggleSortOrder()">
+        <i class="material-icons">{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</i>
+        <span>{{ sortOrder === 'asc' ? 'Ascendente' : 'Descendente' }}</span>
+      </button>
+
+      <button class="compare-button" (click)="compareProfiles()">
+        <i class="material-icons">compare_arrows</i>
+        <span>Comparar</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Listado de perfiles de tueste -->
+  <div class="table-container" *ngIf="!showProfileDetails && !showEditModal">
+    <div *ngIf="loading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Cargando...</p>
+    </div>
+    
+    <table class="profile-table" *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Altitud</th>
+          <th>Proveedor</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="profiles.length === 0">
+          <td colspan="8" class="empty-message">No hay perfiles de tueste registrados</td>
+        </tr>
+        <tr *ngFor="let profile of profiles">
+          <td>{{ profile.name }}</td>
+          <td>{{ profile.type }}</td>
+          <td>{{ profile.altitude }}</td>
+          <td>{{ profile.provider }}</td>
+          <td class="action-cell">
+            <button class="action-button" (click)="toggleFavorite(profile, $event)">
+              <i class="material-icons">{{ profile.isFavorite ? 'star' : 'star_border' }}</i>
+            </button>
+          </td>
+          <td class="action-cell">
+            <button class="action-button" (click)="viewProfileDetails(profile)">
+              <i class="material-icons">search</i>
+            </button>
+          </td>
+          <td class="action-cell">
+            <button class="action-button" (click)="editProfile(profile)">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+          <td class="action-cell">
+            <button class="action-button" (click)="duplicateProfile(profile, $event)">
+              <i class="material-icons">content_copy</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vista detalle de perfil -->
+  <div *ngIf="showProfileDetails" class="profile-details">
+    <div class="breadcrumb">
+      <a routerLink="/inicio">Inicio</a> &gt; 
+      <a (click)="closeProfileDetails()" style="cursor: pointer;">Perfiles de tueste</a> &gt; 
+      {{ selectedProfile?.name }}
+    </div>
+
+    <h2>Detalles del Perfil de Tueste</h2>
+
+    <div class="detail-row">
+      <div class="detail-group">
+        <label>Nombre:</label>
+        <p>{{ selectedProfile?.name }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Tipo:</label>
+        <p>{{ selectedProfile?.type }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Altitud:</label>
+        <p>{{ selectedProfile?.altitude }}</p>
+      </div>
+
+      <div class="detail-group">
+        <label>Proveedor:</label>
+        <p>{{ selectedProfile?.provider }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para registrar perfil de tueste -->
+  <div *ngIf="showRegisterModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="back-button" (click)="showRegisterModal = false">
+        <i class="material-icons">arrow_back</i> Nuevo Perfil de Tueste
+      </div>
+      
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+      
+      <form (ngSubmit)="registerProfile()" #profileForm="ngForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" [(ngModel)]="newProfile.name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="type">Tipo de Tueste</label>
+            <select id="type" [(ngModel)]="newProfile.type" name="type" required>
+              <option value="" disabled selected>Seleccionar tipo</option>
+              <option *ngFor="let type of roastTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="altitude">Altitud</label>
+            <input type="text" id="altitude" [(ngModel)]="newProfile.altitude" name="altitude" placeholder="msnm" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="provider">Proveedor</label>
+            <input type="text" id="provider" [(ngModel)]="newProfile.provider" name="provider" required>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Registrar Perfil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para editar perfil de tueste -->
+  <div *ngIf="showEditModal && editingProfile" class="modal-overlay">
+    <div class="modal-content">
+      <div class="back-button" (click)="closeEditModal()">
+        <i class="material-icons">arrow_back</i> Editar Perfil de Tueste
+      </div>
+      
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+      
+      <form (ngSubmit)="saveProfileChanges()" #editForm="ngForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-name">Nombre</label>
+            <input type="text" id="edit-name" [(ngModel)]="editingProfile.name" name="name" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-type">Tipo de Tueste</label>
+            <select id="edit-type" [(ngModel)]="editingProfile.type" name="type" required>
+              <option value="" disabled>Seleccionar tipo</option>
+              <option *ngFor="let type of roastTypes" [value]="type">{{ type }}</option>
+            </select>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-altitude">Altitud</label>
+            <input type="text" id="edit-altitude" [(ngModel)]="editingProfile.altitude" name="altitude" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-provider">Proveedor</label>
+            <input type="text" id="edit-provider" [(ngModel)]="editingProfile.provider" name="provider" required>
+            <i class="material-icons edit-field-icon">edit</i>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="submit-button">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Botón para registrar nuevo perfil -->
+  <div class="register-container" *ngIf="!showProfileDetails && !showEditModal">
+    <button class="register-button" (click)="showRegisterModal = true">Registrar Perfil de Tueste</button>
+  </div>
+</div>

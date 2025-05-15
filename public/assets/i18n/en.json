@@ -1,3 +1,22 @@
 {
-
+  "supply": {
+    "providers": {
+      "title": "Providers",
+      "breadcrumb": "Home > Providers",
+      "search_placeholder": "Search provider...",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "location": "Location"
+      },
+      "register_button": "Register Provider"
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "features": "Features",
+    "contact": "Contact Us",
+    "profile": "Profile"
+  }
 }

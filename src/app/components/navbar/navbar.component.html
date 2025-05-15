@@ -1,0 +1,19 @@
+<div class="navbar">
+  <div class="logo-container">
+    <a routerLink="/inicio">
+      <div class="logo">
+        <img src="./assets/images/logo.png" alt="Café Lab Logo" class="logo-image" />
+      </div>
+    </a>
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/inicio" class="nav-button">{{ 'navbar.home' | translate }}</a>
+    <a routerLink="/funcionalidades" class="nav-button">{{ 'navbar.features' | translate }}</a>
+    <a routerLink="/perfil" class="nav-button">{{ 'navbar.profile' | translate }}</a>
+    <a class="language-button" (click)="toggleLanguage()">
+      {{ currentLanguage }}
+      <span class="material-icons">arrow_drop_down</span>
+    </a>
+  </div>
+</div>

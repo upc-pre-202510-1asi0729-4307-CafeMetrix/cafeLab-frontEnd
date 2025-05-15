@@ -1,0 +1,68 @@
+.dialog-container {
+  padding: 24px;
+  min-width: 800px;
+}
+
+.dialog-title {
+  font-family: 'Nunito', sans-serif;
+  color: #414535;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 24px 0;
+}
+
+.dialog-content {
+  display: flex;
+  gap: 24px;
+}
+
+.form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-card {
+  h3 {
+    font-family: 'Nunito', sans-serif;
+    color: #414535;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+  }
+
+  mat-card {
+    background-color: #96BBBB;
+    color: white;
+    padding: 16px;
+  }
+
+  mat-card-content {
+    p {
+      margin: 8px 0;
+    }
+  }
+}
+
+.dialog-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  background-color: #414535 !important;
+  color: white !important;
+  padding: 8px 24px;
+}
+
+::ng-deep .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: white;
+} 

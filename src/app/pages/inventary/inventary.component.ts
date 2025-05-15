@@ -5,6 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RegisterConsumptionDialogComponent } from '../../components/register-consumption-dialog/register-consumption-dialog.component';
 
 interface CoffeeStock {
   type: string;
@@ -25,7 +27,8 @@ interface CoffeeStock {
     MatButtonModule,
     MatSelectModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './inventary.component.html',
   styleUrl: './inventary.component.css'
@@ -53,4 +56,21 @@ export class InventaryComponent {
 
   displayedColumns: string[] = ['fecha', 'producto', 'lote', 'cantidad', 'acciones'];
   recentMovements: any[] = [];  // This would be populated with actual data
+
+  constructor(private dialog: MatDialog) {}
+
+  openRegisterConsumptionDialog(): void {
+    const dialogRef = this.dialog.open(RegisterConsumptionDialogComponent, {
+      width: '80%',
+      maxWidth: '1200px',
+      panelClass: 'register-consumption-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog result:', result);
+        // Handle the result here
+      }
+    });
+  }
 }

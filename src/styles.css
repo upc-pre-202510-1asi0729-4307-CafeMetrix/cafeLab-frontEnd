@@ -11,3 +11,21 @@ body {
   background-color: #F8F7F2;
   min-height: 100vh;
 }
+
+/* Estilos para el diálogo */
+.register-consumption-dialog .mat-mdc-dialog-container {
+  padding: 0;
+}
+
+.register-consumption-dialog .mdc-dialog__surface {
+  border-radius: 8px;
+}
+
+.register-consumption-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: white;
+}
+
+/* Overlay más oscuro para el diálogo */
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}

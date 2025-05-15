@@ -1,12 +1,15 @@
-.container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+.main-container {
+  padding: 84px 20px 20px 20px; /* Aumentado el padding superior para dar espacio al navbar */
+  background-color: #F8F7F2;
+  min-height: calc(100vh - 64px); /* Ajusta esto según la altura de tu navbar */
 }
 
 .breadcrumb {
   margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
   color: #414535;
+  padding: 10px 0;
 }
 
 .step-content {
@@ -14,12 +17,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 h2 {
   color: #414535;
   margin-bottom: 20px;
   text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
 }
 
 .full-width {
@@ -35,16 +41,118 @@ h2 {
 }
 
 .action-button {
-  background-color: #414535;
-  color: white;
+  background-color: #414535 !important;
+  color: #FFFFFF !important;
   min-width: 120px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
 }
 
-/* Override Material styles */
+/* Cards Styles */
+.cards-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px 0;
+}
+
+.cost-card {
+  flex: 1;
+  border: 1px solid #393737;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.cost-card mat-card-header {
+  padding: 16px 16px 0 16px;
+  margin-bottom: 0;
+}
+
+::ng-deep .cost-card .mat-mdc-card-header {
+  padding: 16px 16px 0 16px !important;
+}
+
+::ng-deep .cost-card .mat-mdc-card-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+  color: #414535 !important;
+  font-size: 1.2rem !important;
+  margin: 0 !important;
+}
+
+.cost-card mat-card-content {
+  padding: 16px;
+}
+
+.inputs-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.inputs-row mat-form-field {
+  flex: 1;
+  min-width: 150px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.total-row mat-form-field {
+  width: 200px;
+}
+
+/* Progress Bar Styles */
+::ng-deep .mat-mdc-progress-bar {
+  margin: 0 0 20px 0;
+}
+
+/* Stepper Customization */
+::ng-deep .mat-stepper-horizontal {
+  background-color: transparent !important;
+}
+
+::ng-deep .mat-step-header {
+  font-family: 'Nunito', sans-serif !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin: 0 4px;
+  background-color: white !important;
+}
+
+::ng-deep .mat-step-label {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 400 !important;
+}
+
 ::ng-deep .mat-step-header .mat-step-icon-selected {
   background-color: #414535;
 }
 
 ::ng-deep .mat-step-header .mat-step-label.mat-step-label-active {
   color: #414535;
+}
+
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+  }
+
+  .inputs-row {
+    flex-direction: column;
+  }
+
+  .inputs-row mat-form-field {
+    width: 100%;
+  }
 }

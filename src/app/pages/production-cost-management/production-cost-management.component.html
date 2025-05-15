@@ -1,14 +1,19 @@
-<div class="container">
+<app-navbar></app-navbar>
+
+<div class="main-container">
   <!-- Breadcrumb -->
   <div class="breadcrumb">
-    <span>Inicio</span>
+    <span>Inicio > Registro de costos por lote</span>
   </div>
 
   <!-- Stepper -->
-  <mat-stepper>
+  <mat-stepper (selectionChange)="currentStep = $event.selectedIndex">
     <mat-step [stepControl]="firstFormGroup">
-      <ng-template matStepLabel>1. Selección de lote</ng-template>
+      <ng-template matStepLabel>Selección de lote</ng-template>
       <div class="step-content">
+        <!-- Progress Bar -->
+        <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+        
         <h2>Selección del lote</h2>
         <form [formGroup]="firstFormGroup">
           <mat-form-field appearance="outline" class="full-width">
@@ -20,32 +25,119 @@
             </mat-select>
           </mat-form-field>
         </form>
+
+        <!-- Buttons -->
+        <div class="button-container">
+          <button mat-raised-button class="action-button" (click)="onCancel()">
+            Cancelar
+          </button>
+          <button mat-raised-button class="action-button" 
+                  [disabled]="!firstFormGroup.valid"
+                  matStepperNext>
+            Continuar
+          </button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="directCostsForm">
+      <ng-template matStepLabel>Costos directos</ng-template>
+      <div class="step-content">
+        <!-- Progress Bar -->
+        <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+
+        <div class="cards-container">
+          <!-- Raw Materials Card -->
+          <mat-card class="cost-card">
+            <mat-card-header>
+              <mat-card-title>Costos de materia prima</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <form [formGroup]="directCostsForm">
+                <div class="inputs-row" formGroupName="rawMaterials">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Costo por kg de café verde</mat-label>
+                    <input matInput type="number" formControlName="costPerKg">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Cantidad de café verde (kg)</mat-label>
+                    <input matInput type="number" formControlName="quantity">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Total</mat-label>
+                    <input matInput [value]="rawMaterialTotal" readonly>
+                  </mat-form-field>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Labor Card -->
+          <mat-card class="cost-card">
+            <mat-card-header>
+              <mat-card-title>Costos de mano de obra directa</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <form [formGroup]="directCostsForm">
+                <div class="inputs-row" formGroupName="labor">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Horas trabajadas</mat-label>
+                    <input matInput type="number" formControlName="hoursWorked">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Costo por hora</mat-label>
+                    <input matInput type="number" formControlName="costPerHour">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Número de trabajadores</mat-label>
+                    <input matInput type="number" formControlName="numberOfWorkers">
+                  </mat-form-field>
+                </div>
+                <div class="total-row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Total</mat-label>
+                    <input matInput [value]="laborTotal" readonly>
+                  </mat-form-field>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-container">
+          <button mat-raised-button class="action-button" matStepperPrevious>
+            Anterior
+          </button>
+          <button mat-raised-button class="action-button" 
+                  [disabled]="!directCostsForm.valid"
+                  matStepperNext>
+            Continuar
+          </button>
+        </div>
       </div>
     </mat-step>
 
     <mat-step>
-      <ng-template matStepLabel>2. Costos directos</ng-template>
-      <p>Este paso está en desarrollo...</p>
+      <ng-template matStepLabel>Costos indirectos</ng-template>
+      <div class="step-content">
+        <!-- Progress Bar -->
+        <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+        <p>Este paso está en desarrollo...</p>
+      </div>
     </mat-step>
 
     <mat-step>
-      <ng-template matStepLabel>3. Costos indirectos</ng-template>
-      <p>Este paso está en desarrollo...</p>
-    </mat-step>
-
-    <mat-step>
-      <ng-template matStepLabel>4. Resumen</ng-template>
-      <p>Este paso está en desarrollo...</p>
+      <ng-template matStepLabel>Resumen</ng-template>
+      <div class="step-content">
+        <!-- Progress Bar -->
+        <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+        <p>Este paso está en desarrollo...</p>
+      </div>
     </mat-step>
   </mat-stepper>
-
-  <!-- Buttons -->
-  <div class="button-container">
-    <button mat-raised-button class="action-button">
-      Cancelar
-    </button>
-    <button mat-raised-button class="action-button" [disabled]="!firstFormGroup.valid">
-      Continuar
-    </button>
-  </div>
 </div>

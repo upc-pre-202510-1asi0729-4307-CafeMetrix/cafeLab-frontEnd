@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
+import { NuevaCataDialogComponent } from '../../components/nueva-cata-dialog/nueva-cata-dialog.component';
 
 interface SesionCata {
   nombre: string;
@@ -33,7 +34,9 @@ interface SesionCata {
     MatFormFieldModule,
     MatMenuModule,
     NavbarComponent,
-    FormsModule
+    FormsModule,
+    FiltroDialogComponent,
+    NuevaCataDialogComponent
   ],
   templateUrl: './sesiones-cata.component.html',
   styleUrls: ['./sesiones-cata.component.css']
@@ -78,5 +81,20 @@ export class SesionesCataComponent {
 
   toggleComparacion() {
     this.mostrarComparacion = !this.mostrarComparacion;
+  }
+
+  iniciarNuevaCata() {
+    const dialogRef = this.dialog.open(NuevaCataDialogComponent, {
+      width: '500px',
+      backdropClass: 'dialog-backdrop',
+      panelClass: 'filter-dialog-panel'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Aquí implementaremos la lógica para crear la nueva sesión
+        console.log('Nueva sesión de cata:', result);
+      }
+    });
   }
 } 

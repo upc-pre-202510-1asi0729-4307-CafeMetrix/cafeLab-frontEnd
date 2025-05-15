@@ -12,6 +12,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
 import { NuevaCataDialogComponent } from '../../components/nueva-cata-dialog/nueva-cata-dialog.component';
+import { DetalleCataComponent } from '../../components/detalle-cata/detalle-cata.component';
 
 interface SesionCata {
   nombre: string;
@@ -19,6 +20,8 @@ interface SesionCata {
   origen: string;
   variedad: string;
   favorito: boolean;
+  loteNombre?: string;
+  perfilNombre?: string;
 }
 
 @Component({
@@ -36,7 +39,8 @@ interface SesionCata {
     NavbarComponent,
     FormsModule,
     FiltroDialogComponent,
-    NuevaCataDialogComponent
+    NuevaCataDialogComponent,
+    DetalleCataComponent
   ],
   templateUrl: './sesiones-cata.component.html',
   styleUrls: ['./sesiones-cata.component.css']
@@ -45,9 +49,19 @@ export class SesionesCataComponent {
   displayedColumns: string[] = ['nombre', 'fecha', 'origen', 'variedad', 'acciones'];
   searchText: string = '';
   mostrarComparacion: boolean = false;
+  mostrarDetalle: boolean = false;
+  sesionSeleccionada: SesionCata | null = null;
 
   sesiones: SesionCata[] = [
-    { nombre: 'Cata Especial Primavera', fecha: '2024-03-15', origen: 'Perú', variedad: 'Arábica', favorito: false },
+    { 
+      nombre: 'Cata Especial Primavera', 
+      fecha: '2024-03-15', 
+      origen: 'Perú', 
+      variedad: 'Arábica', 
+      favorito: false,
+      loteNombre: 'Lote A - Perú Chanchamayo',
+      perfilNombre: 'Perfil Ligero - City Roast'
+    },
     { nombre: 'Evaluación Mensual', fecha: '2024-03-10', origen: 'Colombia', variedad: 'Caturra', favorito: true },
     { nombre: 'Cata Regional Sur', fecha: '2024-03-05', origen: 'Brasil', variedad: 'Bourbon', favorito: false },
     { nombre: 'Análisis Premium', fecha: '2024-02-28', origen: 'Guatemala', variedad: 'Gesha', favorito: false },
@@ -76,7 +90,8 @@ export class SesionesCataComponent {
   }
 
   verDetalle(sesion: SesionCata) {
-    // Implementar lógica para ver detalle
+    this.sesionSeleccionada = sesion;
+    this.mostrarDetalle = true;
   }
 
   toggleComparacion() {

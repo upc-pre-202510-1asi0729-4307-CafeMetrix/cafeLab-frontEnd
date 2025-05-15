@@ -3,7 +3,7 @@
   <div class="breadcrumb">
     <a routerLink="/welcome-barista">Inicio</a>
     <mat-icon>chevron_right</mat-icon>
-    <ng-container *ngIf="!mostrarComparacion">
+    <ng-container *ngIf="!mostrarComparacion && !mostrarDetalle">
       <span class="active">Sesiones de Cata</span>
     </ng-container>
     <ng-container *ngIf="mostrarComparacion">
@@ -11,10 +11,15 @@
       <mat-icon>chevron_right</mat-icon>
       <span class="active">Comparación de Múltiples Catas</span>
     </ng-container>
+    <ng-container *ngIf="mostrarDetalle">
+      <a (click)="mostrarDetalle = false; sesionSeleccionada = null" class="breadcrumb-link">Sesiones de Cata</a>
+      <mat-icon>chevron_right</mat-icon>
+      <span class="active">{{sesionSeleccionada?.nombre}}</span>
+    </ng-container>
   </div>
 
-  <!-- Contenido principal -->
-  <div class="main-content" *ngIf="!mostrarComparacion">
+  <!-- Vista principal de sesiones -->
+  <div class="main-content" *ngIf="!mostrarComparacion && !mostrarDetalle">
     <!-- Barra de búsqueda y acciones -->
     <div class="actions-bar">
       <div class="search-section">
@@ -39,7 +44,9 @@
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let sesion">{{sesion.nombre}}</td>
+        <td mat-cell *matCellDef="let sesion">
+          <a class="session-link" (click)="verDetalle(sesion)">{{sesion.nombre}}</a>
+        </td>
       </ng-container>
 
       <!-- Fecha Column -->
@@ -89,6 +96,13 @@
 
   <!-- Vista de comparación -->
   <div class="comparison-view" *ngIf="mostrarComparacion">
-    <!-- Aquí irá el contenido de la vista de comparación -->
+    <div class="comparison-image-container">
+      <img src="../../../assets/multiple-cupping-exmp.png" alt="Comparación de catas" class="comparison-image">
+    </div>
+  </div>
+
+  <!-- Vista de detalle -->
+  <div class="detail-view" *ngIf="mostrarDetalle && sesionSeleccionada">
+    <app-detalle-cata [sesion]="sesionSeleccionada"></app-detalle-cata>
   </div>
 </div> 

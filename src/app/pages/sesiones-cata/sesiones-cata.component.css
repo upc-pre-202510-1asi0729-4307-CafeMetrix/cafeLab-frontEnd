@@ -103,6 +103,16 @@ table {
   padding: 0.5rem 2rem;
 }
 
+.session-link {
+  color: #414535;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.session-link:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .sesiones-container {
     padding: 1rem;
@@ -124,4 +134,24 @@ table {
   .compare-button {
     width: 100%;
   }
+}
+
+.comparison-view {
+  width: 100%;
+  height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comparison-image-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 2rem;
+}
+
+.comparison-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 } 

@@ -8,7 +8,7 @@ import { CoffeeLot } from '../models/coffee-lot.model';
   providedIn: 'root'
 })
 export class CoffeeLotService {
-  private apiUrl = 'http://localhost:3000/coffee-lots';
+  private apiUrl = 'https://682697d8397e48c913169c83.mockapi.io/coffee-lots';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -70,16 +70,16 @@ export class CoffeeLotService {
 
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
-    
+
     let errorMessage = 'Se produjo un error desconocido';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Error del lado del servidor
       errorMessage = `Código de error: ${error.status}, mensaje: ${error.message}`;
-      
+
       // Mensajes de error más específicos
       if (error.status === 0) {
         errorMessage = 'No se puede conectar al servidor. Por favor verifique su conexión o si el servidor está en ejecución.';
@@ -89,8 +89,8 @@ export class CoffeeLotService {
         errorMessage = 'Error interno del servidor.';
       }
     }
-    
+
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
-} 
+}

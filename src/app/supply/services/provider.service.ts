@@ -8,7 +8,7 @@ import { Provider } from '../models/provider.model';
   providedIn: 'root'
 })
 export class ProviderService {
-  private apiUrl = 'http://localhost:3000/providers';
+  private apiUrl = 'https://682697d8397e48c913169c83.mockapi.io/providers';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export class ProviderService {
     console.log('Adding provider:', provider);
     console.log('API URL:', this.apiUrl);
     console.log('HTTP Options:', this.httpOptions);
-    
+
     return this.http.post<Provider>(this.apiUrl, provider, this.httpOptions)
       .pipe(
         tap(newProvider => console.log(`Added provider w/ id=${newProvider.id}`)),
@@ -64,16 +64,16 @@ export class ProviderService {
 
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
-    
+
     let errorMessage = 'Se produjo un error desconocido';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // Error del lado del servidor
       errorMessage = `Código de error: ${error.status}, mensaje: ${error.message}`;
-      
+
       // Mensajes de error más específicos
       if (error.status === 0) {
         errorMessage = 'No se puede conectar al servidor. Por favor verifique su conexión o si el servidor está en ejecución.';
@@ -83,8 +83,8 @@ export class ProviderService {
         errorMessage = 'Error interno del servidor.';
       }
     }
-    
+
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
-} 
+}

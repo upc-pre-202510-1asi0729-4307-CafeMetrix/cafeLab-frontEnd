@@ -1,0 +1,126 @@
+{
+  "coffees": [
+    {
+      "id": 1,
+      "name": "Caturra",
+      "region": "Cajamarca",
+      "variety": "Arabica",
+      "totalWeight": 300
+    },
+    {
+      "id": 2,
+      "name": "Geisha",
+      "region": "Cusco",
+      "variety": "Arabica",
+      "totalWeight": 250
+    },
+    {
+      "id": 3,
+      "name": "Bourbon",
+      "region": "Junin",
+      "variety": "Arabica",
+      "totalWeight": 350
+    },
+    {
+      "id": 4,
+      "name": "Typica",
+      "region": "Puno",
+      "variety": "Arabica",
+      "totalWeight": 200
+    },
+    {
+      "id": 5,
+      "name": "Catimor",
+      "region": "San Martin",
+      "variety": "Robusta",
+      "totalWeight": 400
+    },
+    {
+      "id": 6,
+      "name": "Pacamara",
+      "region": "Amazonas",
+      "variety": "Arabica",
+      "totalWeight": 275
+    },
+    {
+      "id": 7,
+      "name": "Villa Sarchi",
+      "region": "Huanuco",
+      "variety": "Arabica",
+      "totalWeight": 320
+    }
+  ],
+  "defects": [
+    {
+      "id": 1,
+      "coffeeId": 1,
+      "name": "Broca",
+      "defectType": "Primary",
+      "defectWeight": 15,
+      "percentage": 5,
+      "probableCause": "Hypothenemus hampei infestation",
+      "suggestedSolution": "Apply biological control and timely harvesting"
+    },
+    {
+      "id": 2,
+      "coffeeId": 2,
+      "name": "Total Black",
+      "defectType": "Primary",
+      "defectWeight": 10,
+      "percentage": 4,
+      "probableCause": "Over-fermentation or poor drying",
+      "suggestedSolution": "Use raised beds with proper ventilation"
+    },
+    {
+      "id": 3,
+      "coffeeId": 3,
+      "name": "Broken Bean",
+      "defectType": "Secondary",
+      "defectWeight": 8,
+      "percentage": 2.29,
+      "probableCause": "Improper depulper calibration",
+      "suggestedSolution": "Calibrate depulper before use"
+    },
+    {
+      "id": 4,
+      "coffeeId": 4,
+      "name": "Over-Fermented",
+      "defectType": "Primary",
+      "defectWeight": 12,
+      "percentage": 6,
+      "probableCause": "Uncontrolled fermentation time",
+      "suggestedSolution": "Monitor time and temperature during fermentation"
+    },
+    {
+      "id": 5,
+      "coffeeId": 5,
+      "name": "Mold",
+      "defectType": "Primary",
+      "defectWeight": 20,
+      "percentage": 5,
+      "probableCause": "Humid storage conditions",
+      "suggestedSolution": "Use dry jute sacks and avoid humidity"
+    },
+    {
+      "id": 6,
+      "coffeeId": 6,
+      "name": "Foreign Matter",
+      "defectType": "Secondary",
+      "defectWeight": 5,
+      "percentage": 1.82,
+      "probableCause": "Poor post-harvest selection",
+      "suggestedSolution": "Improve manual and mechanical sorting"
+    },
+    {
+      "id": 7,
+      "coffeeId": 7,
+      "name": "Immature Bean",
+      "defectType": "Secondary",
+      "defectWeight": 10,
+      "percentage": 3.13,
+      "probableCause": "Premature harvesting",
+      "suggestedSolution": "Harvest only ripe cherries with manual selection"
+    }
+
+  ]
+}

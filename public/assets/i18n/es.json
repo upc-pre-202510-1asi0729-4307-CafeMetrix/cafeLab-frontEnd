@@ -1,0 +1,45 @@
+{
+  "NAVIGATION": {
+    "HOME": "Inicio",
+    "FEATURES": "Funcionalidades",
+    "CONTACT": "Contáctanos",
+    "PROFILE": "Perfil"
+  },
+  "CONSULTATIONS": {
+    "TITLE": "Biblioteca de defectos",
+    "BREADCRUMB_HOME": "Inicio",
+    "BREADCRUMB_LIBRARY": "Biblioteca de defectos",
+    "SEARCH_COFFEE": "Tipo de Café",
+    "SEARCH_DEFECT": "Tipo de Defecto",
+    "TABLE": {
+      "WEIGHT": "Peso",
+      "COFFEE": "Café",
+      "DEFECT": "Defecto",
+      "PERCENTAGE": "Porcentaje"
+    },
+    "ADD_DEFECT": "Agregar defecto"
+  },
+  "DEFECT_FILE": {
+    "TITLE": "Ficha de defecto",
+    "CAUSES": "Causas probables",
+    "SOLUTIONS": "Soluciones recomendadas",
+    "CLOSE": "Cerrar"
+  },
+  "ADD_DEFECT": {
+    "TITLE": "Registrar Defecto",
+    "COFFEE_DATA": "Datos del café",
+    "COFFEE_ID": "N° de café",
+    "COFFEE_NAME": "Nombre del café",
+    "COFFEE_REGION": "Región",
+    "COFFEE_VARIETY": "Variedad",
+    "COFFEE_WEIGHT": "Peso total",
+    "DEFECT_DATA": "Datos del defecto",
+    "DEFECT_NAME": "Nombre del defecto",
+    "DEFECT_TYPE": "Tipo de defecto",
+    "DEFECT_WEIGHT": "Peso del defecto",
+    "DEFECT_PERCENTAGE": "Porcentaje",
+    "DEFECT_CAUSE": "Posible causa",
+    "DEFECT_SOLUTION": "Posible solución",
+    "SAVE": "Guardar datos"
+  }
+}

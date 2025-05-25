@@ -1,0 +1,45 @@
+{
+  "NAVIGATION": {
+    "HOME": "Home",
+    "FEATURES": "Features",
+    "CONTACT": "Contact us",
+    "PROFILE": "Profile"
+  },
+  "CONSULTATIONS": {
+    "TITLE": "Defects Library",
+    "BREADCRUMB_HOME": "Home",
+    "BREADCRUMB_LIBRARY": "Defects Library",
+    "SEARCH_COFFEE": "Coffee Type",
+    "SEARCH_DEFECT": "Defect Type",
+    "TABLE": {
+      "WEIGHT": "Weight",
+      "COFFEE": "Coffee",
+      "DEFECT": "Defect",
+      "PERCENTAGE": "Percentage"
+    },
+    "ADD_DEFECT": "Add defect"
+  },
+  "DEFECT_FILE": {
+    "TITLE": "Defect file",
+    "CAUSES": "Probable causes",
+    "SOLUTIONS": "Recommended solutions",
+    "CLOSE": "Close"
+  },
+  "ADD_DEFECT": {
+    "TITLE": "Register Defect",
+    "COFFEE_DATA": "Coffee data",
+    "COFFEE_ID": "Coffee number",
+    "COFFEE_NAME": "Coffee name",
+    "COFFEE_REGION": "Region",
+    "COFFEE_VARIETY": "Variety",
+    "COFFEE_WEIGHT": "Total weight",
+    "DEFECT_DATA": "Defect data",
+    "DEFECT_NAME": "Defect name",
+    "DEFECT_TYPE": "Defect type",
+    "DEFECT_WEIGHT": "Defect weight",
+    "DEFECT_PERCENTAGE": "Percentage",
+    "DEFECT_CAUSE": "Probable cause",
+    "DEFECT_SOLUTION": "Probable solution",
+    "SAVE": "Save data"
+  }
+}

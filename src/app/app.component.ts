@@ -8,7 +8,7 @@ import {ToolbarComponent} from './public/components/toolbar/toolbar.component';
 
 
 /**
- * Root component of the Eventify application
+ * Root component of the Café Lab application
  * @class AppComponent
  * @description
  * This component serves as the main entry point for the application.

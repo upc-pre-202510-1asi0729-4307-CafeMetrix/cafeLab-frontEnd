@@ -8,7 +8,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
 
 interface Recommendation {
@@ -29,7 +29,7 @@ interface Recommendation {
     MatInputModule,
     MatCardModule,
     ReactiveFormsModule,
-    NavbarComponent
+    ToolbarComponent
   ],
   templateUrl: './production-cost-management.component.html',
   styleUrl: './production-cost-management.component.css'
@@ -221,7 +221,7 @@ export class ProductionCostPageComponent {
   onSubmit(): void {
     if (this.firstFormGroup.valid && this.directCostsForm.valid && this.indirectCostsForm.valid) {
       this.isSubmitting = true;
-      
+
       // Generar código de registro
       const year = new Date().getFullYear();
       const random = Math.floor(10000 + Math.random() * 90000);

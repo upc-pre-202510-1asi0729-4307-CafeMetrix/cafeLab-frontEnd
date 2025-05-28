@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-toolbar></app-toolbar>
 
 <div class="main-container">
   <!-- Success Message -->
@@ -76,7 +76,7 @@
         <div class="step-content">
           <!-- Progress Bar -->
           <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
-          
+
           <h2>Selección del lote</h2>
           <form [formGroup]="firstFormGroup">
             <mat-form-field appearance="outline" class="full-width">
@@ -97,7 +97,7 @@
             <button mat-raised-button class="action-button" (click)="onCancel()">
               Cancelar
             </button>
-            <button mat-raised-button class="action-button" 
+            <button mat-raised-button class="action-button"
                     [disabled]="!firstFormGroup.valid"
                     matStepperNext>
               Continuar
@@ -184,7 +184,7 @@
             <button mat-raised-button class="action-button" matStepperPrevious>
               Anterior
             </button>
-            <button mat-raised-button class="action-button" 
+            <button mat-raised-button class="action-button"
                     [disabled]="!directCostsForm.valid"
                     matStepperNext>
               Continuar
@@ -355,7 +355,7 @@
             <button mat-raised-button class="action-button" matStepperPrevious>
               Anterior
             </button>
-            <button mat-raised-button class="action-button" 
+            <button mat-raised-button class="action-button"
                     [disabled]="!indirectCostsForm.valid"
                     matStepperNext>
               Continuar
@@ -430,7 +430,7 @@
               <button mat-raised-button class="action-button" (click)="onSaveAsDraft()">
                 Guardar Borrador
               </button>
-              <button mat-raised-button class="action-button" 
+              <button mat-raised-button class="action-button"
                       [disabled]="isSubmitting"
                       (click)="onSubmit()">
                 {{ isSubmitting ? 'Enviando...' : 'Guardar registro' }}

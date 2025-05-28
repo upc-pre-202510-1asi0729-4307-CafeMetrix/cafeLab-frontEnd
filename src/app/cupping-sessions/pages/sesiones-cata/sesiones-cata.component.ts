@@ -1,0 +1,115 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
+import { FormsModule } from '@angular/forms';
+import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
+import { NuevaCataDialogComponent } from '../../components/nueva-cata-dialog/nueva-cata-dialog.component';
+import { DetalleCataComponent } from '../../components/detalle-cata/detalle-cata.component';
+
+interface SesionCata {
+  nombre: string;
+  fecha: string;
+  origen: string;
+  variedad: string;
+  favorito: boolean;
+  loteNombre?: string;
+  perfilNombre?: string;
+}
+
+@Component({
+  selector: 'app-sesiones-cata',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    ToolbarComponent,
+    FormsModule,
+    FiltroDialogComponent,
+    NuevaCataDialogComponent,
+    DetalleCataComponent
+  ],
+  templateUrl: './sesiones-cata.component.html',
+  styleUrls: ['./sesiones-cata.component.css']
+})
+export class SesionesCataComponent {
+  displayedColumns: string[] = ['nombre', 'fecha', 'origen', 'variedad', 'acciones'];
+  searchText: string = '';
+  mostrarComparacion: boolean = false;
+  mostrarDetalle: boolean = false;
+  sesionSeleccionada: SesionCata | null = null;
+
+  sesiones: SesionCata[] = [
+    {
+      nombre: 'Cata Especial Primavera',
+      fecha: '2024-03-15',
+      origen: 'Perú',
+      variedad: 'Arábica',
+      favorito: false,
+      loteNombre: 'Lote A - Perú Chanchamayo',
+      perfilNombre: 'Perfil Ligero - City Roast'
+    },
+    { nombre: 'Evaluación Mensual', fecha: '2024-03-10', origen: 'Colombia', variedad: 'Caturra', favorito: true },
+    { nombre: 'Cata Regional Sur', fecha: '2024-03-05', origen: 'Brasil', variedad: 'Bourbon', favorito: false },
+    { nombre: 'Análisis Premium', fecha: '2024-02-28', origen: 'Guatemala', variedad: 'Gesha', favorito: false },
+    { nombre: 'Cata Orgánica', fecha: '2024-02-20', origen: 'México', variedad: 'Typica', favorito: true }
+  ];
+
+  constructor(private dialog: MatDialog) {}
+
+  toggleFavorito(sesion: SesionCata) {
+    sesion.favorito = !sesion.favorito;
+  }
+
+  mostrarFiltros() {
+    const dialogRef = this.dialog.open(FiltroDialogComponent, {
+      width: '600px',
+      backdropClass: 'dialog-backdrop',
+      panelClass: 'filter-dialog-panel'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Aquí implementaremos la lógica de filtrado
+        console.log('Filtros aplicados:', result);
+      }
+    });
+  }
+
+  verDetalle(sesion: SesionCata) {
+    this.sesionSeleccionada = sesion;
+    this.mostrarDetalle = true;
+  }
+
+  toggleComparacion() {
+    this.mostrarComparacion = !this.mostrarComparacion;
+  }
+
+  iniciarNuevaCata() {
+    const dialogRef = this.dialog.open(NuevaCataDialogComponent, {
+      width: '500px',
+      backdropClass: 'dialog-backdrop',
+      panelClass: 'filter-dialog-panel'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Aquí implementaremos la lógica para crear la nueva sesión
+        console.log('Nueva sesión de cata:', result);
+      }
+    });
+  }
+}

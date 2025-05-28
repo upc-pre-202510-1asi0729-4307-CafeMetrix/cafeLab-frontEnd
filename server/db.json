@@ -122,5 +122,21 @@
       "suggestedSolution": "Harvest only ripe cherries with manual selection"
     }
 
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Adrián",
+      "email": "adrian@gmail.com",
+      "password": "12345",
+      "role": "barista",
+      "cafeteriaName": "Cafe del Sur",
+      "experience": "2 años",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": true
+    }
   ]
 }

@@ -45,7 +45,7 @@ export class LoginFormComponent extends BaseFormComponent {
           console.log('Logged in user:', user);
           localStorage.setItem('currentUser', JSON.stringify(user));
 
-          // Redirigir al dashboard correspondiente según el plan del usuario
+          // Redirigir al dashboard correspondiente según el plan del usuario AQUI TAMBIEN HAY QUE CAMBIAR SI ES DISTINTO LO QUE TIENES
           switch (user.plan) {
             case 'barista':
               this.router.navigate(['/dashboard/barista']);

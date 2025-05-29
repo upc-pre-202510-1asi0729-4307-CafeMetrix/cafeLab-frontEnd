@@ -80,8 +80,8 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
         next: (user: User) => {
           console.log('Updated user:', user);
           localStorage.setItem('currentUser', JSON.stringify(user));
-          // Redirigir a la página de suscripción
-          this.router.navigate(['/subscription']);
+          // Redirigir a la página de suscripción AQUI HAY QUE REEMPLAZAR PARA UNIR, ESTE LLEVA A SELECCIONAR UN PLAN
+          this.router.navigate(['/subscription/selectplan']);
         },
         error: (error: any) => {
           console.error('Update profile error:', error);

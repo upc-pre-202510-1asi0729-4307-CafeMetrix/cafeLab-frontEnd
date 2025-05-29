@@ -18,6 +18,6 @@ export class LogupBaristaSuccessPageComponent {
   constructor(private router: Router) {}
 
   onContinue() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/editprofile']);
   }
 }

@@ -1,0 +1,16 @@
+<!-- ESTO SE MODIFICA -->
+<app-toolbarinit></app-toolbarinit>
+<div class="select-plan">
+  <h2>{{ 'SELECT_PLAN.TITLE' | translate }}</h2>
+  <div class="plan-buttons">
+    <button mat-raised-button color="primary" (click)="onSelectPlan('barista')">
+      {{ 'SELECT_PLAN.BARISTA' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="onSelectPlan('admin')">
+      {{ 'SELECT_PLAN.OWNER' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="onSelectPlan('complete')">
+      {{ 'SELECT_PLAN.COMPLETE' | translate }}
+    </button>
+  </div>
+</div>

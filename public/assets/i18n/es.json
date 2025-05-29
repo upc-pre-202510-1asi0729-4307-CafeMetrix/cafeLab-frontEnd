@@ -57,6 +57,9 @@
     "CAFETERIA_NAME": "Nombre de la Cafetería",
     "SUBMIT": "Registrarse"
   },
+  "LOGUP_OWNER": {
+    "TITLE": "Registro de Dueño de Cafetería"
+  },
   "EDIT_PROFILE": {
     "NAME": "Nombre",
     "EMAIL": "Correo electrónico",

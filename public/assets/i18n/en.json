@@ -57,6 +57,9 @@
     "CAFETERIA_NAME": "Cafeteria Name",
     "SUBMIT": "Sign Up"
   },
+  "LOGUP_OWNER": {
+    "TITLE": "Cafeteria Owner Registration"
+  },
   "EDIT_PROFILE": {
     "NAME": "Name",
     "EMAIL": "Email",

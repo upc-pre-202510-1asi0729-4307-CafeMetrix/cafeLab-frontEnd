@@ -1,37 +1,40 @@
-<form class="logup-form" [formGroup]="logupForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>{{ 'LOGUP.NAME' | translate }}</mat-label>
-    <input matInput type="text" formControlName="name">
-    <mat-error *ngIf="isInvalidControl(logupForm, 'name')">
-      {{ errorMessagesForControl(logupForm, 'name') }}
-    </mat-error>
-  </mat-form-field>
+<div class="logup-form-container">
+  <h2>{{ 'LOGUP_OWNER.TITLE' | translate }}</h2>
+  <form class="logup-form" [formGroup]="logupForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.NAME' | translate }}</mat-label>
+      <input matInput type="text" formControlName="name">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'name')">
+        {{ errorMessagesForControl(logupForm, 'name') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'LOGUP.EMAIL' | translate }}</mat-label>
-    <input matInput type="email" formControlName="email">
-    <mat-error *ngIf="isInvalidControl(logupForm, 'email')">
-      {{ errorMessagesForControl(logupForm, 'email') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.EMAIL' | translate }}</mat-label>
+      <input matInput type="email" formControlName="email">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'email')">
+        {{ errorMessagesForControl(logupForm, 'email') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'LOGUP.PASSWORD' | translate }}</mat-label>
-    <input matInput type="password" formControlName="password">
-    <mat-error *ngIf="isInvalidControl(logupForm, 'password')">
-      {{ errorMessagesForControl(logupForm, 'password') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.PASSWORD' | translate }}</mat-label>
+      <input matInput type="password" formControlName="password">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'password')">
+        {{ errorMessagesForControl(logupForm, 'password') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'LOGUP.CAFETERIA_NAME' | translate }}</mat-label>
-    <input matInput type="text" formControlName="cafeteriaName">
-    <mat-error *ngIf="isInvalidControl(logupForm, 'cafeteriaName')">
-      {{ errorMessagesForControl(logupForm, 'cafeteriaName') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.CAFETERIA_NAME' | translate }}</mat-label>
+      <input matInput type="text" formControlName="cafeteriaName">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'cafeteriaName')">
+        {{ errorMessagesForControl(logupForm, 'cafeteriaName') }}
+      </mat-error>
+    </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">
-    {{ 'LOGUP.SUBMIT' | translate }}
-  </button>
-</form>
+    <button mat-raised-button color="primary" type="submit">
+      {{ 'LOGUP.SUBMIT' | translate }}
+    </button>
+  </form>
+</div>

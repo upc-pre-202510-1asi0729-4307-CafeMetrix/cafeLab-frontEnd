@@ -1,0 +1,14 @@
+.logup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logup-form mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.logup-form button {
+  width: 100%;
+}

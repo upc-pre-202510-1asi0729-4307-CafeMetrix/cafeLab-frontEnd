@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { LogupOwnerFormComponent } from '../../components/logup-owner-form/logup-owner-form.component';
+import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-logup-owner-page',
-  imports: [],
   templateUrl: './logup-owner-page.component.html',
-  styleUrl: './logup-owner-page.component.css'
+  styleUrls: ['./logup-owner-page.component.css'],
+  standalone: true,
+  imports: [LogupOwnerFormComponent, ToolbarinitComponent]
 })
-export class LogupOwnerPageComponent {
-
-}
+export class LogupOwnerPageComponent {}

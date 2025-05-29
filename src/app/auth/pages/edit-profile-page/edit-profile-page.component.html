@@ -1,4 +1,5 @@
-<app-toolbarinit></app-toolbarinit>
+<app-toolbar *ngIf="showToolbar"></app-toolbar>
+<app-toolbarinit *ngIf="!showToolbar"></app-toolbarinit>
 <div class="edit-profile-page">
   <div class="form-container">
     <app-edit-profile-form></app-edit-profile-form>

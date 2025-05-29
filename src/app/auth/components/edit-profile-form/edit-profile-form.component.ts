@@ -1,4 +1,3 @@
-// src/app/auth/components/edit-profile-form/edit-profile-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { BaseFormComponent } from '../../../shared/components/base-form.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
-import {MatOption, MatSelect} from '@angular/material/select';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -21,9 +19,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     TranslateModule,
-    ReactiveFormsModule,
-    MatSelect,
-    MatOption,
+    ReactiveFormsModule
   ]
 })
 export class EditProfileFormComponent extends BaseFormComponent implements OnInit {
@@ -80,14 +76,35 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
         next: (user: User) => {
           console.log('Updated user:', user);
           localStorage.setItem('currentUser', JSON.stringify(user));
-          // Redirigir a la página de suscripción AQUI HAY QUE REEMPLAZAR PARA UNIR, ESTE LLEVA A SELECCIONAR UN PLAN
-          this.router.navigate(['/subscription/selectplan']);
+          this.redirectAfterUpdate();
         },
         error: (error: any) => {
           console.error('Update profile error:', error);
-          // Manejar el error de actualización de perfil, como mostrar un mensaje de error al usuario
         }
       });
+    }
+  }
+
+  redirectAfterUpdate() {
+    if (this.currentUser?.hasPlan) {
+      // Si el usuario ya tiene un plan seleccionado, redirigir al dashboard correspondiente
+      switch (this.currentUser.plan) {
+        case 'barista':
+          this.router.navigate(['/dashboard/barista']);
+          break;
+        case 'admin':
+          this.router.navigate(['/dashboard/owner']);
+          break;
+        case 'complete':
+          this.router.navigate(['/dashboard/complete']);
+          break;
+        default:
+          this.router.navigate(['/']);
+          break;
+      }
+    } else {
+      // Si el usuario no tiene un plan seleccionado, redirigir a la página de selección de plan
+      this.router.navigate(['/subscription/selectplan']);
     }
   }
 }

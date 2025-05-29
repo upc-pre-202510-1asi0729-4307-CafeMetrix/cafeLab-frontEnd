@@ -1,19 +1,12 @@
-import {Component} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {CommonModule} from '@angular/common';
-import {RouterOutlet} from '@angular/router';
-import {MatToolbar} from '@angular/material/toolbar';
-import {ToolbarComponent} from './public/components/toolbar/toolbar.component';
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { MatToolbar } from '@angular/material/toolbar';
+import { ToolbarComponent } from './public/components/toolbar/toolbar.component';
+import { ToolbarinitComponent } from './public/components/toolbarinit/toolbarinit.component';
+import { User } from './auth/model/user.entity';
 
-
-
-/**
- * Root component of the Café Lab application
- * @class AppComponent
- * @description
- * This component serves as the main entry point for the application.
- * It initializes the translation service and sets up the basic layout structure.
- */
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,31 +15,29 @@ import {ToolbarComponent} from './public/components/toolbar/toolbar.component';
     RouterOutlet,
     MatToolbar,
     ToolbarComponent,
-
+    ToolbarinitComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  /** Application title */
+export class AppComponent implements OnInit {
   title = 'libraryDefects';
+  currentUser: User | null = null;
 
-  /** Navigation menu items */
-  options = [
-    { path: '/libraryDefects', title: 'Library' }
-  ];
-
-
-  /**
-   * Creates an instance of AppComponent.
-   * Initializes the translation service with English and Spanish languages.
-   *
-   * @param translate - The translation service for handling internationalization
-   */
   constructor(private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     this.translate.setDefaultLang('en');
     this.translate.use('en');
   }
 
+  ngOnInit() {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+    }
+  }
+
+  get showToolbar(): boolean {
+    return !!this.currentUser?.hasPlan;
+  }
 }

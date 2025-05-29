@@ -50,6 +50,11 @@
     "REGISTER_BARISTA": "Register as Barista",
     "REGISTER_OWNER": "Register as Cafeteria Owner"
   },
+  "LOGIN_SUCCESS": {
+    "TITLE": "Login Successful",
+    "MESSAGE": "Welcome, {{name}}!",
+    "CONTINUE": "Continue"
+  },
   "LOGUP": {
     "NAME": "Name",
     "EMAIL": "Email",
@@ -59,6 +64,11 @@
   },
   "LOGUP_BARISTA": {
     "TITLE": "Barista Registration"
+  },
+  "LOGUP_BARISTA_SUCCESS": {
+    "TITLE": "Registration Successful",
+    "MESSAGE": "Your barista account has been created successfully.",
+    "CONTINUE": "Go to Login"
   },
   "LOGUP_OWNER": {
     "TITLE": "Cafeteria Owner Registration"

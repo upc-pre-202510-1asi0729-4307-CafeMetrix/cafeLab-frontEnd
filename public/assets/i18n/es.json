@@ -50,6 +50,11 @@
     "REGISTER_BARISTA": "Registrarse como Barista",
     "REGISTER_OWNER": "Registrarse como Dueño de Cafetería"
   },
+  "LOGIN_SUCCESS": {
+    "TITLE": "Inicio de sesión exitoso",
+    "MESSAGE": "¡Bienvenido, {{name}}!",
+    "CONTINUE": "Continuar"
+  },
   "LOGUP": {
     "NAME": "Nombre",
     "EMAIL": "Correo electrónico",
@@ -59,6 +64,11 @@
   },
   "LOGUP_BARISTA": {
     "TITLE": "Registro de Barista"
+  },
+  "LOGUP_BARISTA_SUCCESS": {
+    "TITLE": "Registro Exitoso",
+    "MESSAGE": "Tu cuenta de barista ha sido creada exitosamente.",
+    "CONTINUE": "Ir al Login"
   },
   "LOGUP_OWNER": {
     "TITLE": "Registro de Dueño de Cafetería"

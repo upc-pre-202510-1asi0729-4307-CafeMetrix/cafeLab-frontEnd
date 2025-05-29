@@ -73,6 +73,11 @@
   "LOGUP_OWNER": {
     "TITLE": "Registro de Dueño de Cafetería"
   },
+  "LOGUP_OWNER_SUCCESS": {
+    "TITLE": "Registro Exitoso",
+    "MESSAGE": "Tu cuenta de dueño de cafetería ha sido creada exitosamente.",
+    "CONTINUE": "Ir al Login"
+  },
   "EDIT_PROFILE": {
     "TITLE": "Editar Perfil",
     "NAME": "Nombre",

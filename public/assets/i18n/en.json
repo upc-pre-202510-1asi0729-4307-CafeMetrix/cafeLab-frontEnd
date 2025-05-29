@@ -73,6 +73,11 @@
   "LOGUP_OWNER": {
     "TITLE": "Cafeteria Owner Registration"
   },
+  "LOGUP_OWNER_SUCCESS": {
+    "TITLE": "Registration Successful",
+    "MESSAGE": "Your cafeteria owner account has been created successfully.",
+    "CONTINUE": "Go to Login"
+  },
   "EDIT_PROFILE": {
     "TITLE": "Edit Profile",
     "NAME": "Name",

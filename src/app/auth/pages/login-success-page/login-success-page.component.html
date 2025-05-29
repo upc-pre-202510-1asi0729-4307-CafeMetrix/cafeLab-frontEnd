@@ -1,1 +1,9 @@
-<p>login-success-page works!</p>
+<div class="login-success-page">
+  <div class="success-message">
+    <h2>{{ 'LOGIN_SUCCESS.TITLE' | translate }}</h2>
+    <p>{{ 'LOGIN_SUCCESS.MESSAGE' | translate: { name: currentUser?.name } }}</p>
+  </div>
+  <button mat-raised-button color="primary" (click)="onContinue()">
+    {{ 'LOGIN_SUCCESS.CONTINUE' | translate }}
+  </button>
+</div>

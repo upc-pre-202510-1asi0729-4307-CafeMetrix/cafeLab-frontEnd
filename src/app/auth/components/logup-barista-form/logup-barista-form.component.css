@@ -1,7 +1,26 @@
+/* src/app/auth/components/logup-barista-form/logup-barista-form.component.css */
+.logup-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logup-form-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
 .logup-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .logup-form mat-form-field {

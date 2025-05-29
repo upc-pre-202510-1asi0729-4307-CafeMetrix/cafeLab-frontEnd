@@ -48,5 +48,23 @@
     "SUBMIT": "Log In",
     "REGISTER_BARISTA": "Register as Barista",
     "REGISTER_OWNER": "Register as Cafeteria Owner"
+  },
+  "LOGUP": {
+    "TITLE": "Barista Registration",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "CAFETERIA_NAME": "Cafeteria Name",
+    "SUBMIT": "Sign Up"
+  },
+  "EDIT_PROFILE": {
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "CAFETERIA_NAME": "Cafeteria Name",
+    "EXPERIENCE": "Experience",
+    "PAYMENT_METHOD": "Payment Method",
+    "VISA": "Visa",
+    "MASTERCARD": "Mastercard",
+    "SUBMIT": "Save"
   }
 }

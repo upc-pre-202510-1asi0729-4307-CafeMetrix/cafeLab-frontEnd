@@ -22,8 +22,7 @@ export class UserService extends BaseService<User> {
    * @returns An Observable of the authenticated user
    */
   login(email: string, password: string): Observable<User> {
-    return this.http.get<User[]>(`${this.resourcePath()}?email=${email}&password=${password}`)
-      .pipe(
+    return this.http.get<User[]>(`${this.resourcePath()}?email=${email}&password=${password}`).pipe(
         map(users => {
           if (users.length === 1) {
             return users[0];

@@ -41,5 +41,12 @@
     "DEFECT_CAUSE": "Probable cause",
     "DEFECT_SOLUTION": "Probable solution",
     "SAVE": "Save data"
+  },
+  "LOGIN": {
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "SUBMIT": "Log In",
+    "REGISTER_BARISTA": "Register as Barista",
+    "REGISTER_OWNER": "Register as Cafeteria Owner"
   }
 }

@@ -43,6 +43,7 @@
     "SAVE": "Guardar datos"
   },
   "LOGIN": {
+    "TITLE": "Iniciar sesión",
     "EMAIL": "Correo electrónico",
     "PASSWORD": "Contraseña",
     "SUBMIT": "Iniciar sesión",
@@ -50,17 +51,20 @@
     "REGISTER_OWNER": "Registrarse como Dueño de Cafetería"
   },
   "LOGUP": {
-    "TITLE": "Registro de Barista",
     "NAME": "Nombre",
     "EMAIL": "Correo electrónico",
     "PASSWORD": "Contraseña",
     "CAFETERIA_NAME": "Nombre de la Cafetería",
     "SUBMIT": "Registrarse"
   },
+  "LOGUP_BARISTA": {
+    "TITLE": "Registro de Barista"
+  },
   "LOGUP_OWNER": {
     "TITLE": "Registro de Dueño de Cafetería"
   },
   "EDIT_PROFILE": {
+    "TITLE": "Editar Perfil",
     "NAME": "Nombre",
     "EMAIL": "Correo electrónico",
     "CAFETERIA_NAME": "Nombre de la Cafetería",

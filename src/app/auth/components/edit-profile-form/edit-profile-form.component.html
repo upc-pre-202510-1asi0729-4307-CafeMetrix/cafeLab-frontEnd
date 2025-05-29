@@ -1,49 +1,51 @@
-<!-- src/app/auth/components/edit-profile-form/edit-profile-form.component.html -->
-<form class="edit-profile-form" [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>{{ 'EDIT_PROFILE.NAME' | translate }}</mat-label>
-    <input matInput type="text" formControlName="name">
-    <mat-error *ngIf="isInvalidControl(editProfileForm, 'name')">
-      {{ errorMessagesForControl(editProfileForm, 'name') }}
-    </mat-error>
-  </mat-form-field>
+<div class="edit-profile-form-container">
+  <h2>{{ 'EDIT_PROFILE.TITLE' | translate }}</h2>
+  <form class="edit-profile-form" [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>{{ 'EDIT_PROFILE.NAME' | translate }}</mat-label>
+      <input matInput type="text" formControlName="name">
+      <mat-error *ngIf="isInvalidControl(editProfileForm, 'name')">
+        {{ errorMessagesForControl(editProfileForm, 'name') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'EDIT_PROFILE.EMAIL' | translate }}</mat-label>
-    <input matInput type="email" formControlName="email">
-    <mat-error *ngIf="isInvalidControl(editProfileForm, 'email')">
-      {{ errorMessagesForControl(editProfileForm, 'email') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'EDIT_PROFILE.EMAIL' | translate }}</mat-label>
+      <input matInput type="email" formControlName="email">
+      <mat-error *ngIf="isInvalidControl(editProfileForm, 'email')">
+        {{ errorMessagesForControl(editProfileForm, 'email') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field *ngIf="currentUser?.role === 'dueno_cafeteria'">
-    <mat-label>{{ 'EDIT_PROFILE.CAFETERIA_NAME' | translate }}</mat-label>
-    <input matInput type="text" formControlName="cafeteriaName">
-    <mat-error *ngIf="isInvalidControl(editProfileForm, 'cafeteriaName')">
-      {{ errorMessagesForControl(editProfileForm, 'cafeteriaName') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field *ngIf="currentUser?.role === 'dueno_cafeteria'">
+      <mat-label>{{ 'EDIT_PROFILE.CAFETERIA_NAME' | translate }}</mat-label>
+      <input matInput type="text" formControlName="cafeteriaName">
+      <mat-error *ngIf="isInvalidControl(editProfileForm, 'cafeteriaName')">
+        {{ errorMessagesForControl(editProfileForm, 'cafeteriaName') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'EDIT_PROFILE.EXPERIENCE' | translate }}</mat-label>
-    <input matInput type="text" formControlName="experience">
-    <mat-error *ngIf="isInvalidControl(editProfileForm, 'experience')">
-      {{ errorMessagesForControl(editProfileForm, 'experience') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'EDIT_PROFILE.EXPERIENCE' | translate }}</mat-label>
+      <input matInput type="text" formControlName="experience">
+      <mat-error *ngIf="isInvalidControl(editProfileForm, 'experience')">
+        {{ errorMessagesForControl(editProfileForm, 'experience') }}
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'EDIT_PROFILE.PAYMENT_METHOD' | translate }}</mat-label>
-    <mat-select formControlName="paymentMethod">
-      <mat-option value="visa">{{ 'EDIT_PROFILE.VISA' | translate }}</mat-option>
-      <mat-option value="mastercard">{{ 'EDIT_PROFILE.MASTERCARD' | translate }}</mat-option>
-    </mat-select>
-    <mat-error *ngIf="isInvalidControl(editProfileForm, 'paymentMethod')">
-      {{ errorMessagesForControl(editProfileForm, 'paymentMethod') }}
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'EDIT_PROFILE.PAYMENT_METHOD' | translate }}</mat-label>
+      <mat-select formControlName="paymentMethod">
+        <mat-option value="visa">{{ 'EDIT_PROFILE.VISA' | translate }}</mat-option>
+        <mat-option value="mastercard">{{ 'EDIT_PROFILE.MASTERCARD' | translate }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isInvalidControl(editProfileForm, 'paymentMethod')">
+        {{ errorMessagesForControl(editProfileForm, 'paymentMethod') }}
+      </mat-error>
+    </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">
-    {{ 'EDIT_PROFILE.SUBMIT' | translate }}
-  </button>
-</form>
+    <button mat-raised-button color="primary" type="submit">
+      {{ 'EDIT_PROFILE.SUBMIT' | translate }}
+    </button>
+  </form>
+</div>

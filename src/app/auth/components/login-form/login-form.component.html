@@ -1,3 +1,5 @@
+<div class="login-form-container">
+  <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>{{ 'LOGIN.EMAIL' | translate }}</mat-label>
@@ -27,4 +29,5 @@
   <button mat-button (click)="onRegisterOwner()">
     {{ 'LOGIN.REGISTER_OWNER' | translate }}
   </button>
+</div>
 </div>

@@ -1,1 +1,10 @@
-<p>logup-owner-success-page works!</p>
+<app-toolbarinit></app-toolbarinit>
+<div class="logup-owner-success-page">
+  <div class="success-message">
+    <h2>{{ 'LOGUP_OWNER_SUCCESS.TITLE' | translate }}</h2>
+    <p>{{ 'LOGUP_OWNER_SUCCESS.MESSAGE' | translate }}</p>
+  </div>
+  <button mat-raised-button color="primary" (click)="onContinue()">
+    {{ 'LOGUP_OWNER_SUCCESS.CONTINUE' | translate }}
+  </button>
+</div>

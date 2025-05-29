@@ -1,0 +1,29 @@
+.logup-owner-success-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.success-message {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.success-message h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.success-message p {
+  font-size: 16px;
+  color: #666;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+}

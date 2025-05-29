@@ -1,11 +1,23 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import {MatButton} from '@angular/material/button';
+import {TranslatePipe} from '@ngx-translate/core';
+import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-logup-owner-success-page',
-  imports: [],
   templateUrl: './logup-owner-success-page.component.html',
-  styleUrl: './logup-owner-success-page.component.css'
+  imports: [
+    MatButton,
+    TranslatePipe,
+    ToolbarinitComponent
+  ],
+  styleUrls: ['./logup-owner-success-page.component.css']
 })
 export class LogupOwnerSuccessPageComponent {
+  constructor(private router: Router) {}
 
+  onContinue() {
+    this.router.navigate(['/login']);
+  }
 }

@@ -2,12 +2,17 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import {ToolbarComponent} from '../public/components/toolbar/toolbar.component';
+import {MatToolbar} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule],
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbar, ToolbarComponent],
   template: `
+    <mat-toolbar color="primary">
+      <app-toolbar/>
+    </mat-toolbar>
     <div class="welcome-container">
       <h1>Bienvenido a Café Lab</h1>
       <p>Sistema de gestión para laboratorios de café</p>
@@ -23,6 +28,10 @@ import { TranslateModule } from '@ngx-translate/core';
         <a routerLink="/perfiles-tueste" class="welcome-button">
           <i class="material-icons">whatshot</i>
           <span>Perfiles de Tueste</span>
+        </a>
+        <a routerLink="/libraryDefects" class="welcome-button">
+          <i class="material-icons"></i>
+            <span>Libreria de defectos</span>
         </a>
       </div>
     </div>
@@ -77,4 +86,4 @@ import { TranslateModule } from '@ngx-translate/core';
     }
   `]
 })
-export class WelcomeComponent {} 
+export class WelcomeComponent {}

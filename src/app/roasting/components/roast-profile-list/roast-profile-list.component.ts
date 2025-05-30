@@ -1,51 +1,67 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { RoastProfileService } from '../../services/roast-profile.service';
 import { RoastProfile } from '../../models/roast-profile.model';
 import { catchError, finalize, of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import {CoffeeLot} from '../../../coffee-lot/models/coffee-lot.model';
+import {CoffeeLotService} from '../../../coffee-lot/services/coffee-lot.service';
+import {Router} from '@angular/router';
+import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
+import {MatToolbar} from '@angular/material/toolbar';
+
 
 @Component({
   selector: 'app-roast-profile-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, ToolbarComponent, MatToolbar, NgOptimizedImage],
   templateUrl: './roast-profile-list.component.html',
   styleUrls: ['./roast-profile-list.component.css']
 })
 export class RoastProfileListComponent implements OnInit {
   @ViewChild('profileForm') profileForm!: NgForm;
   @ViewChild('editForm') editForm!: NgForm;
-  
+
+  coffeeLots: CoffeeLot[] = [];
   profiles: RoastProfile[] = [];
   searchQuery: string = '';
   showProfileDetails: boolean = false;
   showEditModal: boolean = false;
   showRegisterModal: boolean = false;
-  
+
   selectedProfile: RoastProfile | null = null;
   editingProfile: RoastProfile | null = null;
-  
+
   newProfile: RoastProfile = {
     name: '',
     type: '',
-    altitude: '',
-    provider: ''
+    duration: 0,
+    lot: '',
+    tempStart: 0,
+    tempEnd: 0
   };
-  
+
+
   loading: boolean = false;
   error: string | null = null;
-  
+
   showFavoritesOnly: boolean = false;
   sortOrder: 'asc' | 'desc' = 'desc';
-  
+
   roastTypes: string[] = ['Ligero', 'Medio', 'Medio-Oscuro', 'Oscuro'];
-  
-  constructor(private roastProfileService: RoastProfileService) { }
+
+  constructor(
+    private roastProfileService: RoastProfileService,
+    private coffeeLotService: CoffeeLotService,
+    private router: Router,
+
+  ) { }
 
   ngOnInit(): void {
     this.loadProfiles();
+    this.loadCoffeeLots(); // <-- nuevo
   }
 
   loadProfiles(): void {
@@ -112,7 +128,7 @@ export class RoastProfileListComponent implements OnInit {
   toggleFavorite(profile: RoastProfile, event: Event): void {
     event.stopPropagation(); // Prevenir que se abra el detalle
     if (!profile.id) return;
-    
+
     this.roastProfileService.toggleFavorite(profile.id)
       .pipe(
         catchError(err => {
@@ -162,10 +178,10 @@ export class RoastProfileListComponent implements OnInit {
       this.error = "Por favor, complete todos los campos obligatorios.";
       return;
     }
-    
+
     this.loading = true;
     this.error = null;
-    
+
     this.roastProfileService.updateProfile(this.editingProfile)
       .pipe(
         catchError(err => {
@@ -188,10 +204,10 @@ export class RoastProfileListComponent implements OnInit {
   duplicateProfile(profile: RoastProfile, event: Event): void {
     event.stopPropagation(); // Prevenir que se abra el detalle
     if (!profile.id) return;
-    
+
     this.loading = true;
     this.error = null;
-    
+
     this.roastProfileService.duplicateProfile(profile.id)
       .pipe(
         catchError(err => {
@@ -216,10 +232,10 @@ export class RoastProfileListComponent implements OnInit {
       this.error = "Por favor, complete todos los campos obligatorios.";
       return;
     }
-    
+
     this.loading = true;
     this.error = null;
-    
+
     this.roastProfileService.addProfile(this.newProfile)
       .pipe(
         catchError(err => {
@@ -239,19 +255,21 @@ export class RoastProfileListComponent implements OnInit {
         }
       });
   }
-  
+
   resetForm(): void {
     this.newProfile = {
       name: '',
       type: '',
-      altitude: '',
-      provider: ''
+      duration: 0,
+      lot: '',
+      tempStart: 0,
+      tempEnd: 0
     };
-    
+
     if (this.profileForm) {
       this.profileForm.resetForm();
     }
-    
+
     this.error = null;
   }
 
@@ -267,6 +285,21 @@ export class RoastProfileListComponent implements OnInit {
 
   compareProfiles(): void {
     // Esta funcionalidad será implementada más adelante
-    console.log('Comparar perfiles - Funcionalidad pendiente');
+    this.router.navigate(['/compare-profile']);
   }
-} 
+
+  loadCoffeeLots(): void {
+    this.coffeeLotService.getLots()
+      .pipe(
+        catchError(err => {
+          console.error('Error loading coffee lots', err);
+          return of([]);
+        })
+      )
+      .subscribe((lots: CoffeeLot[]) => {
+        this.coffeeLots = lots;
+      });
+
+  }
+
+}

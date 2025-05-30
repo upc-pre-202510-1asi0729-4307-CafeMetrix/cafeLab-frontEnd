@@ -1,22 +1,299 @@
 {
-  "supply": {
-    "providers": {
-      "title": "Providers",
-      "breadcrumb": "Home > Providers",
-      "search_placeholder": "Search provider...",
-      "columns": {
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone Number",
-        "location": "Location"
-      },
-      "register_button": "Register Provider"
+  "BREADCRUMB": {
+    "HOME": "Home",
+    "COFFEE_LOTS": "Coffee Lots"
+  },
+  "NAV": {
+    "LOTS": "Coffee Lots"
+  },
+  "breadcrumb":{
+    "perfilesTueste": "Roasting Profiles",
+    "comparacionTuestes": "Roast Comparison",
+    "inicio": "Home",
+    "home": "Home",
+    "profiles": "Roasting Profiles"
+  },
+  "SEARCH": {
+    "PLACEHOLDER": "Search lot..."
+  },
+  "TABLE": {
+    "HEADER": {
+      "NAME": "Name",
+      "COFFEE_TYPE": "Coffee Type",
+      "ALTITUDE": "Altitude (masl)",
+      "SUPPLIER": "Supplier",
+      "ACTIONS": "Actions"
+    },
+    "NO_LOTS": "No coffee lots registered"
+  },
+  "BUTTON": {
+    "VIEW": "View",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit",
+    "REGISTER_LOT": "Register Lot",
+    "ADD": "Add",
+    "REMOVE": "Remove",
+    "REGISTER": "Register",
+    "CANCELR": "Cancel",
+    "BACK": "Back",
+    "COMPARE_ROAST_PROFILE": "Compare Roast Profile"
+  },
+  "MODAL": {
+    "NEW_COFFEE_LOT": "New Coffee Lot",
+    "LOT_DETAILS": "Details",
+    "EDIT_LOT": "Edit Lot"
+  },
+  "FORM": {
+    "LABEL": {
+      "NAME": "Name",
+      "COFFEE_TYPE": "Coffee Type",
+      "ALTITUDE": "Altitude (masl)",
+      "ORIGIN": "Origin(specify in the location)",
+      "WEIGHT": "Weight (kg)",
+      "PROCESS": "Processing Method",
+      "SUPPLIER": "Supplier",
+      "CERTIFICATIONS": "Certifications"
+    },
+    "SELECT_PLACEHOLDER": {
+      "SELECT_TYPE": "Select type",
+      "SELECT_PROCESS": "Select process",
+      "SELECT_SUPPLIER": "Select supplier",
+      "SELECT_CERTIFICATION": "Select certification"
     }
   },
   "navbar": {
-    "home": "Home",
-    "features": "Features",
-    "contact": "Contact Us",
-    "profile": "Profile"
+    "home": "Home"
+  },
+  "supply": {
+    "suppliers": {
+      "title": "Suppliers",
+      "search_placeholder": "Search suppliers...",
+      "loading": "Loading...",
+      "no_suppliers": "No suppliers registered",
+      "register_button": "Register Supplier",
+      "register_title": "New Supplier",
+      "edit_title": "Edit Supplier",
+      "save_button": "Save Changes",
+      "details": {
+        "title": "Supplier Details",
+        "general_info": "General information"
+      },
+      "no_specialties": "N/A",
+      "specialties_hint": "comma separated",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "specialties": "Specialties",
+        "user_id": "User ID"
+      },
+      "add_specialty_placeholder": "Add Especialty"
+    }
+  },
+  "profile": {
+    "detailTitle": "Roast profile details",
+    "register": {
+      "title": "New Roast Profile",
+      "submit": "Register Profile"
+    },
+    "fields": {
+      "name": "Profile Name",
+      "type": "Type of Coffee",
+      "selectType": "Select type",
+      "duration": "Total Roasting Time (min)",
+      "durationPlaceholder": "Ej: 12",
+      "tempStart": "Initial Grain Temperature (°C)",
+      "tempEnd": "Desired Final Temperature (°C)",
+      "lot": "Linked Lot",
+      "selectLot": "Select lot"
+    },
+    "columns": {
+      "name": "Name",
+      "type": "Type",
+      "duration": "Duration",
+      "lot": "Lot"
+    },
+    "edit": {
+      "title": "Edit Roast Profile",
+      "submit": "Save Changes"
+    },
+  "detailName": "Name:",
+    "detailType": "Type:",
+    "detailDuration": "Duration:",
+    "detailLot": "Lot:",
+    "favorites": "Favorites",
+    "filter": "Filter",
+    "registerbutton": "Register roast profile",
+    "title": "Home",
+    "secondTile": "Roasting profiles",
+    "curveTitle": "Roasting process curve",
+    "informationTitle": "Information:",
+    "detailTempStart": "Initial temperature",
+    "detailTempEnd": "Final Temperature"
+  },
+"comparison": {
+  "tuesteLabel": "Roasting profile"
+},
+
+  "NAVIGATION": {
+    "HOME": "Home",
+    "FEATURES": "Features",
+    "CONTACTS": "Contact us",
+    "PROFILE": "Profile"
+  },
+  "CONTACT": {
+    "MAIN_TITLE": "Do you have questions, suggestions or need help? At Cafelab we are here to support you and your coffee shop. Write to us!",
+    "FORM_TITLE": "Contact Us",
+    "FORM": {
+      "NAME": "Name",
+      "NAME_PLACEHOLDER": "Enter your full name",
+      "EMAIL": "Email",
+      "EMAIL_PLACEHOLDER": "your@email.com",
+      "SUBJECT": "Subject",
+      "SUBJECT_PLACEHOLDER": "Title of your inquiry",
+      "MESSAGE": "Message",
+      "MESSAGE_PLACEHOLDER": "Describe your inquiry, suggestion or help request...",
+      "ATTACHMENTS": "Attach files",
+      "SEND": "Send"
+    },
+    "CARDS": {
+      "EMAIL_TITLE": "Email",
+      "WHATSAPP_TITLE": "WhatsApp",
+      "LINKEDIN_TITLE": "LinkedIn",
+      "LINKEDIN_TEXT": "Follow us on LinkedIn",
+      "LOCATION_TITLE": "Location",
+      "LOCATION_TEXT": "View our location"
+    },
+    "SCHEDULE": "Office hours: Monday to Friday from 9:00 a.m. to 6:00 p.m. (local time)",
+    "MAP": {
+      "TITLE": "Our Location"
+    },
+    "FAQ": {
+      "TITLE": "Frequently Asked Questions",
+      "QUESTION_1": "How can I register on the platform?",
+      "ANSWER_1": "To register, click the 'Sign Up' button at the top of the page. Complete the form with your personal and business information. Once submitted, you will receive a confirmation email to activate your account.",
+      "QUESTION_2": "What features are included in my free account?",
+      "ANSWER_2": "The free account includes basic access to coffee batch recording, basic supplier management and coffee defect consultation. For advanced features like detailed analytics and custom reports, you can upgrade to a premium plan.",
+      "QUESTION_3": "How can I recover my password?",
+      "ANSWER_3": "On the login page, click 'Forgot your password?' Enter your registered email and we will send you a link to reset your password. Follow the instructions in the email to create a new password.",
+      "QUESTION_4": "Can I change my subscription plan at any time?",
+      "ANSWER_4": "Yes, you can upgrade or change your subscription plan at any time from your account settings. Changes will be applied immediately and billing will be prorated accordingly.",
+      "QUESTION_5": "How can I contact technical support?",
+      "ANSWER_5": "You can contact us through this form, by sending an email to contacto@cafelab.com, via WhatsApp at +51 912 345 678, or through our LinkedIn profile. Our office hours are Monday to Friday from 9:00 a.m. to 6:00 p.m."
+    }
+  },
+  "CONSULTATIONS": {
+    "TITLE": "Defects Library",
+    "BREADCRUMB_HOME": "Home",
+    "BREADCRUMB_LIBRARY": "Defects Library",
+    "SEARCH_COFFEE": "Coffee Type",
+    "SEARCH_DEFECT": "Defect Type",
+    "TABLE": {
+      "WEIGHT": "Weight",
+      "COFFEE": "Coffee",
+      "DEFECT": "Defect",
+      "PERCENTAGE": "Percentage"
+    },
+    "ADD_DEFECT": "Add defect"
+  },
+  "DEFECT_FILE": {
+    "TITLE": "Defect file",
+    "CAUSES": "Probable causes",
+    "SOLUTIONS": "Recommended solutions",
+    "CLOSE": "Close"
+  },
+  "ADD_DEFECT": {
+    "TITLE": "Register Defect",
+    "COFFEE_DATA": "Coffee data",
+    "COFFEE_ID": "Coffee number",
+    "COFFEE_NAME": "Coffee name",
+    "COFFEE_REGION": "Region",
+    "COFFEE_VARIETY": "Variety",
+    "COFFEE_WEIGHT": "Total weight",
+    "DEFECT_DATA": "Defect data",
+    "DEFECT_NAME": "Defect name",
+    "DEFECT_TYPE": "Defect type",
+    "DEFECT_WEIGHT": "Defect weight",
+    "DEFECT_PERCENTAGE": "Percentage",
+    "DEFECT_CAUSE": "Probable cause",
+    "DEFECT_SOLUTION": "Probable solution",
+    "SAVE": "Save data"
+  },
+  "Compare": {
+    "compare": "Compare"
+  },
+  "SORT": {
+    "ASC": "Latest",
+    "DESC": "Oldest"
+  },
+  "PLANS": {
+    "MONTH": "month",
+    "BARISTA": {
+      "TITLE": "Barista Plan",
+      "BUTTON": "Start Barista Plan",
+      "FEATURES": [
+        "Cupping sessions",
+        "Defect library",
+        "Roast-Flavor correlation",
+        "Grind calibration",
+        "Recipes"
+      ]
+    },
+    "OWNER": {
+      "TITLE": "Owner/Admin Plan",
+      "BUTTON": "Start Owner/Admin Plan",
+      "FEATURES": [
+        "Suppliers",
+        "Inventory",
+        "Coffee lots",
+        "Cost management",
+        "Roasting profiles"
+      ]
+    },
+    "FULL": {
+      "TITLE": "Full Plan",
+      "BUTTON": "Start Full Plan",
+      "FEATURES": [
+        "Barista Plan",
+        "Owner/Admin Plan"
+      ]
+    }
+  },
+  "CONFIRM": {
+    "BACK": "Back",
+    "PAYMENT": {
+      "TITLE": "Payment Information",
+      "EMAIL": "Email address",
+      "CARD_NUMBER": "Card number",
+      "EXPIRY": "Expiry date",
+      "CVC": "CVC code",
+      "HOLDER": "Cardholder name",
+      "COUNTRY": "Country",
+      "CONFIRM": "Confirm Payment"
+    },
+    "ERRORS": {
+      "EMAIL_REQUIRED": "Email address is required",
+      "EMAIL_INVALID": "Email format is not valid",
+      "CARD_NUMBER_REQUIRED": "Card number is required",
+      "CARD_NUMBER_INVALID": "Card number must have 16 digits",
+      "EXPIRY_REQUIRED": "Expiry date is required",
+      "EXPIRY_INVALID": "Expiry date must be in MM/YY format",
+      "CVC_REQUIRED": "CVC code is required",
+      "CVC_INVALID": "CVC code must have 3 digits",
+      "CARD_HOLDER_REQUIRED": "Cardholder name is required",
+      "CARD_HOLDER_INVALID": "Cardholder name must have at least 2 characters",
+      "COUNTRY_REQUIRED": "Country is required",
+      "COUNTRY_INVALID": "Country must have at least 2 characters"
+    },
+    "EXAMPLES": {
+      "EMAIL": "Example: user@example.com",
+      "CARD_NUMBER": "Example: 1234567890123456",
+      "EXPIRY": "Example: 12/25",
+      "CVC": "Example: 123",
+      "CARD_HOLDER": "Example: John Smith",
+      "COUNTRY": "Example: United States"
+    }
   }
 }

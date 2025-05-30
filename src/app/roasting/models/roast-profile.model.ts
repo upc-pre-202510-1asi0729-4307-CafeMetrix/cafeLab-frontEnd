@@ -2,8 +2,10 @@ export interface RoastProfile {
   id?: string;
   name: string;
   type: string;
-  altitude: string;
-  provider: string;
+  duration: number;
+  tempStart: number;
+  tempEnd: number;
   isFavorite?: boolean;
-  createdAt?: Date;
-} 
+  createdAt?: string | Date;
+  lot: string;
+}

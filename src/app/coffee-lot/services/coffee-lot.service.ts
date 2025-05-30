@@ -16,10 +16,9 @@ export class CoffeeLotService {
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getLots(): Observable<CoffeeLot[]> {
-    console.log('Getting coffee lots from:', this.apiUrl);
     return this.http.get<CoffeeLot[]>(this.apiUrl)
       .pipe(
         retry(1),
@@ -28,7 +27,7 @@ export class CoffeeLotService {
       );
   }
 
-  getLotById(id: number): Observable<CoffeeLot> {
+  getLotById(id: string): Observable<CoffeeLot> {
     return this.http.get<CoffeeLot>(`${this.apiUrl}/${id}`)
       .pipe(
         tap(lot => console.log(`Fetched lot id=${lot.id}`)),
@@ -37,7 +36,10 @@ export class CoffeeLotService {
   }
 
   addLot(lot: CoffeeLot): Observable<CoffeeLot> {
-    console.log('Adding coffee lot:', lot);
+    if (!lot.supplier_id) {
+      return throwError(() => new Error('El lote debe estar asociado a un proveedor.'));
+    }
+
     return this.http.post<CoffeeLot>(this.apiUrl, lot, this.httpOptions)
       .pipe(
         tap(newLot => console.log(`Added coffee lot w/ id=${newLot.id}`)),
@@ -53,10 +55,10 @@ export class CoffeeLotService {
       );
   }
 
-  deleteLot(id: number): Observable<void> {
+  deleteLot(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`Deleted coffee lot id=${id}`)),
+        tap(() => console.log(`Deleted coffee lot id=${id}`)),
         catchError(this.handleError)
       );
   }
@@ -70,19 +72,15 @@ export class CoffeeLotService {
 
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
-
     let errorMessage = 'Se produjo un error desconocido';
 
     if (error.error instanceof ErrorEvent) {
-      // Error del lado del cliente
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Error del lado del servidor
       errorMessage = `Código de error: ${error.status}, mensaje: ${error.message}`;
 
-      // Mensajes de error más específicos
       if (error.status === 0) {
-        errorMessage = 'No se puede conectar al servidor. Por favor verifique su conexión o si el servidor está en ejecución.';
+        errorMessage = 'No se puede conectar al servidor. Verifique su conexión o el estado del servidor.';
       } else if (error.status === 404) {
         errorMessage = 'Recurso no encontrado.';
       } else if (error.status === 500) {
@@ -90,7 +88,6 @@ export class CoffeeLotService {
       }
     }
 
-    console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 }

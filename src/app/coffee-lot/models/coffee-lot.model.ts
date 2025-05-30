@@ -1,13 +1,12 @@
 export interface CoffeeLot {
-  id?: number;
-  name: string;
-  type: string;
-  process: string;
-  altitude: string;
-  weight: string;
-  origin: string;
+  id?: string;
+  lot_name: string;
+  coffee_type: string;
+  processing_method: string;
+  altitude: number;
+  weight: number;
   certifications: string[];
-  productionDate?: string;
-  providerId?: number;
-  providerName?: string;
-} 
+  origin: string;
+  supplier_id: string;
+  user_id: string;
+}

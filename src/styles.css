@@ -11,3 +11,9 @@ body {
 html, body {
   height: 100%;
 }
+
+.mat-toolbar-single-row,
+.mat-toolbar-row {
+  padding-left: 0 !important;
+  padding-right: 40px !important;
+}

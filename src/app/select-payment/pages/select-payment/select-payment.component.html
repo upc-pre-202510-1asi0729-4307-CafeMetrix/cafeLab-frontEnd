@@ -1,4 +1,4 @@
-<div class="payment-container">
+  <div class="payment-container">
   <mat-card class="payment-card">
     <mat-card-header>
       <button mat-button routerLink="/planes" class="back-button">
@@ -12,6 +12,7 @@
       <div class="content-wrapper">
         <!-- Plan info a la izquierda -->
         <div class="left-section">
+          <!--Podría ser un componente
           <mat-card class="plan-info">
             <mat-card-title>Plan Barista</mat-card-title>
             <mat-card-subtitle class="price">s/.19/mes</mat-card-subtitle>
@@ -24,14 +25,15 @@
                 <li><mat-icon color="primary">check</mat-icon> Recetas</li>
               </ul>
             </mat-card-content>
-          </mat-card>
+          </mat-card>-->
+          <app-plan-card-component></app-plan-card-component>
         </div>
 
         <!-- Formulario de pago a la derecha -->
         <div class="right-section">
           <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
             <h3>Complete sus datos</h3>
-            
+
             <div class="card-selection">
               <div class="card-option" [class.selected]="selectedCard === 'visa'" (click)="selectCard('visa')">
                 <img src="../../../assets/logo-visa.png" alt="Visa">
@@ -222,4 +224,4 @@ mat-card-title {
   height: 30px;
   width: auto;
 }
-</style> 
+</style>

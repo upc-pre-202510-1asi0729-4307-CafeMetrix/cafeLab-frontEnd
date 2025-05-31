@@ -1,0 +1,225 @@
+<div class="payment-container">
+  <mat-card class="payment-card">
+    <mat-card-header>
+      <button mat-button routerLink="/planes" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a planes
+      </button>
+      <mat-card-title>Proceso de Pago</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="content-wrapper">
+        <!-- Plan info a la izquierda -->
+        <div class="left-section">
+          <mat-card class="plan-info">
+            <mat-card-title>Plan Barista</mat-card-title>
+            <mat-card-subtitle class="price">s/.19/mes</mat-card-subtitle>
+            <mat-card-content>
+              <ul class="features">
+                <li><mat-icon color="primary">check</mat-icon> Sesiones de cata</li>
+                <li><mat-icon color="primary">check</mat-icon> Librería de defectos</li>
+                <li><mat-icon color="primary">check</mat-icon> Correlación Tueste-Sabor</li>
+                <li><mat-icon color="primary">check</mat-icon> Calibración de Molienda</li>
+                <li><mat-icon color="primary">check</mat-icon> Recetas</li>
+              </ul>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Formulario de pago a la derecha -->
+        <div class="right-section">
+          <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+            <h3>Complete sus datos</h3>
+            
+            <div class="card-selection">
+              <div class="card-option" [class.selected]="selectedCard === 'visa'" (click)="selectCard('visa')">
+                <img src="../../../assets/logo-visa.png" alt="Visa">
+              </div>
+              <div class="card-option" [class.selected]="selectedCard === 'mastercard'" (click)="selectCard('mastercard')">
+                <img src="../../../assets/mastercard-logo.png" alt="Mastercard" style="max-width: 100px;">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Email</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput type="email" formControlName="email" placeholder="example@com">
+                <mat-error *ngIf="paymentForm.get('email')?.invalid">{{getErrorMessage('email')}}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <label>Número de tarjeta</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="cardNumber" placeholder="0000 0000 0000 0000">
+                <mat-error *ngIf="paymentForm.get('cardNumber')?.invalid">{{getErrorMessage('cardNumber')}}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field half-width">
+                <label>Fecha de expiración</label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="expiryDate" placeholder="MM/YY">
+                  <mat-error *ngIf="paymentForm.get('expiryDate')?.invalid">{{getErrorMessage('expiryDate')}}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-field half-width">
+                <label>CVC</label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="cvc" placeholder="CVC">
+                  <mat-error *ngIf="paymentForm.get('cvc')?.invalid">{{getErrorMessage('cvc')}}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Nombre del titular</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <input matInput formControlName="cardholderName" placeholder="Nombre completo">
+                <mat-error *ngIf="paymentForm.get('cardholderName')?.invalid">{{getErrorMessage('cardholderName')}}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <label>País</label>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-select formControlName="country">
+                  <mat-option *ngFor="let country of countries" [value]="country">
+                    {{country}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="paymentForm.get('country')?.invalid">{{getErrorMessage('country')}}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <button mat-raised-button type="submit" [disabled]="paymentForm.invalid" class="submit-button">
+              Continuar
+            </button>
+          </form>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<style>
+.payment-container {
+  padding: 2rem;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.payment-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #FFFFFF !important;
+}
+
+.back-button {
+  background-color: #414535 !important;
+  color: #F8F8F8 !important;
+}
+
+mat-card-title {
+  color: #414535;
+  text-align: center;
+  width: 100%;
+}
+
+.plan-info {
+  background-color: #C68F61 !important;
+}
+
+.plan-info mat-card-title {
+  text-align: center;
+  color: #414535;
+}
+
+.plan-info mat-card-content,
+.plan-info mat-card-subtitle,
+.plan-info .features li {
+  color: #F2E3BC !important;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+}
+
+.payment-form {
+  padding: 1rem;
+}
+
+.payment-form h3 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  color: #414535;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+::ng-deep .mat-form-field-label {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: bold !important;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  background-color: #6B6B6B !important;
+  color: white;
+  width: auto;
+  padding: 0.5rem 2rem;
+  margin: 0 auto;
+  display: block;
+}
+
+.card-selection {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-option {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.card-option.selected {
+  border-color: #414535;
+}
+
+.card-option img {
+  height: 30px;
+  width: auto;
+}
+</style> 

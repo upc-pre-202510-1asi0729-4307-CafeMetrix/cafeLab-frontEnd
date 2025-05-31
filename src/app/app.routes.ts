@@ -9,6 +9,7 @@ import {InventaryComponent} from './inventory/pages/inventary.component';
 import {
   ProductionCostPageComponent
 } from './cost-management/pages/production-cost-management/production-cost-management.component';
+import {SelectPaymentComponent} from './select-payment/pages/select-payment/select-payment.component';
 
 export const routes: Routes = [
   { path: 'libraryDefects',             component: ViewConsultationsComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   {path: 'cupping-sessions', component: SesionesCataComponent},
   {path: 'inventory', component: InventaryComponent},
   {path: 'production-cost-management', component: ProductionCostPageComponent},
+  {path: 'select-payment-barista', component: SelectPaymentComponent},
   { path: 'file/:id', component: ViewFileComponent },
   { path: 'new-defect', component: ViewNewDefectComponent },
   { path: '',                 redirectTo: 'libraryDefects', pathMatch: 'full' },

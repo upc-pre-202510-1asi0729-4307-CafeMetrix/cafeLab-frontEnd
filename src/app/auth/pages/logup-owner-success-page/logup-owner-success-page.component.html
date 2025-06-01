@@ -1,10 +1,12 @@
 <app-toolbarinit></app-toolbarinit>
+
 <div class="logup-owner-success-page">
   <div class="success-message">
     <h2>{{ 'LOGUP_OWNER_SUCCESS.TITLE' | translate }}</h2>
     <p>{{ 'LOGUP_OWNER_SUCCESS.MESSAGE' | translate }}</p>
+    <button mat-raised-button color="primary" (click)="onContinue()">
+      {{ 'LOGUP_OWNER_SUCCESS.CONTINUE' | translate }}
+    </button>
   </div>
-  <button mat-raised-button color="primary" (click)="onContinue()">
-    {{ 'LOGUP_OWNER_SUCCESS.CONTINUE' | translate }}
-  </button>
+  <div class="background-image" aria-hidden="true"></div>
 </div>

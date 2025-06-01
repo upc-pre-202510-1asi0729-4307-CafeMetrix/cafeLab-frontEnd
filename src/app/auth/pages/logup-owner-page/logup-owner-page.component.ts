@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LogupOwnerFormComponent } from '../../components/logup-owner-form/logup-owner-form.component';
-import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
+import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-logup-owner-page',

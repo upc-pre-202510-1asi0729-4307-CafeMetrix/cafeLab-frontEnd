@@ -3,13 +3,14 @@ import { EditProfileFormComponent } from '../../components/edit-profile-form/edi
 import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
 import { User } from '../../model/user.entity';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile-page',
   templateUrl: './edit-profile-page.component.html',
   styleUrls: ['./edit-profile-page.component.css'],
   standalone: true,
-  imports: [EditProfileFormComponent, ToolbarComponent, ToolbarinitComponent]
+  imports: [EditProfileFormComponent, ToolbarComponent, ToolbarinitComponent, NgIf]
 })
 export class EditProfilePageComponent implements OnInit {
   currentUser: User | null = null;

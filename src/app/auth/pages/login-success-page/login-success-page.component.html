@@ -3,8 +3,9 @@
   <div class="success-message">
     <h2>{{ 'LOGIN_SUCCESS.TITLE' | translate }}</h2>
     <p>{{ 'LOGIN_SUCCESS.MESSAGE' | translate: { name: currentUser?.name } }}</p>
+    <button mat-raised-button color="primary" (click)="onContinue()">
+      {{ 'LOGIN_SUCCESS.CONTINUE' | translate }}
+    </button>
   </div>
-  <button mat-raised-button color="primary" (click)="onContinue()">
-    {{ 'LOGIN_SUCCESS.CONTINUE' | translate }}
-  </button>
+  <div class="background-image" aria-hidden="true"></div>
 </div>

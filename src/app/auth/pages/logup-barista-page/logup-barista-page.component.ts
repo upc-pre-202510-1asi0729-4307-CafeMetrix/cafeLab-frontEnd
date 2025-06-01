@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LogupBaristaFormComponent } from '../../components/logup-barista-form/logup-barista-form.component';
-import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
+import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-logup-barista-page',

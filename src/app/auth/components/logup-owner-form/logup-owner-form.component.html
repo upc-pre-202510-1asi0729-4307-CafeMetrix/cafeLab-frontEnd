@@ -18,6 +18,14 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>{{ 'LOGUP.EXPERIENCE' | translate }}</mat-label>
+      <input matInput type="experience" formControlName="experience">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'experience')">
+        {{ errorMessagesForControl(logupForm, 'experience') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
       <mat-label>{{ 'LOGUP.PASSWORD' | translate }}</mat-label>
       <input matInput type="password" formControlName="password">
       <mat-error *ngIf="isInvalidControl(logupForm, 'password')">

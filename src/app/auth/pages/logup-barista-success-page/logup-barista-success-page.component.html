@@ -1,10 +1,13 @@
 <app-toolbarinit></app-toolbarinit>
+
 <div class="logup-barista-success-page">
   <div class="success-message">
     <h2>{{ 'LOGUP_BARISTA_SUCCESS.TITLE' | translate }}</h2>
     <p>{{ 'LOGUP_BARISTA_SUCCESS.MESSAGE' | translate }}</p>
+    <button mat-raised-button color="primary" (click)="onContinue()">
+      {{ 'LOGUP_BARISTA_SUCCESS.CONTINUE' | translate }}
+    </button>
   </div>
-  <button mat-raised-button color="primary" (click)="onContinue()">
-    {{ 'LOGUP_BARISTA_SUCCESS.CONTINUE' | translate }}
-  </button>
+  <div class="background-image" aria-hidden="true"></div>
 </div>
+

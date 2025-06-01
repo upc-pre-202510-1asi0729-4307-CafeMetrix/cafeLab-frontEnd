@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
+import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-login-page',

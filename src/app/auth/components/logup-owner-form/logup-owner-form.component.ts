@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-logup-owner-form',
@@ -19,7 +20,8 @@ import { User } from '../../model/user.entity';
     MatInputModule,
     MatButtonModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ]
 })
 export class LogupOwnerFormComponent extends BaseFormComponent {
@@ -35,13 +37,14 @@ export class LogupOwnerFormComponent extends BaseFormComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      cafeteriaName: ['', Validators.required]
+      cafeteriaName: ['', Validators.required],
+      experience: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.logupForm.valid) {
-      const { name, email, password, cafeteriaName } = this.logupForm.value;
+      const { name, email, password, cafeteriaName, experience } = this.logupForm.value;
       const newUser: User = {
         id: 0,
         name,
@@ -49,7 +52,7 @@ export class LogupOwnerFormComponent extends BaseFormComponent {
         password,
         role: 'dueno_cafeteria',
         cafeteriaName,
-        experience: '',
+        experience,
         profilePicture: '',
         paymentMethod: '',
         isFirstLogin: true,
@@ -59,8 +62,7 @@ export class LogupOwnerFormComponent extends BaseFormComponent {
 
       this.userService.register(newUser).subscribe({
         next: (user: User) => {
-          console.log('Registered user:', user);
-          // Redirigir a la página de éxito de registro de dueño de cafetería
+          localStorage.setItem('currentUser', JSON.stringify(user));  // <-- Guarda usuario
           this.router.navigate(['/logup/owner/success']);
         },
         error: (error: any) => {

@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { MatToolbar } from '@angular/material/toolbar';
-import { ToolbarComponent } from './public/components/toolbar/toolbar.component';
-import { ToolbarinitComponent } from './public/components/toolbarinit/toolbarinit.component';
 import { User } from './auth/model/user.entity';
 
 @Component({
@@ -12,16 +9,13 @@ import { User } from './auth/model/user.entity';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    MatToolbar,
-    ToolbarComponent,
-    ToolbarinitComponent
+    RouterOutlet
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'libraryDefects';
+  title = 'Café Lab';
   currentUser: User | null = null;
 
   constructor(private translate: TranslateService) {

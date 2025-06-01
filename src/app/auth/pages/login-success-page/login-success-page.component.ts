@@ -4,7 +4,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../model/user.entity';
 import {MatButton} from '@angular/material/button';
 import {TranslatePipe} from '@ngx-translate/core';
-import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
+import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-login-success-page',

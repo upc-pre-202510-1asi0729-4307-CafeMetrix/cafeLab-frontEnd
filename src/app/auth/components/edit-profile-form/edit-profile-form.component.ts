@@ -8,6 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -19,7 +21,10 @@ import { User } from '../../model/user.entity';
     MatInputModule,
     MatButtonModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelect,
+    MatOption,
+    NgIf
   ]
 })
 export class EditProfileFormComponent extends BaseFormComponent implements OnInit {
@@ -36,7 +41,7 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       cafeteriaName: [''],
-      experience: [''],
+      experience: ['', Validators.required],
       paymentMethod: ['', Validators.required]
     });
   }
@@ -67,7 +72,7 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
         name,
         email,
         cafeteriaName: cafeteriaName || '',
-        experience: experience || '',
+        experience,
         paymentMethod,
         isFirstLogin: false
       };

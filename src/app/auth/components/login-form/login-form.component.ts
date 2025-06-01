@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import {User} from '../../model/user.entity';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login-form',
@@ -19,7 +20,8 @@ import {User} from '../../model/user.entity';
     MatInputModule,
     MatButtonModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ]
 })
 export class LoginFormComponent extends BaseFormComponent {
@@ -46,21 +48,7 @@ export class LoginFormComponent extends BaseFormComponent {
           localStorage.setItem('currentUser', JSON.stringify(user));
 
           // Redirigir al dashboard correspondiente según el plan del usuario AQUI TAMBIEN HAY QUE CAMBIAR SI ES DISTINTO LO QUE TIENES
-          switch (user.plan) {
-            case 'barista':
-              this.router.navigate(['/dashboard/barista']);
-              break;
-            case 'admin':
-              this.router.navigate(['/dashboard/owner']);
-              break;
-            case 'complete':
-              this.router.navigate(['/dashboard/complete']);
-              break;
-            default:
-              console.error('Invalid user plan');
-              // Manejar el caso de un plan de usuario inválido
-              break;
-          }
+          this.router.navigate(['login/success']);
         },
         error: (error: any) => {
           console.error('Login error:', error);

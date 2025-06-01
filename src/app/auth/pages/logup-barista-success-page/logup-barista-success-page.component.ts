@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {MatButton} from '@angular/material/button';
 import {TranslatePipe} from '@ngx-translate/core';
-import { ToolbarinitComponent } from '../../../public/components/toolbarinit/toolbarinit.component';
+import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
 
 @Component({
   selector: 'app-logup-barista-success-page',
@@ -18,6 +18,6 @@ export class LogupBaristaSuccessPageComponent {
   constructor(private router: Router) {}
 
   onContinue() {
-    this.router.navigate(['/editprofile']);
+    this.router.navigate(['/edit-profile']);
   }
 }

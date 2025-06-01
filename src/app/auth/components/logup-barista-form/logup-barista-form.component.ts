@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-logup-barista-form',
@@ -19,7 +20,8 @@ import { User } from '../../model/user.entity';
     MatInputModule,
     MatButtonModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ]
 })
 export class LogupBaristaFormComponent extends BaseFormComponent {
@@ -34,37 +36,36 @@ export class LogupBaristaFormComponent extends BaseFormComponent {
     this.logupForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      experience: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.logupForm.valid) {
-      const { name, email, password } = this.logupForm.value;
+      const { name, email, password, experience } = this.logupForm.value;
       const newUser: User = {
         id: 0,
         name,
         email,
         password,
+        experience,
         role: 'barista',
         cafeteriaName: '',
-        experience: '',
         profilePicture: '',
         paymentMethod: '',
         isFirstLogin: true,
-        plan: 'barista',
+        plan: '',
         hasPlan: false
       };
 
       this.userService.register(newUser).subscribe({
         next: (user: User) => {
-          console.log('Registered user:', user);
-          // Redirigir a la página de éxito de registro de barista
+          localStorage.setItem('currentUser', JSON.stringify(user));  // <-- Guarda usuario
           this.router.navigate(['/logup/barista/success']);
         },
         error: (error: any) => {
           console.error('Registration error:', error);
-          // Manejar el error de registro, como mostrar un mensaje de error al usuario
         }
       });
     }

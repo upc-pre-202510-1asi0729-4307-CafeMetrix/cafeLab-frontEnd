@@ -33,44 +33,6 @@ mat-card-title {
   margin: 0 auto !important;
 }
 
-.plan-info {
-  background-color: #C68F61 !important;
-  text-align: center;
-  padding-top: 1.5rem;
-}
-
-.plan-info mat-card-title {
-  text-align: center;
-  color: #414535;
-  margin-bottom: 1.5rem !important;
-  font-size: 1.5rem;
-}
-
-.plan-info mat-card-subtitle {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.plan-info mat-card-content,
-.plan-info mat-card-subtitle,
-.plan-info .features li {
-  color: #F2E3BC !important;
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-}
-
-.content-wrapper {
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-}
-
-.left-section,
-.right-section {
-  flex: 1;
-}
-
 .payment-form {
   padding: 1rem;
 }
@@ -205,13 +167,13 @@ input.invalid, select.invalid {
   .content-wrapper {
     flex-direction: column;
   }
-  
+
   .half-width {
     width: 100%;
   }
-  
+
   .form-row {
     flex-direction: column;
     gap: 0;
   }
-} 
+}

@@ -48,12 +48,18 @@ export class SelectPaymentComponent {
 
   onSubmit() {
     if (this.paymentForm.valid) {
-      console.log('Form submitted:', this.paymentForm.value);
-      // Aquí iría la lógica para procesar el pago
+      this.paymentService.submitPayment(this.paymentForm.value)
+        .subscribe(response => {
+          console.log('Payment success:', response);
+        }, error => {
+          console.error('Payment failed:', error);
+        });
     } else {
       this.markFormGroupTouched(this.paymentForm);
     }
   }
+
+
 
   selectCard(card: 'visa' | 'mastercard') {
     this.selectedCard = card;

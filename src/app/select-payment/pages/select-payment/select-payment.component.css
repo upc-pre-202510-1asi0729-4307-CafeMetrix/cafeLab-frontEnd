@@ -4,7 +4,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  margin-top: 64px; /* Add space for navbar */
+  margin-top: 64px;
 }
 
 .payment-card {
@@ -31,6 +31,18 @@ mat-card-title {
   color: #414535;
   text-align: center;
   margin: 0 auto !important;
+  width: 100%;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
 }
 
 .payment-form {
@@ -58,6 +70,12 @@ mat-card-title {
 
 .mat-form-field {
   width: 100%;
+  margin-bottom: 1rem;
+}
+
+::ng-deep .mat-form-field-label {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: bold !important;
 }
 
 .form-row {
@@ -78,7 +96,8 @@ mat-card-title {
   color: white;
   width: auto;
   padding: 0.5rem 2rem;
-  margin: 1rem auto;
+  /*margin: 1rem auto;*/
+  margin: 0 auto;
   display: block;
 }
 

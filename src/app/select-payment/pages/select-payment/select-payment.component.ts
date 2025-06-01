@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,7 +8,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import {PlanCardComponentComponent} from '../../components/plan-card-component/plan-card-component.component';
+import { PlanCardComponentComponent } from '../../components/plan-card-component/plan-card-component.component';
+import { PaymentService } from '../../services/payment.service';
+import { PaymentData } from '../../model/payment-data.model';
 
 @Component({
   selector: 'app-select-payment',
@@ -35,7 +36,10 @@ export class SelectPaymentComponent {
   selectedCard: 'visa' | 'mastercard' = 'visa';
   countries: string[] = ['Peru', 'Chile', 'Colombia', 'Mexico'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private paymentService: PaymentService // 👈 Asegúrate de inyectarlo
+  ) {
     this.paymentForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
@@ -48,18 +52,20 @@ export class SelectPaymentComponent {
 
   onSubmit() {
     if (this.paymentForm.valid) {
-      this.paymentService.submitPayment(this.paymentForm.value)
-        .subscribe(response => {
-          console.log('Payment success:', response);
-        }, error => {
-          console.error('Payment failed:', error);
-        });
+      const paymentData = new PaymentData(this.paymentForm.value);
+      this.paymentService.submitPayment(paymentData)
+        .subscribe(
+          response => {
+            console.log('Payment success:', response);
+          },
+          error => {
+            console.error('Payment failed:', error);
+          }
+        );
     } else {
       this.markFormGroupTouched(this.paymentForm);
     }
   }
-
-
 
   selectCard(card: 'visa' | 'mastercard') {
     this.selectedCard = card;

@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/library-defects",
+            "outputPath": "dist/cafe-lab",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [

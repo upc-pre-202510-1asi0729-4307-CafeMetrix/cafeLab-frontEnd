@@ -1,0 +1,61 @@
+<!-- Espacio reservado para el navbar -->
+<div style="height: 60px;"></div>
+
+<div class="container">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a routerLink="/dashboard">{{ 'NAVIGATION.HOME' | translate }}</a> &gt; <span>{{ 'NAVIGATION.DRINKS' | translate }}</span>
+  </div>
+
+  <!-- Buscador -->
+  <div class="search-container">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>{{ 'recipes.creation.name_placeholder' | translate }}</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (input)="filterDrinks()" placeholder="{{ 'recipes.creation.name_placeholder' | translate }}">
+      <button mat-icon-button matSuffix *ngIf="searchTerm" (click)="searchTerm=''; filterDrinks();">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <!-- Portafolios -->
+  <div class="portfolio-section">
+    <div class="section-header">
+      <h2 class="section-title">{{ 'portfolio.title' | translate }}</h2>
+      <button mat-raised-button class="create-button" (click)="openCreatePortfolioDialog()">
+        {{ 'portfolio.create' | translate }}
+      </button>
+    </div>
+    <div *ngFor="let portfolio of portfolios">
+      <div class="portfolio-card" (click)="navigateToPortfolio(portfolio.id)">
+        <div class="portfolio-content">
+          {{ portfolio.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bebidas sin portafolio asociado -->
+  <div>
+    <div class="section-header">
+      <h2 class="section-title">{{ 'recipes.title' | translate }}</h2>
+      <button mat-raised-button class="create-button" (click)="navigateToCreateRecipe()">
+        {{ 'recipes.create' | translate }}
+      </button>
+    </div>
+    <div class="recipes-grid">
+      <mat-card class="recipe-card" *ngFor="let drink of filteredDrinks" [routerLink]="['/preparation/recipes', drink.id]">
+        <img mat-card-image [src]="drink.image" [alt]="drink.name" class="recipe-img">
+        <mat-card-content>
+          <h3 class="recipe-title">{{ drink.name }}</h3>
+          <p class="recipe-type">
+            {{ 'recipes.creation.extraction_methods.' + drink.extractionMethod | translate }}
+            <span *ngIf="drink.extractionMethod === 'coffee'">
+              - {{ 'recipes.creation.extraction_methods.' + (drink.extractionMethod || 'pour-over') | translate }}
+            </span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

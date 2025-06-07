@@ -7,6 +7,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
+  standalone: true,
   imports: [
     MatToolbar,
     TranslatePipe,

@@ -5,10 +5,12 @@ import { User } from '../../model/user.entity';
 import {MatButton} from '@angular/material/button';
 import {TranslatePipe} from '@ngx-translate/core';
 import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
+import {AuthService } from '../../services/AuthService';
 
 @Component({
   selector: 'app-login-success-page',
   templateUrl: './login-success-page.component.html',
+  standalone: true,
   imports: [
     MatButton,
     TranslatePipe,
@@ -19,7 +21,7 @@ import { ToolbarinitComponent} from '../../../public/components/toolbarinit/tool
 export class LoginSuccessPageComponent implements OnInit {
   currentUser: User | null = null;
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private AuthService: UserService) {}
 
   ngOnInit() {
     const storedUser = localStorage.getItem('currentUser');
@@ -38,10 +40,10 @@ export class LoginSuccessPageComponent implements OnInit {
         case 'barista':
           this.router.navigate(['/dashboard/barista']);
           break;
-        case 'admin':
+        case 'owner':
           this.router.navigate(['/dashboard/owner']);
           break;
-        case 'complete':
+        case 'full':
           this.router.navigate(['/dashboard/complete']);
           break;
         default:

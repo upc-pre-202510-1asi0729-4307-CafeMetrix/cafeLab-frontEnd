@@ -109,7 +109,7 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
       }
     } else {
       // Si el usuario no tiene un plan seleccionado, redirigir a la página de selección de plan
-      this.router.navigate(['/subscription/selectplan']);
+      this.router.navigate(['/subscription/select-plan']);
     }
   }
 }

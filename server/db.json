@@ -304,6 +304,48 @@
       "isFirstLogin": false,
       "plan": "admin",
       "hasPlan": true
+    },
+    {
+      "id": 14,
+      "name": "kalet",
+      "email": "kaler@qwe.com",
+      "password": "123456789",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "kaletitos",
+      "experience": "1",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "complete",
+      "hasPlan": true
+    },
+    {
+      "id": 15,
+      "name": "xd",
+      "email": "xd@as.com",
+      "password": "123456",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "xdxdxdxdxdxd",
+      "experience": "1",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "barista",
+      "hasPlan": true
+    },
+    {
+      "id": 16,
+      "name": "xdd",
+      "email": "as@asd.com",
+      "password": "123456789",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "kaletito",
+      "experience": "1",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "admin",
+      "hasPlan": true
     }
   ]
 }

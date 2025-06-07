@@ -6,6 +6,7 @@ import { ToolbarinitComponent} from '../../../public/components/toolbarinit/tool
 
 @Component({
   selector: 'app-logup-barista-success-page',
+  standalone: true,
   templateUrl: './logup-barista-success-page.component.html',
   imports: [
     MatButton,

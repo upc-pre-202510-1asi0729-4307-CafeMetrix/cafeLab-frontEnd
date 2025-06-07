@@ -1,1 +1,37 @@
-<p>owner-dashboard works!</p>
+<mat-toolbar color="primary">
+  <app-toolbar></app-toolbar>
+</mat-toolbar>
+
+<div class="cards-container">
+  <!-- Primera fila -->
+  <div class="cards-row">
+    <div class="card-wrapper">
+      <mat-card class="action-card" routerLink="/suppliers">
+        <mat-card-content>
+          <img src="/assets/supply-img.png" alt="{{ 'WELCOME.BUTTONS.SUPPLIERS' | translate }}">
+        </mat-card-content>
+        <h3 class="card-title">{{ 'WELCOME.BUTTONS.SUPPLIERS' | translate }}</h3>
+      </mat-card>
+    </div>
+
+    <div class="card-wrapper">
+      <mat-card class="action-card" routerLink="/coffee-lots">
+        <mat-card-content>
+          <img src="/assets/lots-img.png" alt="{{ 'WELCOME.BUTTONS.BATCHES' | translate }}">
+        </mat-card-content>
+        <h3 class="card-title">{{ 'WELCOME.BUTTONS.BATCHES' | translate }}</h3>
+      </mat-card>
+    </div>
+
+    <div class="card-wrapper">
+      <mat-card class="action-card" routerLink="/perfiles-tueste">
+        <mat-card-content>
+          <img src="/assets/profiles-img.png" alt="{{ 'WELCOME.BUTTONS.ROAST_PROFILES' | translate }}">
+        </mat-card-content>
+        <h3 class="card-title">{{ 'WELCOME.BUTTONS.ROAST_PROFILES' | translate }}</h3>
+      </mat-card>
+    </div>
+  </div>
+
+
+</div>

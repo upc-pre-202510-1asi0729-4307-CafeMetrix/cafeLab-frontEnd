@@ -5,6 +5,7 @@ import {UpperCasePipe} from '@angular/common';
 @Component({
   selector: 'app-language-switcher',
   templateUrl: './language-switcher.component.html',
+  standalone: true,
   imports: [
     UpperCasePipe
   ],

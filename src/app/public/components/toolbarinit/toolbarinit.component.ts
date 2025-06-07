@@ -4,6 +4,7 @@ import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.
 
 @Component({
   selector: 'app-toolbarinit',
+  standalone: true,
   imports: [
     MatToolbar,
     LanguageSwitcherComponent

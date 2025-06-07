@@ -2,15 +2,16 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {MatButton} from '@angular/material/button';
 import {TranslatePipe} from '@ngx-translate/core';
-import { ToolbarinitComponent} from '../../../public/components/toolbarinit/toolbarinit.component';
+import {ToolbarPlanComponent} from '../../../subscription/components/toolbar-plan/toolbar-plan.component';
 
 @Component({
   selector: 'app-logup-owner-success-page',
   templateUrl: './logup-owner-success-page.component.html',
+  standalone: true,
   imports: [
     MatButton,
     TranslatePipe,
-    ToolbarinitComponent
+    ToolbarPlanComponent
   ],
   styleUrls: ['./logup-owner-success-page.component.css']
 })

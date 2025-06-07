@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import {User} from '../../model/user.entity';
 import {NgIf} from '@angular/common';
+import {AuthService} from '../../services/AuthService';
 
 @Component({
   selector: 'app-login-form',
@@ -29,6 +30,7 @@ export class LoginFormComponent extends BaseFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private userService: UserService,
     private router: Router
   ) {
@@ -42,13 +44,16 @@ export class LoginFormComponent extends BaseFormComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.userService.login(email, password).subscribe({
+      this.authService.login(email, password).subscribe({
         next: (user: User) => {
           console.log('Logged in user:', user);
           localStorage.setItem('currentUser', JSON.stringify(user));
 
-          // Redirigir al dashboard correspondiente según el plan del usuario AQUI TAMBIEN HAY QUE CAMBIAR SI ES DISTINTO LO QUE TIENES
+          if(user.hasPlan){
           this.router.navigate(['login/success']);
+            } else {
+            this.router.navigate(['/select-plan']);
+          }
         },
         error: (error: any) => {
           console.error('Login error:', error);
@@ -68,4 +73,6 @@ export class LoginFormComponent extends BaseFormComponent {
   onRegisterOwner() {
     this.router.navigate(['/register/owner']);
   }
+
+
 }

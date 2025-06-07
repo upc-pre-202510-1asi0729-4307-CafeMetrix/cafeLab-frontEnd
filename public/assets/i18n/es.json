@@ -89,5 +89,269 @@
     "VISA": "Visa",
     "MASTERCARD": "Mastercard",
     "SUBMIT": "Guardar"
+  },
+  "PLANS": {
+    "MONTH": "mes",
+    "BARISTA": {
+      "TITLE": "Plan Barista",
+      "BUTTON": "Comenzar Plan Barista",
+      "FEATURES": [
+        "Sesiones de cata",
+        "Librería de defectos",
+        "Correlación Tueste-Sabor",
+        "Calibración de Molienda",
+        "Recetas"
+      ]
+    },
+    "OWNER": {
+      "TITLE": "Plan Dueño/Administrador",
+      "BUTTON": "Comenzar Plan Dueño/Administrador",
+      "FEATURES": [
+        "Proveedores",
+        "Inventario",
+        "Lotes de café",
+        "Gestión de costos",
+        "Perfiles de tueste"
+      ]
+    },
+    "FULL": {
+      "TITLE": "Plan Completo",
+      "BUTTON": "Comenzar Plan Completo",
+      "FEATURES": [
+        "Plan Barista",
+        "Plan Dueño/Administrador"
+      ]
+    }
+  },
+  "CONFIRM": {
+    "BACK": "Volver",
+    "PAYMENT": {
+      "TITLE": "Información de Pago",
+      "EMAIL": "Correo electrónico",
+      "CARD_NUMBER": "Número de tarjeta",
+      "EXPIRY": "Fecha de vencimiento",
+      "CVC": "Código CVC",
+      "HOLDER": "Nombre del titular",
+      "COUNTRY": "País",
+      "CONFIRM": "Confirmar Pago"
+    },
+    "ERRORS": {
+      "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
+      "EMAIL_INVALID": "El formato del correo electrónico no es válido",
+      "CARD_NUMBER_REQUIRED": "El número de tarjeta es obligatorio",
+      "CARD_NUMBER_INVALID": "El número de tarjeta debe tener 16 dígitos",
+      "EXPIRY_REQUIRED": "La fecha de vencimiento es obligatoria",
+      "EXPIRY_INVALID": "La fecha de vencimiento debe tener el formato MM/AA",
+      "CVC_REQUIRED": "El código CVC es obligatorio",
+      "CVC_INVALID": "El código CVC debe tener 3 dígitos",
+      "CARD_HOLDER_REQUIRED": "El nombre del titular es obligatorio",
+      "CARD_HOLDER_INVALID": "El nombre del titular debe tener al menos 2 caracteres",
+      "COUNTRY_REQUIRED": "El país es obligatorio",
+      "COUNTRY_INVALID": "El país debe tener al menos 2 caracteres"
+    },
+    "EXAMPLES": {
+      "EMAIL": "Ejemplo: usuario@ejemplo.com",
+      "CARD_NUMBER": "Ejemplo: 1234567890123456",
+      "EXPIRY": "Ejemplo: 12/25",
+      "CVC": "Ejemplo: 123",
+      "CARD_HOLDER": "Ejemplo: Juan Pérez",
+      "COUNTRY": "Ejemplo: Perú"
+    }
+  },
+  "WELCOME": {
+    "TITLE": "Bienvenido a Café Lab",
+    "SUBTITLE": "Sistema de gestión para laboratorios de café",
+    "BUTTONS": {
+      "SUPPLIERS": "Gestión de Proveedores",
+      "BATCHES": "Gestión de Lotes",
+      "ROAST_PROFILES": "Perfiles de Tueste",
+      "DEFECT_LIBRARY": "Librería de defectos"
+    }
+  },
+  "CONTACT": {
+    "MAIN_TITLE": "¿Tienes preguntas, sugerencias o necesitas ayuda? En Cafelab estamos para apoyarte a ti y tu cafetería. ¡Escríbenos!",
+    "FORM_TITLE": "Contáctanos",
+    "FORM": {
+      "NAME": "Nombre",
+      "NAME_PLACEHOLDER": "Ingresa tu nombre completo",
+      "EMAIL": "Correo electrónico",
+      "EMAIL_PLACEHOLDER": "tu@email.com",
+      "SUBJECT": "Asunto",
+      "SUBJECT_PLACEHOLDER": "Título de tu consulta",
+      "MESSAGE": "Mensaje",
+      "MESSAGE_PLACEHOLDER": "Describe tu consulta, sugerencia o solicitud de ayuda...",
+      "ATTACHMENTS": "Adjuntar archivos",
+      "SEND": "Enviar"
+    },
+    "CARDS": {
+      "EMAIL_TITLE": "Correo electrónico",
+      "WHATSAPP_TITLE": "WhatsApp",
+      "LINKEDIN_TITLE": "LinkedIn",
+      "LINKEDIN_TEXT": "Síguenos en LinkedIn",
+      "LOCATION_TITLE": "Ubicación",
+      "LOCATION_TEXT": "Ver nuestra ubicación"
+    },
+    "SCHEDULE": "Horario de atención: Lunes a Viernes de 9:00 a.m. a 6:00 p.m. (hora local)",
+    "MAP": {
+      "TITLE": "Nuestra Ubicación"
+    },
+    "FAQ": {
+      "TITLE": "Preguntas Frecuentes",
+      "QUESTION_1": "¿Cómo puedo registrarme en la plataforma?",
+      "ANSWER_1": "Para registrarte, haz clic en el botón 'Registrarse' en la parte superior de la página. Completa el formulario con tu información personal y empresarial. Una vez enviado, recibirás un correo de confirmación para activar tu cuenta.",
+      "QUESTION_2": "¿Qué funcionalidades incluye mi cuenta gratuita?",
+      "ANSWER_2": "La cuenta gratuita incluye acceso básico al registro de lotes de café, gestión básica de proveedores y consulta de defectos en el café. Para funciones avanzadas como análisis detallados y reportes personalizados, puedes actualizar a un plan premium.",
+      "QUESTION_3": "¿Cómo puedo recuperar mi contraseña?",
+      "ANSWER_3": "En la página de inicio de sesión, haz clic en '¿Olvidaste tu contraseña?' Ingresa tu correo electrónico registrado y te enviaremos un enlace para restablecer tu contraseña. Sigue las instrucciones del correo para crear una nueva contraseña.",
+      "QUESTION_4": "¿Puedo cambiar mi plan de suscripción en cualquier momento?",
+      "ANSWER_4": "Sí, puedes actualizar o cambiar tu plan de suscripción en cualquier momento desde la configuración de tu cuenta. Los cambios se aplicarán inmediatamente y se prorrateará la facturación según corresponda.",
+      "QUESTION_5": "¿Cómo puedo contactar al soporte técnico?",
+      "ANSWER_5": "Puedes contactarnos a través de este formulario, enviando un correo a contacto@cafelab.com, por WhatsApp al +51 912 345 678, o a través de nuestro perfil de LinkedIn. Nuestro horario de atención es de lunes a viernes de 9:00 a.m. a 6:00 p.m."
+    }
+  },
+  "navbar": {
+    "home": "Inicio"
+  },
+  "supply": {
+    "suppliers": {
+      "title": "Proveedores",
+      "search_placeholder": "Buscar proveedores...",
+      "loading": "Cargando...",
+      "no_suppliers": "No hay proveedores registrados",
+      "register_button": "Registrar Proveedor",
+      "register_title": "Nuevo Proveedor",
+      "edit_title": "Editar Proveedor",
+      "save_button": "Guardar Cambios",
+      "details": {
+        "title": "Detalles del Proveedor",
+        "general_info": "Informacion general"
+      },
+      "no_specialties": "N/A",
+      "specialties_hint": "separadas por coma",
+      "columns": {
+        "name": "Nombre",
+        "email": "Correo Electrónico",
+        "phone": "Teléfono",
+        "location": "Ubicación",
+        "specialties": "Especialidades",
+        "user_id": "ID de Usuario"
+      },
+      "add_specialty_placeholder": "Agregar Especialidad"
+
+    }
+  },
+  "BREADCRUMB": {
+    "HOME": "Inicio",
+    "perfilesTueste": "Perfiles de tueste",
+    "comparacionTuestes": "Comparación de tuestes",
+    "COFFEE_LOTS": "Lotes de Café"
+  },
+  "SEARCH": {
+    "PLACEHOLDER": "Buscar lote..."
+  },
+  "TABLE": {
+    "HEADER": {
+      "NAME": "Nombre",
+      "COFFEE_TYPE": "Tipo de Café",
+      "ALTITUDE": "Altitud (msnm)",
+      "SUPPLIER": "Proveedor",
+      "ACTIONS": "Acciones"
+    },
+    "NO_LOTS": "No hay lotes de cafe registrados"
+  },
+  "FORM": {
+    "LABEL": {
+      "NAME": "Nombre",
+      "COFFEE_TYPE": "Tipo de Café",
+      "ALTITUDE": "Altitud (msnm)",
+      "ORIGIN": "Origen(Especificar en la ubicacion)",
+      "WEIGHT": "Peso (kg)",
+      "PROCESS": "Proceso",
+      "SUPPLIER": "Proveedor",
+      "CERTIFICATIONS": "Certificaciones"
+    },
+    "SELECT_PLACEHOLDER": {
+      "SELECT_TYPE": "Seleccionar tipo",
+      "SELECT_PROCESS": "Seleccionar proceso",
+      "SELECT_SUPPLIER": "Seleccionar proveedor",
+      "SELECT_CERTIFICATION": "Seleccionar certificación"
+    }
+  },
+  "BUTTON": {
+    "VIEW": "Ver",
+    "SAVE": "Guardar",
+    "CANCEL": "Cancelar",
+    "EDIT": "Editar",
+    "REGISTER_LOT": "Registrar Lote",
+    "ADD": "Agregar",
+    "REMOVE": "Eliminar",
+    "REGISTER": "Registrar",
+    "CANCELR": "Cancelar",
+    "BACK": "Regresar",
+    "COMPARE_ROAST_PROFILE": "Comparar Perfil de Tueste"
+  },
+  "MODAL": {
+    "NEW_COFFEE_LOT": "Nuevo Lote de Café",
+    "LOT_DETAILS": "Detalles",
+    "EDIT_LOT": "Editar Lote"
+  },
+  "profile": {
+    "detailTitle": "Detalles del perfil de tueste",
+    "register": {
+      "title": "Nuevo Perfil de Tueste",
+      "submit": "Registrar Perfil"
+    },
+    "fields": {
+      "name": "Nombre del Perfil",
+      "type": "Tipo de Café",
+      "selectType": "Seleccionar tipo",
+      "duration": "Duración Total del Tueste (min)",
+      "durationPlaceholder": "Ej: 12",
+      "tempStart": "Temperatura Inicial del Grano (°C)",
+      "tempEnd": "Temperatura Final Deseada (°C)",
+      "lot": "Lote Vinculado",
+      "selectLot": "Seleccionar lote"
+    },
+    "columns": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "duration": "Duración",
+      "lot": "Lote"
+    },
+
+    "edit": {
+      "title": "Editar Perfil de Tueste",
+      "submit": "Guardar Cambios"
+    },
+    "detailName": "Nombre:",
+    "detailType": "Tipo:",
+    "detailDuration": "Duracion:",
+    "detailLot": "Lote:",
+    "favorites": "Favoritos",
+    "filter": "Filtrar",
+    "registerbutton": "Registrar perfil de tueste",
+    "title": "Inicio",
+    "secondTile": "Perfiles de tueste",
+    "curveTitle": "Curva de proceso de tostado",
+    "informationTitle": "Informacion:",
+    "detailTempStart": "Temperatura inicial",
+    "detailTempEnd": "Temperatura Final"
+  },
+  "comparison": {
+    "tuesteLabel": "Perfil de Tueste"
+  },
+  "Compare": {
+    "compare": "Comparar"
+  },
+  "SORT": {
+    "ASC": "Mas reciente",
+    "DESC": "Mas antiguo"
+  },
+  "breadcrumb":{
+    "perfilesTueste": "Perfiles de tueste",
+    "comparacionTuestes": "Comparacion de perfiles de tueste",
+    "inicio": "Inicio",
+    "home": "Inicio",
+    "profiles": "Perfiles de tueste"
   }
 }

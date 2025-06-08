@@ -6,7 +6,7 @@ import { RoastProfileService } from '../../services/roast-profile.service';
 import { RoastProfile } from '../../models/roast-profile.model';
 import { catchError, finalize, of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import {CoffeeLot} from '../../../coffee-lot/models/coffee-lot.model';
+import {CoffeeLot} from '../../../coffee-lot/model/coffee-lot.model';
 import {CoffeeLotService} from '../../../coffee-lot/services/coffee-lot.service';
 import {Router} from '@angular/router';
 import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
@@ -293,7 +293,6 @@ export class RoastProfileListComponent implements OnInit {
   }
 
   compareProfiles(): void {
-    // Esta funcionalidad será implementada más adelante
     this.router.navigate(['/compare-profile']);
   }
 
@@ -303,7 +302,7 @@ export class RoastProfileListComponent implements OnInit {
     this.coffeeLotService.getLots()
       .pipe(
         catchError(err => {
-          console.error('Error loading coffee lots', err);
+          console.error('Error loading coffee lots-page', err);
           return of([]);
         })
       )

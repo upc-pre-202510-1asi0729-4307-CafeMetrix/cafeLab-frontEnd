@@ -163,7 +163,7 @@
     "SUBTITLE": "Management system for coffee laboratories",
     "BUTTONS": {
       "SUPPLIERS": "Supplier Management",
-      "BATCHES": "Batch Management",
+      "BATCHES": "Lots Management",
       "ROAST_PROFILES": "Roast Profiles",
       "DEFECT_LIBRARY": "Defect Library"
     }

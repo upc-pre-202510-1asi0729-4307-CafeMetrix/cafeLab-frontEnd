@@ -12,10 +12,10 @@ import { OwnerDashboardComponent } from './dashboard/components/owner-dashboard/
 import { CompleteDashboardComponent } from './dashboard/components/complete-dashboard/complete-dashboard.component';
 import { PageNotFoundComponent } from "./public/pages/page-not-found/page-not-found.component";
 import { ConfirmPlanComponent } from './subscription/components/confirm-plan/confirm-plan.component';
-import { SupplierListComponent} from './supply/components/provider-list/supplier-list.component';
-import { LotListComponent } from './coffee-lot/components/lot-list/lot-list.component';
-import {RoastProfileListComponent} from './roasting/components/roast-profile-list/roast-profile-list.component';
+import {RoastingPageComponent} from './roasting/pages/roasting-page/roasting-page.component';
 import {RoastProfileComparisonComponent} from './roasting/components/roast-profile-comparison/roast-profile-comparison.component';
+import {LotsComponent} from './coffee-lot/pages/lots-page/lots.component';
+import {SupplyPageComponent} from './supply/pages/supply-page/supply-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -40,9 +40,9 @@ export const routes: Routes = [
   // { path: 'libraryDefects', component: ViewConsultationsComponent },
   // { path: 'file/:id', component: ViewFileComponent },
   // { path: 'new-defect', component: ViewNewDefectComponent },
-  { path:'suppliers', component: SupplierListComponent },
-  { path:'coffee-lots', component: LotListComponent },
-  { path:'perfiles-tueste', component: RoastProfileListComponent},
+  { path:'suppliers', component: SupplyPageComponent },
+  { path:'coffee-lots', component: LotsComponent },
+  { path:'profiles-roasting', component: RoastingPageComponent},
   { path:'compare-profile', component: RoastProfileComparisonComponent  },
   { path: '**', component: PageNotFoundComponent }
 ];

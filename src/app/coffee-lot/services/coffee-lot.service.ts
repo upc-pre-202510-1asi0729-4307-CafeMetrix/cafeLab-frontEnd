@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
-import { CoffeeLot } from '../models/coffee-lot.model';
+import { CoffeeLot } from '../model/coffee-lot.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CoffeeLotService {
     return this.http.get<CoffeeLot[]>(this.apiUrl)
       .pipe(
         retry(1),
-        tap(lots => console.log('Fetched coffee lots:', lots)),
+        tap(lots => console.log('Fetched coffee lots-page:', lots)),
         catchError(this.handleError)
       );
   }

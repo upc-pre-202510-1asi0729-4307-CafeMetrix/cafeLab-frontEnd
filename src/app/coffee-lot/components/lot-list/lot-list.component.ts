@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CoffeeLotService } from '../../services/coffee-lot.service';
-import { CoffeeLot } from '../../models/coffee-lot.model';
+import { CoffeeLot } from '../../model/coffee-lot.model';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, finalize, of } from 'rxjs';
 import { RouterModule } from '@angular/router';

@@ -36,30 +36,37 @@ export class RoastProfileService {
   /**
    * Buscar perfiles por nombre, tipo o proveedor
    */
-  searchRoastProfiles(query: string): Observable<RoastProfile[]> {
+  searchRoastProfiles(query: string, userId: string): Observable<RoastProfile[]> {
     return this.getRoastProfiles().pipe(
       map(profiles => {
         const normalizedQuery = query.toLowerCase().trim();
-        return profiles.filter(profile =>
-          profile.name.toLowerCase().includes(normalizedQuery) ||
-          profile.type.toLowerCase().includes(normalizedQuery) ||
-          profile.lot.toLowerCase().includes(normalizedQuery)
-        );
+        return profiles
+          .filter(profile => profile.user_id === userId) // <--- filtramos por usuario!
+          .filter(profile =>
+            profile.name.toLowerCase().includes(normalizedQuery) ||
+            profile.type.toLowerCase().includes(normalizedQuery) ||
+            profile.lot.toLowerCase().includes(normalizedQuery)
+          );
       })
     );
   }
 
+
   /**
    * Filtrar por favoritos y ordenar por fecha
    */
-  filterProfiles(showFavoritesOnly: boolean, sortOrder: 'asc' | 'desc'): Observable<RoastProfile[]> {
+  filterProfiles(userId: string, showFavoritesOnly: boolean, sortOrder: 'asc' | 'desc'): Observable<RoastProfile[]> {
     return this.getRoastProfiles().pipe(
       map(profiles => {
-        let filtered = profiles;
+        // Primero filtrar SOLO por los perfiles del usuario actual
+        let filtered = profiles.filter(p => p.user_id === userId);
+
+        // Luego aplicar filtro de favoritos si corresponde
         if (showFavoritesOnly) {
           filtered = filtered.filter(p => p.isFavorite);
         }
 
+        // Finalmente ordenar por fecha
         return filtered.sort((a, b) => {
           const timeA = new Date(a.createdAt ?? '').getTime();
           const timeB = new Date(b.createdAt ?? '').getTime();
@@ -69,6 +76,8 @@ export class RoastProfileService {
       })
     );
   }
+
+
 
   /**
    * Alternar favorito (mockapi requiere PUT)

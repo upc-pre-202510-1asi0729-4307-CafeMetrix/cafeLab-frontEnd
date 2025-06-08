@@ -4,8 +4,8 @@
 </mat-toolbar>
 
 <div class="breadcrumb">
-  <a routerLink="/inicio">{{ 'breadcrumb.inicio' | translate }}</a> &gt;
-  <a routerLink="/perfiles-tueste">{{ 'breadcrumb.perfilesTueste' | translate }}</a> &gt;
+  <a routerLink="/dashboard/owner">{{ 'breadcrumb.inicio' | translate }}</a> &gt;
+  <a routerLink="/profiles-roasting">{{ 'breadcrumb.perfilesTueste' | translate }}</a> &gt;
   {{ 'breadcrumb.comparacionTuestes' | translate }}
 </div>
 
@@ -32,10 +32,8 @@
     </button>
   </div>
 
-  <div class="image-placeholder">
-    <img
-      src="../../../../assets/comparationProfile.png" alt="Comparation img" class="image-placeholder"
-    />
+  <div class="comparison-graph">
+    <canvas #comparisonCanvas width="800" height="600"></canvas>
   </div>
 </div>
 

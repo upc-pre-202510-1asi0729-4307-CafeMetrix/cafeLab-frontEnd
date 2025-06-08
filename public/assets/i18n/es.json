@@ -277,6 +277,9 @@
       "SELECT_CERTIFICATION": "Seleccionar certificación"
     }
   },
+  "NAV":{
+  "LOTS": "Lotes"
+},
   "BUTTON": {
     "VIEW": "Ver",
     "SAVE": "Guardar",
@@ -338,7 +341,15 @@
     "detailTempEnd": "Temperatura Final"
   },
   "comparison": {
-    "tuesteLabel": "Perfil de Tueste"
+    "tuesteLabel": "Perfil de Tueste",
+    "graficoTitulo": "Comparación de perfiles de tueste",
+    "graficoTitulo2": "Curva de tueste simulada",
+    "minutos": "min",
+    "gradosCelsius": "°C",
+    "temperaturaGrano": "Temperatura del grano",
+    "temperaturaTambor": "Temperatura del tambor",
+    "firstCrack": "First Crack (estimado)",
+    "secondCrack": "Second Crack (estimado)"
   },
   "Compare": {
     "compare": "Comparar"

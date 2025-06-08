@@ -274,6 +274,9 @@
       "SELECT_CERTIFICATION": "Select certification"
     }
   },
+  "NAV":{
+    "LOTS": "Lots"
+  },
   "BUTTON": {
     "VIEW": "View",
     "SAVE": "Save",
@@ -334,7 +337,15 @@
     "detailTempEnd": "Final Temperature"
   },
   "comparison": {
-    "tuesteLabel": "Roasting profile"
+    "tuesteLabel": "Roasting profile",
+    "graficoTitulo": "Roast Profile Comparison",
+    "graficoTitulo2": "Simulated roasting curve",
+    "minutos": "min",
+    "gradosCelsius": "°C",
+    "temperaturaGrano": "Bean temperature",
+    "temperaturaTambor": "Drum temperature",
+    "firstCrack": "First Crack (estimated)",
+    "secondCrack": "Second Crack (estimated)"
   },
   "Compare": {
     "compare": "Compare"

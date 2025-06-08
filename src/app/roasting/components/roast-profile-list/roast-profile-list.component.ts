@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {AuthService} from '../../../auth/services/AuthService';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-roast-profile-list',
@@ -23,6 +24,8 @@ import {AuthService} from '../../../auth/services/AuthService';
 export class RoastProfileListComponent implements OnInit {
   @ViewChild('profileForm') profileForm!: NgForm;
   @ViewChild('editForm') editForm!: NgForm;
+  @ViewChild('roastCurveCanvas') roastCurveCanvas: any;
+
 
   coffeeLots: CoffeeLot[] = [];
   profiles: RoastProfile[] = [];
@@ -57,6 +60,7 @@ export class RoastProfileListComponent implements OnInit {
     private coffeeLotService: CoffeeLotService,
     private router: Router,
     private authService: AuthService,
+    private translate: TranslateService
 
   ) { }
 
@@ -90,7 +94,10 @@ export class RoastProfileListComponent implements OnInit {
     if (this.searchQuery.trim()) {
       this.loading = true;
       this.error = null;
-      this.roastProfileService.searchRoastProfiles(this.searchQuery)
+
+      const userId = this.authService.getCurrentUserId();
+
+      this.roastProfileService.searchRoastProfiles(this.searchQuery, userId)
         .pipe(
           catchError(err => {
             console.error('Error searching profiles', err);
@@ -109,10 +116,14 @@ export class RoastProfileListComponent implements OnInit {
     }
   }
 
+
   applyFilters(): void {
     this.loading = true;
     this.error = null;
-    this.roastProfileService.filterProfiles(this.showFavoritesOnly, this.sortOrder)
+
+    const userId = this.authService.getCurrentUserId();
+
+    this.roastProfileService.filterProfiles(userId, this.showFavoritesOnly, this.sortOrder)
       .pipe(
         catchError(err => {
           console.error('Error filtering profiles', err);
@@ -127,6 +138,7 @@ export class RoastProfileListComponent implements OnInit {
         this.profiles = profiles;
       });
   }
+
 
   toggleFavorite(profile: RoastProfile, event: Event): void {
     event.stopPropagation(); // Prevenir que se abra el detalle
@@ -151,10 +163,16 @@ export class RoastProfileListComponent implements OnInit {
   }
 
   viewProfileDetails(profile: RoastProfile): void {
-    this.selectedProfile = {...profile};
+    this.selectedProfile = { ...profile };
     this.showProfileDetails = true;
     this.error = null;
+
+    // Espera un poco a que el canvas esté en el DOM
+    setTimeout(() => {
+      this.drawRoastCurve();
+    }, 0);
   }
+
 
   closeProfileDetails(): void {
     this.showProfileDetails = false;
@@ -224,7 +242,6 @@ export class RoastProfileListComponent implements OnInit {
       )
       .subscribe(result => {
         if (result) {
-          // Añadir el nuevo perfil duplicado a la lista
           this.profiles = [...this.profiles, result];
         }
       });
@@ -310,6 +327,183 @@ export class RoastProfileListComponent implements OnInit {
         this.coffeeLots = lots.filter(lot => lot.user_id === userId);
       });
   }
+  drawRoastCurve(): void {
+    if (!this.selectedProfile || !this.roastCurveCanvas) {
+      return;
+    }
+
+    const canvas: HTMLCanvasElement = this.roastCurveCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const duration = this.selectedProfile.duration;
+    const tempStart = this.selectedProfile.tempStart;
+    const tempEnd = this.selectedProfile.tempEnd;
+
+    const padding = 70;
+    const graphWidth = canvas.width - padding * 2;
+    const graphHeight = canvas.height - padding * 2;
+
+    const timeToX = (t: number) => padding + (t / duration) * graphWidth;
+    const tempToY = (temp: number) =>
+      canvas.height - padding - ((temp - tempStart) / (tempEnd - tempStart)) * graphHeight;
+
+    // --- Dibujar fondo y grilla ---
+    ctx.strokeStyle = '#ddd';
+    ctx.lineWidth = 1;
+
+    const xSteps = 10;
+    const ySteps = 10;
+
+    // Grilla vertical
+    for (let i = 0; i <= xSteps; i++) {
+      const t = (i / xSteps) * duration;
+      const x = timeToX(t);
+      ctx.beginPath();
+      ctx.moveTo(x, padding);
+      ctx.lineTo(x, canvas.height - padding);
+      ctx.stroke();
+    }
+
+    // Grilla horizontal
+    for (let i = 0; i <= ySteps; i++) {
+      const temp = tempStart + (i / ySteps) * (tempEnd - tempStart);
+      const y = tempToY(temp);
+      ctx.beginPath();
+      ctx.moveTo(padding, y);
+      ctx.lineTo(canvas.width - padding, y);
+      ctx.stroke();
+    }
+
+    // --- Dibujar ejes ---
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(padding, canvas.height - padding);
+    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+    ctx.moveTo(padding, canvas.height - padding);
+    ctx.lineTo(padding, padding);
+    ctx.stroke();
+
+    // --- Etiquetas eje X ---
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= xSteps; i++) {
+      const t = (i / xSteps) * duration;
+      const x = timeToX(t);
+      ctx.fillText(
+        `${t.toFixed(1)} ${this.translate.instant('comparison.minutos')}`,
+        x,
+        canvas.height - padding + 20
+      );
+    }
+
+    // --- Etiquetas eje Y ---
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= ySteps; i++) {
+      const temp = tempStart + (i / ySteps) * (tempEnd - tempStart);
+      const y = tempToY(temp);
+      ctx.fillText(
+        `${temp.toFixed(0)} ${this.translate.instant('comparison.gradosCelsius')}`,
+        padding - 10,
+        y + 5
+      );
+    }
+
+    // --- Título ---
+    ctx.textAlign = 'center';
+    ctx.font = '18px Arial';
+    ctx.fillText(
+      this.translate.instant('comparison.graficoTitulo2'),
+      canvas.width / 2,
+      padding / 2
+    );
+
+    // --- Dibujar curvas ---
+    const steps = 100;
+    ctx.lineWidth = 3;
+
+    // Temperatura del grano
+    ctx.strokeStyle = '#8e44ad';
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * duration;
+      const temp = tempStart + (tempEnd - tempStart) * Math.log1p(t) / Math.log1p(duration);
+      const x = timeToX(t);
+      const y = tempToY(temp);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Temperatura del tambor
+    ctx.strokeStyle = '#c0392b';
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * duration;
+      const temp = tempStart + (tempEnd - tempStart) * 0.8 * Math.log1p(t + 2) / Math.log1p(duration + 2);
+      const x = timeToX(t);
+      const y = tempToY(temp);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // --- Dibujar líneas de eventos ---
+    const firstCrackTime = duration * 0.7;
+    const secondCrackTime = duration * 0.9;
+
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 6]);
+
+    // First Crack
+    ctx.strokeStyle = '#f1c40f';
+    ctx.beginPath();
+    ctx.moveTo(timeToX(firstCrackTime), padding);
+    ctx.lineTo(timeToX(firstCrackTime), canvas.height - padding);
+    ctx.stroke();
+
+    // Second Crack
+    ctx.strokeStyle = '#e74c3c';
+    ctx.beginPath();
+    ctx.moveTo(timeToX(secondCrackTime), padding);
+    ctx.lineTo(timeToX(secondCrackTime), canvas.height - padding);
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+    // --- Dibujar leyenda ---
+    ctx.font = '14px Arial';
+    ctx.textAlign = 'left';
+
+    const legendX = canvas.width - padding - 200;
+    const legendY = padding + 20;
+    const lineHeight = 20;
+
+    const legendItems = [
+      { color: '#8e44ad', label: this.translate.instant('comparison.temperaturaGrano') },
+      { color: '#c0392b', label: this.translate.instant('comparison.temperaturaTambor') },
+      { color: '#f1c40f', label: this.translate.instant('comparison.firstCrack') },
+      { color: '#e74c3c', label: this.translate.instant('comparison.secondCrack') },
+    ];
+
+    legendItems.forEach((item, index) => {
+      ctx.strokeStyle = item.color;
+      ctx.beginPath();
+      ctx.moveTo(legendX, legendY + index * lineHeight);
+      ctx.lineTo(legendX + 30, legendY + index * lineHeight);
+      ctx.stroke();
+
+      ctx.fillStyle = '#000';
+      ctx.fillText(item.label, legendX + 40, legendY + index * lineHeight + 5);
+    });
+  }
 
 
-}
+
+
+
+    }

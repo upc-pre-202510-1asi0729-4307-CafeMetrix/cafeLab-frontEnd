@@ -1,7 +1,7 @@
 
 <div class="profile-container">
   <div class="breadcrumb">
-    <a routerLink="/inicio">{{ 'profile.title' | translate }}</a> &gt; {{ 'profile.secondTile' | translate }}
+    <a routerLink="/dashboard/owner">{{ 'profile.title' | translate }}</a> &gt; {{ 'profile.secondTile' | translate }}
   </div>
 
   <div *ngIf="error" class="error-message">
@@ -92,7 +92,7 @@
   <!-- Vista detalle de perfil -->
   <div *ngIf="showProfileDetails" class="profile-details">
     <div class="breadcrumb">
-      <a routerLink="/inicio">{{ 'breadcrumb.home' | translate }}</a> &gt;
+      <a routerLink="/dashboard/owner">{{ 'breadcrumb.home' | translate }}</a> &gt;
       <a (click)="closeProfileDetails()" style="cursor: pointer;">{{ 'breadcrumb.profiles' | translate }}</a> &gt;
       {{ selectedProfile?.name }}
     </div>
@@ -103,7 +103,7 @@
       <!-- Columna izquierda: imagen -->
       <div class="detail-left">
         <h3>{{ 'profile.curveTitle' | translate }}</h3>
-        <img src="../../../../assets/placeholder-curve.png" alt="Curva de tueste" class="curve-image" height="540" width="894">
+        <canvas #roastCurveCanvas width="894" height="540" class="curve-image"></canvas>
       </div>
 
       <!-- Columna derecha: información -->

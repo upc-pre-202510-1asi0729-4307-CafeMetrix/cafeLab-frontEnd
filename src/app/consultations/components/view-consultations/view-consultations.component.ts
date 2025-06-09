@@ -65,27 +65,33 @@ export class ViewConsultationsComponent implements OnInit {
     private coffeeService: CoffeeService,
     private defectService: DefectService,
     private router: Router
-) {}
+  ) {}
 
   ngOnInit() {
     this.loadData();
   }
   loadData(): void {
-    this.coffeeService.getAll().subscribe(coffees => {
-      this.coffees = coffees;
-      this.defectService.getAll().subscribe(defects => {
-        this.defects = defects;
+    this.coffeeService.getCoffees().subscribe({
+      next: (coffees: Coffee[]) => {
+        this.coffees = coffees;
+        this.defectService.getDefects().subscribe({
+          next: (defects: Defect[]) => {
+            this.defects = defects;
 
 
-        this.history = this.defects.map(defect => {
-          const coffee = this.coffees.find(c => c.id === defect.coffeeId);
-          return {
-            ...defect,
-            coffeeName: coffee ? coffee.name : ''
-          };
+            this.history = this.defects.map(defect => {
+              const coffee = this.coffees.find(c => c.id === defect.coffeeId);
+              return {
+                ...defect,
+                coffeeName: coffee ? coffee.name : ''
+              };
+            });
+            this.filteredHistory = [...this.history];
+          },
+          error: (err) => console.error('Error al cargar defectos:', err)
         });
-        this.filteredHistory = [...this.history];
-      });
+      },
+      error: (err) => console.error('Error al cargar cafés:', err)
     });
   }
 

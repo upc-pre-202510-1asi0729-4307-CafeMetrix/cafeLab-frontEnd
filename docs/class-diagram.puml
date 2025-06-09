@@ -1,0 +1,146 @@
+@startuml Consultations Frontend Diagram
+
+class AppComponent <<Component>> {
+    +constructor(): void
+}
+
+package "Public" {
+    package "Pages" {
+        class LibraryComponent <<Component>> {
+
+        }
+        class PageNotFoundComponent <<Component>> {
+          +constructor(): void
+                  +ngOnInit(): void
+                  +onNavigateHome(): void
+        }
+    }
+}
+
+package "Consultations Bounded Context" {
+    package "Components" {
+        class ViewConsultationsComponent <<Component>> {
+            +ngOnInit(): void
+            +loadData(): void
+        }
+
+        class AddConsultationComponent <<Component>> {
+            +ngOnInit(): void
+            +onSubmit(): void
+        }
+
+        class FileComponent <<Component>> {
+            +ngOnInit(): void
+            +handleFile(): void
+        }
+    }
+
+    package "Pages" {
+        class ViewNewDefectComponent <<Component>> {
+            +defects: Defect[]
+            +ngOnInit(): void
+            +loadDefects(): void
+        }
+
+        class ViewFileComponent <<Component>> {
+            +file: File
+            +ngOnInit(): void
+            +processFile(): void
+        }
+    }
+
+    package "Services" {
+        class DefectService <<Service>> {
+            -http: HttpClient
+            +getDefects(): Observable<Defect[]>
+            +saveDefect(defect: Defect): Observable<Defect>
+        }
+
+        class CoffeeService <<Service>> {
+            -http: HttpClient
+            +getCoffees(): Observable<Coffee[]>
+            +saveCoffee(coffee: Coffee): Observable<Coffee>
+        }
+    }
+
+    package "Assemblers" {
+        class DefectAssembler <<Assembler>> {
+            +static toEntitiesFromResponse(response: DefectsResponse): Defect[]
+            +static toEntityFromResource(resource: DefectResource): Defect
+            +static toResourceFromEntity(entity: Defect): DefectResource
+        }
+
+        class CoffeeAssembler <<Assembler>> {
+            +static toEntitiesFromResponse(response: CoffeesResponse): Coffee[]
+            +static toEntityFromResource(resource: CoffeeResource): Coffee
+            +static toResourceFromEntity(entity: Coffee): CoffeeResource
+        }
+    }
+
+    package "Responses" {
+        interface DefectResource <<Interface>> {
+            // ... propiedades
+        }
+        interface DefectsResponse <<Interface>> {
+            +defects: DefectResource[]
+        }
+        interface CoffeeResource <<Interface>> {
+            // ... propiedades
+        }
+        interface CoffeesResponse <<Interface>> {
+            +coffees: CoffeeResource[]
+        }
+    }
+
+    package "Model" {
+        class Defect <<Model>> {
+            +id: number
+            +coffeeId: number
+            +name: string
+            +defectType: string
+            +defectWeight: number
+            +percentage: number
+            +probableCause: string
+            +suggestedSolution: string
+        }
+
+        class Coffee <<Model>> {
+            +id: number
+            +name: string
+            +region: string
+            +variety: string
+            +totalWeight: number
+        }
+    }
+}
+
+' Relaciones de renderizado de la aplicación
+AppComponent --> LibraryComponent : renders
+AppComponent --> PageNotFoundComponent : renders
+
+' Las páginas renderizan componentes (corregido)
+LibraryComponent --> ViewConsultationsComponent : renders
+ViewNewDefectComponent --> AddConsultationComponent : renders
+ViewFileComponent --> FileComponent : renders
+
+' Los servicios utilizan Assemblers
+DefectService --> DefectAssembler : uses
+CoffeeService --> CoffeeAssembler : uses
+
+' Los Assemblers transforman modelos y leen respuestas
+DefectAssembler --> Defect : transforms
+DefectAssembler --> DefectResource : transforms
+DefectAssembler --> DefectsResponse : reads
+
+CoffeeAssembler --> Coffee : transforms
+CoffeeAssembler --> CoffeeResource : transforms
+CoffeeAssembler --> CoffeesResponse : reads
+
+' Los servicios gestionan modelos
+DefectService --> Defect : manages
+CoffeeService --> Coffee : manages
+
+' Relación entre modelos
+Defect --> Coffee : references
+
+@enduml

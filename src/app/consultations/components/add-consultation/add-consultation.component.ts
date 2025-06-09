@@ -70,10 +70,17 @@ export class AddConsultationComponent implements OnInit {
         suggestedSolution: this.defectForm.value.suggestedSolution
       });
 
-      this.coffeeService.create(coffee).subscribe(() => {
-        this.defectService.create(defect).subscribe(() => {
-          this.router.navigate(['/libraryDefects']);
-        });
+
+      this.coffeeService.saveCoffee(coffee).subscribe({
+        next: () => {
+          this.defectService.saveDefect(defect).subscribe({
+            next: () => {
+              this.router.navigate(['/libraryDefects']);
+            },
+            error: (err) => console.error('Error:', err)
+          });
+        },
+        error: (err) => console.error('Error:', err)
       });
     }
   }

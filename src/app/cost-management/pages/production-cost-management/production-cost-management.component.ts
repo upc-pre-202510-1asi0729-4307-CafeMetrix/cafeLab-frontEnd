@@ -8,8 +8,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 import { Router } from '@angular/router';
+import {MetricsCardComponent} from '../../components/metrics-card/metrics-card.component';
+import {RecommendationsCardComponent} from '../../components/recommendation-cards/recommendation-cards.component';
 
 interface Recommendation {
   message: string;
@@ -29,7 +30,8 @@ interface Recommendation {
     MatInputModule,
     MatCardModule,
     ReactiveFormsModule,
-    ToolbarComponent
+    MetricsCardComponent,
+      RecommendationsCardComponent
   ],
   templateUrl: './production-cost-management.component.html',
   styleUrl: './production-cost-management.component.css'

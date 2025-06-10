@@ -16,7 +16,9 @@ export const routes: Routes = [
   { path: 'welcome-barista', component: WelcomeBaristaComponent },
   {path: 'cupping-sessions', component: SesionesCataComponent},
   {path: 'inventory', component: InventaryComponent},
-  {path: 'production-cost-management', component: ProductionCostPageComponent},
+  {path: 'production-cost-management', loadComponent: () =>
+      import('./cost-management/pages/production-cost-management/production-cost-management.component')
+        .then(m => m.ProductionCostPageComponent)},
   {path: 'select-payment-barista', component: SelectPaymentComponent},
   { path: 'file/:id', component: ViewFileComponent },
   { path: 'new-defect', component: ViewNewDefectComponent },

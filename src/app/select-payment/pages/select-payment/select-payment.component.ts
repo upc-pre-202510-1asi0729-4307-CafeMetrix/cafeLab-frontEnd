@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { PlanCardComponentComponent } from '../../components/plan-card-component/plan-card-component.component';
 import { PaymentService } from '../../services/payment.service';
-import { PaymentData } from '../../model/payment-data.model';
+import { Payment } from '../../model/payment.model';
 
 @Component({
   selector: 'app-select-payment',
@@ -26,8 +26,7 @@ import { PaymentData } from '../../model/payment-data.model';
         MatButtonModule,
         MatIconModule,
         RouterModule,
-        PlanCardComponentComponent,
-        NgOptimizedImage
+        PlanCardComponentComponent
     ],
   templateUrl: './select-payment.component.html',
   styleUrls: ['./select-payment.component.css']
@@ -53,8 +52,8 @@ export class SelectPaymentComponent {
 
   onSubmit() {
     if (this.paymentForm.valid) {
-      const paymentData = new PaymentData(this.paymentForm.value);
-      this.paymentService.submitPayment(paymentData)
+      const paymentData = new Payment(this.paymentForm.value);
+      this.paymentService.create(paymentData)
         .subscribe(
           response => {
             console.log('Payment success:', response);

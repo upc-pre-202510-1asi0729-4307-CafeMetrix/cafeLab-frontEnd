@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { PaymentData } from '../model/payment-data.model';  // o la ruta correcta
+import { BaseService } from '../../shared/services/base.service';
+import { Payment } from '../model/payment.model';
+import { environment } from '../../../environments/environment';
+
+const PaymentResourceEndpointPath = environment.paymentsEndpointPath;
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentService {
-
-  constructor() { }
-
-  submitPayment(paymentData: PaymentData): Observable<any> {
-    // Aquí se conectaría con la API real
-    // return this.http.post('/api/payment', paymentData);
-
-    // Por ahora, simulamos una respuesta exitosa:
-    console.log('Enviando pago al servidor:', paymentData);
-    return of({ success: true, message: 'Pago procesado correctamente.' });
+export class PaymentService extends BaseService<Payment> {
+  constructor() {
+    super();
+    this.resourceEndpoint = PaymentResourceEndpointPath;
   }
 }

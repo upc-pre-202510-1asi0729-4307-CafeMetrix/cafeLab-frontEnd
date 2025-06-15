@@ -255,7 +255,7 @@ export class PortfolioDetailComponent implements OnInit {
     this.portfolioService.delete(this.portfolioId).subscribe({
       next: () => {
         this.snackBar.open('Portafolio eliminado correctamente', 'Cerrar', { duration: 3000 });
-        this.router.navigate(['/recipes']);
+        this.router.navigate(['/preparation/recipes']);
       },
       error: (error) => {
         console.error('Error deleting portfolio:', error);

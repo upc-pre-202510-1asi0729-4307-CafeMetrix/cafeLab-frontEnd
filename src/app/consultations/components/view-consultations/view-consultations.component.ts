@@ -19,6 +19,7 @@ import {
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'app-view-consultations',
@@ -46,7 +47,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatCellDef,
     MatHeaderCellDef,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    ToolbarComponent
   ],
   styleUrls: ['./view-consultations.component.css']
 })

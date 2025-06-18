@@ -123,8 +123,10 @@ export class ConfirmPlanComponent implements OnInit {
             this.router.navigate(['/dashboard/owner']);
             break;
           case 'barista':
-          case 'full':
             this.router.navigate(['/dashboard/barista']);
+            break;
+          case 'full':
+            this.router.navigate(['/dashboard/complete']);
             break;
           default:
             this.router.navigate(['/page-not-found']);

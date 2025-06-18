@@ -33,5 +33,24 @@
     </div>
   </div>
 
+  <!-- Nueva fila para Inventario y Gestión de Costos -->
+  <div class="cards-row">
+    <div class="card-wrapper">
+      <mat-card class="action-card" routerLink="/inventory">
+        <mat-card-content>
+          <img src="/assets/inventario.png" alt="{{ 'WELCOME.BUTTONS.INVENTORY' | translate }}">
+        </mat-card-content>
+        <h3 class="card-title">{{ 'WELCOME.BUTTONS.INVENTORY' | translate }}</h3>
+      </mat-card>
+    </div>
 
+    <div class="card-wrapper">
+      <mat-card class="action-card" routerLink="/production-cost-management">
+        <mat-card-content>
+          <img src="/assets/costos.png" alt="{{ 'WELCOME.BUTTONS.COST_MANAGEMENT' | translate }}">
+        </mat-card-content>
+        <h3 class="card-title">{{ 'WELCOME.BUTTONS.COST_MANAGEMENT' | translate }}</h3>
+      </mat-card>
+    </div>
+  </div>
 </div>

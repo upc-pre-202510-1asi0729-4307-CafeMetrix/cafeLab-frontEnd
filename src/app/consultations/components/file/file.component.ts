@@ -9,6 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',
+  standalone: true,
   imports: [
     TranslatePipe,
     MatIconModule,

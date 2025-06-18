@@ -1,0 +1,39 @@
+<div class="main-container">
+  <!-- Success Message -->
+  <div *ngIf="isSuccess" class="success-screen">
+    <div class="success-message">
+      <h2>¡Registro guardado exitosamente!</h2>
+      <p class="registration-code">Código de registro: {{ registrationCode }}</p>
+    </div>
+
+    <div class="success-content">
+      <!-- Metrics -->
+      <app-metrics-card
+        [costPerKg]="costPerKg"
+        [potentialMargin]="potentialMargin"
+        [suggestedPrice]="suggestedPrice">
+      </app-metrics-card>
+
+      <!-- Recommendations -->
+      <app-recommendations-card [recommendations]="recommendations"></app-recommendations-card>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-container">
+      <button mat-raised-button class="action-button" (click)="onExit()">
+        Salir
+      </button>
+      <button mat-raised-button class="action-button" (click)="onPrint()">
+        Imprimir reporte
+      </button>
+    </div>
+  </div>
+
+  <!-- TODO: Stepper & Form logic (sin cambios) -->
+  <div *ngIf="!isSuccess">
+    <!-- Aquí colocas tu stepper y formularios -->
+    <mat-stepper (selectionChange)="currentStep = $event.selectedIndex">
+      <!-- Todo el código del stepper permanece igual -->
+    </mat-stepper>
+  </div>
+</div>

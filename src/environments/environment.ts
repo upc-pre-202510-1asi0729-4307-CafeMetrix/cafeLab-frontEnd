@@ -9,4 +9,7 @@ export const environment = {
   defectsEndpointPath: '/defects',
   plansEndPointPath: '/plans',
   usersEndpointPath: '/users',
+  cuppingSessionsEndpointPath: '/cupping',
+  recipesEndpointPath: '/recipes',
+  portfoliosEndpointPath: '/portfolios',
 };

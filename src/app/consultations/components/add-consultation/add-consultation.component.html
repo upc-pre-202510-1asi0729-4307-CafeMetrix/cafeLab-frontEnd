@@ -67,6 +67,9 @@
       <button mat-raised-button color="primary" type="submit" [disabled]="defectForm.invalid">
         {{ 'ADD_DEFECT.SAVE' | translate }}
       </button>
+      <button mat-raised-button color="warn" type="button" (click)="onCancel()" style="margin-left: 16px;">
+        {{ 'ADD_DEFECT.CANCEL' | translate }}
+      </button>
     </div>
   </form>
 </div>

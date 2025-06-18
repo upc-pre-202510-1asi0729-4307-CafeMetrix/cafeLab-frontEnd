@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
 import {TranslatePipe} from '@ngx-translate/core';
 import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
-import {MatAnchor} from '@angular/material/button';
+import {MatAnchor, MatButton} from '@angular/material/button';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {AuthService} from '../../../auth/services/AuthService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,11 +16,36 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
     LanguageSwitcherComponent,
     MatAnchor,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatButton
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css'
 })
 export class ToolbarComponent {
+  constructor(private authService: AuthService, private router: Router) {}
 
+  redirectToFeatures() {
+    const user = this.authService.getCurrentUser();
+  if (!user) {
+  // Usuario no autenticado: opcionalmente redirigir a login
+  this.router.navigate(['/login']);
+  return;
+}
+
+// Rutas por plan
+switch (user.plan) {
+  case 'barista':
+    this.router.navigate(['/dashboard/barista']);
+    break;
+  case 'owner':
+    this.router.navigate(['/dashboard/owner']);
+    break;
+  case 'full':
+    this.router.navigate(['/dashboard/complete']);
+    break;
+  default:
+    this.router.navigate(['/features']); // Ruta genérica
+}
+}
 }

@@ -19,6 +19,13 @@
     },
     "ADD_DEFECT": "Agregar defecto"
   },
+  "WELCOME_BARISTA": {
+    "CUPPING_SESSIONS": "Sesiones de cata",
+    "DEFECTS_LIBRARY": "Librerías de defectos",
+    "ROAST_FLAVOR_RELATION": "Correlación Tueste - Sabor",
+    "GRIND_CALIBRATION": "Calibración de Molienda",
+    "RECIPES": "Recetas"
+  },
   "DEFECT_FILE": {
     "TITLE": "Ficha de defecto",
     "CAUSES": "Causas probables",

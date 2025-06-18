@@ -1,3 +1,5 @@
+<app-toolbar></app-toolbar>
+
 <div class="main-container">
   <!-- Success Message -->
   <div *ngIf="isSuccess" class="success-screen">
@@ -31,7 +33,25 @@
 
   <!-- TODO: Stepper & Form logic (sin cambios) -->
   <div *ngIf="!isSuccess">
-    <!-- Aquí colocas tu stepper y formularios -->
+    <mat-stepper linear [selectedIndex]="currentStep">
+      <mat-step [stepControl]="firstFormGroup">
+        <ng-template matStepLabel>Selección de lote</ng-template>
+
+        <app-step-lot-selection
+          [formGroup]="firstFormGroup"
+          [progressValue]="progressValue"
+          [onCancel]="onCancel">
+        </app-step-lot-selection>
+      </mat-step>
+      <mat-step [stepControl]="firstFormGroup">
+        <ng-template matStepLabel>Costos directos</ng-template>
+        <app-step-direct-costs
+          [formGroup]="firstFormGroup"
+          [progressValue]="progressValue"
+          [onCancel]="onCancel">
+        </app-step-direct-costs>
+      </mat-step>
+    </mat-stepper>
     <mat-stepper (selectionChange)="currentStep = $event.selectedIndex">
       <!-- Todo el código del stepper permanece igual -->
     </mat-stepper>

@@ -19,6 +19,13 @@
     },
     "ADD_DEFECT": "Add defect"
   },
+  "WELCOME_BARISTA": {
+    "CUPPING_SESSIONS": "Cupping Sessions",
+    "DEFECTS_LIBRARY": "Defects Library",
+    "ROAST_FLAVOR_RELATION": "Roast - Flavor Correlation",
+    "GRIND_CALIBRATION": "Grinding Calibration",
+    "RECIPES": "Recipes"
+  },
   "DEFECT_FILE": {
     "TITLE": "Defect file",
     "CAUSES": "Probable causes",

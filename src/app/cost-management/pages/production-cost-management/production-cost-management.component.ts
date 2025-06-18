@@ -11,6 +11,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import {MetricsCardComponent} from '../../components/metrics-card/metrics-card.component';
 import {RecommendationsCardComponent} from '../../components/recommendation-cards/recommendation-cards.component';
+import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
+import { StepLotSelectionComponent } from '../../components/step-lot-selection/step-lot-selection.component';
+import {StepDirectCostsComponent} from '../../components/step-direct-costs/step-direct-costs.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 interface Recommendation {
   message: string;
@@ -31,7 +35,11 @@ interface Recommendation {
     MatCardModule,
     ReactiveFormsModule,
     MetricsCardComponent,
-      RecommendationsCardComponent
+    RecommendationsCardComponent,
+    ToolbarComponent,
+    StepLotSelectionComponent,
+    StepDirectCostsComponent,
+    TranslateModule
   ],
   templateUrl: './production-cost-management.component.html',
   styleUrl: './production-cost-management.component.css'

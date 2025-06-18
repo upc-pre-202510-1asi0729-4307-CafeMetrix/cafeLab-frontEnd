@@ -3,7 +3,7 @@ export class Defect {
   id: number;
 
   /** ID of the related coffee batch */
-  coffeeId: number;
+  coffeeId: string;
 
   /** Name of the defect (e.g. Broca, Mold, Immature Bean) */
   name: string;
@@ -29,7 +29,7 @@ export class Defect {
    */
   constructor(defect: {
     id?: number,
-    coffeeId?: number,
+    coffeeId?: string,
     name?: string,
     defectType?: string,
     defectWeight?: number,
@@ -38,7 +38,7 @@ export class Defect {
     suggestedSolution?: string
   }) {
     this.id = defect.id || 0;
-    this.coffeeId = defect.coffeeId || 0;
+    this.coffeeId = defect.coffeeId || '';
     this.name = defect.name || '';
     this.defectType = defect.defectType || '';
     this.defectWeight = defect.defectWeight || 0;

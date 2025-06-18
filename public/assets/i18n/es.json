@@ -40,6 +40,55 @@
     "DEFECT_PERCENTAGE": "Porcentaje",
     "DEFECT_CAUSE": "Posible causa",
     "DEFECT_SOLUTION": "Posible solución",
-    "SAVE": "Guardar datos"
+    "SAVE": "Guardar datos",
+    "CANCEL": "Cancelar"
+  },
+  "LOGIN": {
+    "TITLE": "Iniciar sesión",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "SUBMIT": "Iniciar sesión",
+    "REGISTER_BARISTA": "Registrarse como Barista",
+    "REGISTER_OWNER": "Registrarse como Dueño de Cafetería"
+  },
+  "LOGIN_SUCCESS": {
+    "TITLE": "Inicio de sesión exitoso",
+    "MESSAGE": "¡Bienvenido, {{name}}!",
+    "CONTINUE": "Continuar"
+  },
+  "LOGUP": {
+    "NAME": "Nombre",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "EXPERIENCE": "Experiencia",
+    "CAFETERIA_NAME": "Nombre de la Cafetería",
+    "SUBMIT": "Registrarse"
+  },
+  "LOGUP_BARISTA": {
+    "TITLE": "Registro de Barista"
+  },
+  "LOGUP_BARISTA_SUCCESS": {
+    "TITLE": "Registro Exitoso",
+    "MESSAGE": "Tu cuenta de barista ha sido creada exitosamente.",
+    "CONTINUE": "Ir a Editar Perfil"
+  },
+  "LOGUP_OWNER": {
+    "TITLE": "Registro de Dueño de Cafetería"
+  },
+  "LOGUP_OWNER_SUCCESS": {
+    "TITLE": "Registro Exitoso",
+    "MESSAGE": "Tu cuenta de dueño de cafetería ha sido creada exitosamente.",
+    "CONTINUE": "Ir a Editar Perfil"
+  },
+  "EDIT_PROFILE": {
+    "TITLE": "Editar Perfil",
+    "NAME": "Nombre",
+    "EMAIL": "Correo electrónico",
+    "CAFETERIA_NAME": "Nombre de la Cafetería",
+    "EXPERIENCE": "Experiencia",
+    "PAYMENT_METHOD": "Método de Pago",
+    "VISA": "Visa",
+    "MASTERCARD": "Mastercard",
+    "SUBMIT": "Guardar"
   }
 }

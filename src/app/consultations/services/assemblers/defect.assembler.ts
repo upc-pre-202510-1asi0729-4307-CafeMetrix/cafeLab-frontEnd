@@ -2,14 +2,17 @@ import { Defect } from '../../model/defect.entity'
 import { DefectResource, DefectsResponse } from '../responses/defect.response';
 
 export class DefectAssembler {
-  static toEntitiesFromResponse(response: DefectsResponse): Defect[] {
-    return response.defects.map(defect => this.toEntityFromResource(defect));
+  static toEntitiesFromResponse(response: DefectResource[]): Defect[] {
+    if (!response) {
+      return [];
+    }
+    return response.map((defect: DefectResource) => this.toEntityFromResource(defect));
   }
 
   static toEntityFromResource(resource: DefectResource): Defect {
     return new Defect({
       id: resource.id,
-      coffeeId: resource.coffeeId,
+      coffeeId: resource.coffeeId ? resource.coffeeId.toString() : '',
       name: resource.name,
       defectType: resource.defectType,
       defectWeight: resource.defectWeight,

@@ -35,15 +35,17 @@ export class AddConsultationComponent implements OnInit {
 
   ngOnInit(): void {
     this.defectForm = this.fb.group({
-      id: ['', Validators.required],
-      name: ['', Validators.required],
-      region: ['', Validators.required],
-      variety: ['', Validators.required],
-      totalWeight: ['', Validators.required],
-      defectName: ['', Validators.required],
+      // Coffee data
+      name: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$')]], // solo letras y espacios
+      region: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$')]],
+      variety: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$')]],
+      totalWeight: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1)]],
+
+      // Defect data
+      defectName: ['', [Validators.required, Validators.pattern('^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$')]],
       defectType: ['', Validators.required],
-      defectWeight: ['', Validators.required],
-      percentage: ['', Validators.required],
+      defectWeight: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1)]],
+      percentage: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(1), Validators.max(100)]],
       probableCause: ['', Validators.required],
       suggestedSolution: ['', Validators.required]
     });
@@ -52,27 +54,25 @@ export class AddConsultationComponent implements OnInit {
   onSubmit() {
     if (this.defectForm.valid) {
       const coffee: Coffee = new Coffee({
-        id: this.defectForm.value.id,
         name: this.defectForm.value.name,
         region: this.defectForm.value.region,
         variety: this.defectForm.value.variety,
         totalWeight: this.defectForm.value.totalWeight
       });
 
-      const defect: Defect = new Defect({
-        id: this.defectForm.value.id, // mismo id que el café
-        coffeeId: this.defectForm.value.id,
-        name: this.defectForm.value.defectName,
-        defectType: this.defectForm.value.defectType,
-        defectWeight: this.defectForm.value.defectWeight,
-        percentage: this.defectForm.value.percentage,
-        probableCause: this.defectForm.value.probableCause,
-        suggestedSolution: this.defectForm.value.suggestedSolution
-      });
-
-
       this.coffeeService.saveCoffee(coffee).subscribe({
-        next: () => {
+        next: (savedCoffee) => {
+          const defect: Defect = new Defect({
+            id: savedCoffee.id,
+            coffeeId: String(savedCoffee.id),
+            name: this.defectForm.value.defectName,
+            defectType: this.defectForm.value.defectType,
+            defectWeight: this.defectForm.value.defectWeight,
+            percentage: this.defectForm.value.percentage,
+            probableCause: this.defectForm.value.probableCause,
+            suggestedSolution: this.defectForm.value.suggestedSolution
+          });
+
           this.defectService.saveDefect(defect).subscribe({
             next: () => {
               this.router.navigate(['/libraryDefects']);
@@ -83,5 +83,8 @@ export class AddConsultationComponent implements OnInit {
         error: (err) => console.error('Error:', err)
       });
     }
+  }
+  onCancel() {
+    this.router.navigate(['/libraryDefects']); // O la ruta que corresponda para volver
   }
 }

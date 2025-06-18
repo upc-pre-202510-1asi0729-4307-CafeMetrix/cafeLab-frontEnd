@@ -1,7 +1,5 @@
-export interface CoffeesResponse {
-  status: string
-  coffees: CoffeeResource[]
-}
+export type CoffeesResponse = CoffeeResource[];
+
 export interface CoffeeResource {
   id: number
   name: string

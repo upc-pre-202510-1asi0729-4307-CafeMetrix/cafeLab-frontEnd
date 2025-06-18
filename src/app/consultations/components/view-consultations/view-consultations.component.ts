@@ -80,7 +80,7 @@ export class ViewConsultationsComponent implements OnInit {
 
 
             this.history = this.defects.map(defect => {
-              const coffee = this.coffees.find(c => c.id === defect.coffeeId);
+              const coffee = this.coffees.find(c => String(c.id) === String(defect.coffeeId));
               return {
                 ...defect,
                 coffeeName: coffee ? coffee.name : ''
@@ -117,4 +117,5 @@ export class ViewConsultationsComponent implements OnInit {
   goToNewDefect() {
     this.router.navigate(['/new-defect']);
   }
+
 }

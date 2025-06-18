@@ -40,6 +40,55 @@
     "DEFECT_PERCENTAGE": "Percentage",
     "DEFECT_CAUSE": "Probable cause",
     "DEFECT_SOLUTION": "Probable solution",
-    "SAVE": "Save data"
+    "SAVE": "Save data",
+    "CANCEL": "Cancel"
+  },
+  "LOGIN": {
+    "TITLE": "Log in",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "SUBMIT": "Log In",
+    "REGISTER_BARISTA": "Register as Barista",
+    "REGISTER_OWNER": "Register as Cafeteria Owner"
+  },
+  "LOGIN_SUCCESS": {
+    "TITLE": "Login Successful",
+    "MESSAGE": "Welcome, {{name}}!",
+    "CONTINUE": "Continue"
+  },
+  "LOGUP": {
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "EXPERIENCE": "Experience",
+    "CAFETERIA_NAME": "Cafeteria Name",
+    "SUBMIT": "Sign Up"
+  },
+  "LOGUP_BARISTA": {
+    "TITLE": "Barista Registration"
+  },
+  "LOGUP_BARISTA_SUCCESS": {
+    "TITLE": "Registration Successful",
+    "MESSAGE": "Your barista account has been created successfully.",
+    "CONTINUE": "Go to Edit Profile"
+  },
+  "LOGUP_OWNER": {
+    "TITLE": "Cafeteria Owner Registration"
+  },
+  "LOGUP_OWNER_SUCCESS": {
+    "TITLE": "Registration Successful",
+    "MESSAGE": "Your cafeteria owner account has been created successfully.",
+    "CONTINUE": "Go to Edit Profile"
+  },
+  "EDIT_PROFILE": {
+    "TITLE": "Edit Profile",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "CAFETERIA_NAME": "Cafeteria Name",
+    "EXPERIENCE": "Experience",
+    "PAYMENT_METHOD": "Payment Method",
+    "VISA": "Visa",
+    "MASTERCARD": "Mastercard",
+    "SUBMIT": "Save"
   }
 }

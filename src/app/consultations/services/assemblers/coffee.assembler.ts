@@ -2,9 +2,13 @@ import { Coffee } from '../../model/coffe.entity';
 import { CoffeeResource, CoffeesResponse } from '../responses/coffe.response';
 
 export class CoffeeAssembler {
-  static toEntitiesFromResponse(response: CoffeesResponse): Coffee[] {
-    return response.coffees.map(coffee => this.toEntityFromResource(coffee));
+  static toEntitiesFromResponse(response: CoffeeResource[]): Coffee[] {
+    if (!response) {
+      return [];
+    }
+    return response.map((coffee: CoffeeResource) => this.toEntityFromResource(coffee));
   }
+
 
   static toEntityFromResource(resource: CoffeeResource): Coffee {
     return new Coffee({

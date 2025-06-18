@@ -45,6 +45,13 @@ export class SesionesCataComponent implements OnInit {
   sesionSeleccionada: CuppingSession | null = null;
   sesiones: CuppingSession[] = [];
 
+  filtros = {
+    origen: '',
+    variedad: '',
+    fecha: null as string | null,
+    procesamiento: ''
+  };
+
   constructor(
     private dialog: MatDialog,
     private cuppingSessionService: CuppingSessionService
@@ -54,7 +61,6 @@ export class SesionesCataComponent implements OnInit {
     this.obtenerSesiones();
   }
 
-  /** Obtiene las sesiones del backend (mockAPI por ahora) */
   obtenerSesiones(): void {
     this.cuppingSessionService.getAll().subscribe({
       next: (data) => {
@@ -66,7 +72,22 @@ export class SesionesCataComponent implements OnInit {
     });
   }
 
-  /** Alterna si es favorito y actualiza la sesión en el backend */
+  get sesionesFiltradas(): CuppingSession[] {
+    const q = this.searchText.toLowerCase().trim();
+    return this.sesiones
+      .filter(s =>
+        s.nombre.toLowerCase().includes(q) ||
+        s.origen.toLowerCase().includes(q) ||
+        s.variedad.toLowerCase().includes(q)
+      )
+      .filter(s =>
+        (!this.filtros.origen || s.origen === this.filtros.origen) &&
+        (!this.filtros.variedad || s.variedad === this.filtros.variedad) &&
+        (!this.filtros.procesamiento || s.procesamiento === this.filtros.procesamiento) &&
+        (!this.filtros.fecha || new Date(s.fecha).toISOString().split('T')[0] === new Date(this.filtros.fecha).toISOString().split('T')[0])
+      );
+  }
+
   toggleFavorito(sesion: CuppingSession): void {
     const actualizado = { ...sesion, favorito: !sesion.favorito };
     this.cuppingSessionService.update(actualizado.id!, actualizado).subscribe({
@@ -79,7 +100,6 @@ export class SesionesCataComponent implements OnInit {
     });
   }
 
-  /** Abre el diálogo de filtros (no implementado aún) */
   mostrarFiltros(): void {
     const dialogRef = this.dialog.open(FiltroDialogComponent, {
       width: '600px',
@@ -89,24 +109,20 @@ export class SesionesCataComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Filtros aplicados:', result);
-        // implementar filtrado si deseas
+        this.filtros = result;
       }
     });
   }
 
-  /** Muestra el detalle de una sesión */
   verDetalle(sesion: CuppingSession): void {
     this.sesionSeleccionada = sesion;
     this.mostrarDetalle = true;
   }
 
-  /** Alterna la vista de comparación */
   toggleComparacion(): void {
     this.mostrarComparacion = !this.mostrarComparacion;
   }
 
-  /** Abre el diálogo para crear una nueva sesión de cata */
   iniciarNuevaCata(): void {
     const dialogRef = this.dialog.open(NuevaCataDialogComponent, {
       width: '500px',
@@ -116,15 +132,16 @@ export class SesionesCataComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((nueva) => {
       if (nueva) {
-        const nuevaSesion = {
-          nombre: nueva.nombre || 'Sin nombre',
+        const nuevaSesion: Omit<CuppingSession, 'id' | 'fecha'> = {
+          nombre: nueva.nombre,
           lote: nueva.loteId,
           perfil_tueste: nueva.perfilId,
-          origen: 'Por definir',
-          variedad: 'Por definir',
+          origen: nueva.origen,
+          variedad: nueva.variedad,
+          procesamiento: nueva.procesamiento,
           favorito: false,
           user_id: 'user1'
-        } as Omit<CuppingSession, 'id' | 'fecha'>;
+        };
 
         this.cuppingSessionService.add(nuevaSesion).subscribe({
           next: (creada) => {

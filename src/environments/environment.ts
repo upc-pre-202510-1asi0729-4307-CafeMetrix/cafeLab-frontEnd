@@ -4,7 +4,6 @@ export const environment = {
   coffeesEndpointPath: '/coffees',
   defectsEndpointPath: '/defects',
   paymentsEndpointPath: '/payments',
-  cuppingSessionsEndpointPath: '/cupping-sessions',
   productionCostsEndpointPath: '/production-costs',
   inventoryEntriesEndpointPath: '/inventory-entries'
 };

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
@@ -13,16 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
 import { NuevaCataDialogComponent } from '../../components/nueva-cata-dialog/nueva-cata-dialog.component';
 import { DetalleCataComponent } from '../../components/detalle-cata/detalle-cata.component';
-
-interface SesionCata {
-  nombre: string;
-  fecha: string;
-  origen: string;
-  variedad: string;
-  favorito: boolean;
-  loteNombre?: string;
-  perfilNombre?: string;
-}
+import { CuppingSessionService } from '../../services/cupping-session.service';
+import { CuppingSession } from '../../model/cupping-session.entity';
 
 @Component({
   selector: 'app-sesiones-cata',
@@ -45,70 +37,103 @@ interface SesionCata {
   templateUrl: './sesiones-cata.component.html',
   styleUrls: ['./sesiones-cata.component.css']
 })
-export class SesionesCataComponent {
+export class SesionesCataComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'fecha', 'origen', 'variedad', 'acciones'];
   searchText: string = '';
   mostrarComparacion: boolean = false;
   mostrarDetalle: boolean = false;
-  sesionSeleccionada: SesionCata | null = null;
+  sesionSeleccionada: CuppingSession | null = null;
+  sesiones: CuppingSession[] = [];
 
-  sesiones: SesionCata[] = [
-    {
-      nombre: 'Cata Especial Primavera',
-      fecha: '2024-03-15',
-      origen: 'Perú',
-      variedad: 'Arábica',
-      favorito: false,
-      loteNombre: 'Lote A - Perú Chanchamayo',
-      perfilNombre: 'Perfil Ligero - City Roast'
-    },
-    { nombre: 'Evaluación Mensual', fecha: '2024-03-10', origen: 'Colombia', variedad: 'Caturra', favorito: true },
-    { nombre: 'Cata Regional Sur', fecha: '2024-03-05', origen: 'Brasil', variedad: 'Bourbon', favorito: false },
-    { nombre: 'Análisis Premium', fecha: '2024-02-28', origen: 'Guatemala', variedad: 'Gesha', favorito: false },
-    { nombre: 'Cata Orgánica', fecha: '2024-02-20', origen: 'México', variedad: 'Typica', favorito: true }
-  ];
+  constructor(
+    private dialog: MatDialog,
+    private cuppingSessionService: CuppingSessionService
+  ) {}
 
-  constructor(private dialog: MatDialog) {}
-
-  toggleFavorito(sesion: SesionCata) {
-    sesion.favorito = !sesion.favorito;
+  ngOnInit(): void {
+    this.obtenerSesiones();
   }
 
-  mostrarFiltros() {
+  /** Obtiene las sesiones del backend (mockAPI por ahora) */
+  obtenerSesiones(): void {
+    this.cuppingSessionService.getAll().subscribe({
+      next: (data) => {
+        this.sesiones = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener sesiones de cata', err);
+      }
+    });
+  }
+
+  /** Alterna si es favorito y actualiza la sesión en el backend */
+  toggleFavorito(sesion: CuppingSession): void {
+    const actualizado = { ...sesion, favorito: !sesion.favorito };
+    this.cuppingSessionService.update(actualizado.id!, actualizado).subscribe({
+      next: () => {
+        sesion.favorito = actualizado.favorito;
+      },
+      error: (err) => {
+        console.error('Error al actualizar favorito', err);
+      }
+    });
+  }
+
+  /** Abre el diálogo de filtros (no implementado aún) */
+  mostrarFiltros(): void {
     const dialogRef = this.dialog.open(FiltroDialogComponent, {
       width: '600px',
       backdropClass: 'dialog-backdrop',
       panelClass: 'filter-dialog-panel'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Aquí implementaremos la lógica de filtrado
         console.log('Filtros aplicados:', result);
+        // implementar filtrado si deseas
       }
     });
   }
 
-  verDetalle(sesion: SesionCata) {
+  /** Muestra el detalle de una sesión */
+  verDetalle(sesion: CuppingSession): void {
     this.sesionSeleccionada = sesion;
     this.mostrarDetalle = true;
   }
 
-  toggleComparacion() {
+  /** Alterna la vista de comparación */
+  toggleComparacion(): void {
     this.mostrarComparacion = !this.mostrarComparacion;
   }
 
-  iniciarNuevaCata() {
+  /** Abre el diálogo para crear una nueva sesión de cata */
+  iniciarNuevaCata(): void {
     const dialogRef = this.dialog.open(NuevaCataDialogComponent, {
       width: '500px',
       backdropClass: 'dialog-backdrop',
       panelClass: 'filter-dialog-panel'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Aquí implementaremos la lógica para crear la nueva sesión
-        console.log('Nueva sesión de cata:', result);
+    dialogRef.afterClosed().subscribe((nueva) => {
+      if (nueva) {
+        const nuevaSesion = {
+          nombre: nueva.nombre || 'Sin nombre',
+          lote: nueva.loteId,
+          perfil_tueste: nueva.perfilId,
+          origen: 'Por definir',
+          variedad: 'Por definir',
+          favorito: false,
+          user_id: 'user1'
+        } as Omit<CuppingSession, 'id' | 'fecha'>;
+
+        this.cuppingSessionService.add(nuevaSesion).subscribe({
+          next: (creada) => {
+            this.sesiones.push(creada);
+          },
+          error: (err) => {
+            console.error('Error al crear sesión de cata', err);
+          }
+        });
       }
     });
   }

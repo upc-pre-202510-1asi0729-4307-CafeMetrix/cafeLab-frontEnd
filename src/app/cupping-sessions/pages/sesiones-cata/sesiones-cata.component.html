@@ -25,8 +25,8 @@
     <div class="actions-bar">
       <div class="search-section">
         <mat-form-field appearance="outline" class="search-field">
-          <mat-label>{{ 'CUPPING_SESSIONS.HOME' | translate }}</mat-label>
-          <input matInput [(ngModel)]="searchText" placeholder="Buscar por nombre, origen...">
+          <mat-label>{{ 'CUPPING_SESSIONS.SEARCH_SESSIONS' | translate }}</mat-label>
+          <input matInput [(ngModel)]="searchText" placeholder="{{ 'CUPPING_SESSIONS.NAME' | translate }}">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
@@ -44,7 +44,7 @@
     <table mat-table [dataSource]="sesionesFiltradas" class="mat-elevation-z8">
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'CUPPING_SESSIONS.NAME' | translate }}</th>
         <td mat-cell *matCellDef="let sesion">
           <a class="session-link" (click)="verDetalle(sesion)">{{sesion.nombre}}</a>
         </td>
@@ -52,19 +52,19 @@
 
       <!-- Fecha Column -->
       <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'CUPPING_SESSIONS.DATE' | translate }}</th>
         <td mat-cell *matCellDef="let sesion">{{sesion.fecha}}</td>
       </ng-container>
 
       <!-- Origen Column -->
       <ng-container matColumnDef="origen">
-        <th mat-header-cell *matHeaderCellDef>Origen</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'CUPPING_SESSIONS.ORIGIN' | translate }}</th>
         <td mat-cell *matCellDef="let sesion">{{sesion.origen}}</td>
       </ng-container>
 
       <!-- Variedad Column -->
       <ng-container matColumnDef="variedad">
-        <th mat-header-cell *matHeaderCellDef>Variedad</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'CUPPING_SESSIONS.VARIETY' | translate }}</th>
         <td mat-cell *matCellDef="let sesion">{{sesion.variedad}}</td>
       </ng-container>
 
@@ -90,7 +90,7 @@
     <!-- Botón de nueva cata -->
     <div class="new-cata-button-container">
       <button mat-raised-button (click)="iniciarNuevaCata()" class="new-cata-button">
-        Iniciar una nueva cata
+        {{ 'CUPPING_SESSIONS.RECORD_CUPPING' | translate }}
       </button>
     </div>
   </div>

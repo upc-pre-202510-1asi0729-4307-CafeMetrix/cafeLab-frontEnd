@@ -34,7 +34,8 @@
     "ORIGIN": "Origin",
     "VARIETY": "Variety",
     "COMPARE": "Compare multiple records",
-    "RECORD_CUPPING": "Start a new record"
+    "RECORD_CUPPING": "Start a new record",
+    "FILTER_TITLE": "Filter Cupping Sessions"
   },
   "DEFECT_FILE": {
     "TITLE": "Defect file",

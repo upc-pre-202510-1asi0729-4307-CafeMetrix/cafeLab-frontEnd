@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-filtro-dialog',
@@ -21,12 +22,13 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    TranslatePipe
   ],
   template: `
     <div class="dialog-container">
-      <h2 class="dialog-title">Filtrar sesiones de cata</h2>
-      
+      <h2 class="dialog-title">{{ 'CUPPING_SESSIONS.FILTER_TITLE' | translate }}</h2>
+
       <div class="filters-grid">
         <div class="filter-item">
           <mat-form-field appearance="outline">
@@ -136,4 +138,4 @@ export class FiltroDialogComponent {
   aplicarFiltros() {
     this.dialogRef.close(this.filtros);
   }
-} 
+}

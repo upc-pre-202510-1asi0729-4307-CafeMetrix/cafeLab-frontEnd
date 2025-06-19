@@ -29,12 +29,14 @@
   },
   "CUPPING_SESSIONS": {
     "SEARCH_SESSIONS": "Buscar sesiones de cata",
-    "NAME": "Name",
+    "NAME": "Nombre",
     "DATE": "Fecha",
     "ORIGIN": "Origen",
     "VARIETY": "Variedad",
     "COMPARE": "Comparar múltiples catas",
-    "RECORD_CUPPING": "Iniciar una nueva cata"
+    "RECORD_CUPPING": "Iniciar una nueva cata",
+    "FILTER_TITLE": "Filtrar sesiones de cata"
+
   },
   "DEFECT_FILE": {
     "TITLE": "Ficha de defecto",

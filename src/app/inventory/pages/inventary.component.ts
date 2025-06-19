@@ -7,9 +7,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RegisterConsumptionDialogComponent } from '../../cupping-sessions/components/register-consumption-dialog/register-consumption-dialog.component';
-import {ToolbarComponent} from '../../public/components/toolbar/toolbar.component';
-import {TranslatePipe} from '@ngx-translate/core';
-import {RouterLink} from '@angular/router';
+import { ToolbarComponent } from '../../public/components/toolbar/toolbar.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { InventoryService } from '../services/inventory.service';
+import { InventoryEntry } from '../model/inventory-entry.entity';
+import { HttpClientModule } from '@angular/common/http';
 
 interface CoffeeStock {
   type: string;
@@ -26,6 +29,7 @@ interface CoffeeStock {
   standalone: true,
   imports: [
     CommonModule,
+    HttpClientModule,
     MatCardModule,
     MatButtonModule,
     MatSelectModule,
@@ -61,23 +65,46 @@ export class InventaryComponent {
   ];
 
   displayedColumns: string[] = ['fecha', 'producto', 'lote', 'cantidad', 'acciones'];
-  recentMovements: any[] = [];  // This would be populated with actual data
+  recentMovements: any[] = [];
 
-
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private inventoryService: InventoryService
+  ) {
+    this.loadMovements();
+  }
 
   openRegisterConsumptionDialog(): void {
     const dialogRef = this.dialog.open(RegisterConsumptionDialogComponent, {
       width: '80%',
       maxWidth: '1200px',
       panelClass: 'register-consumption-dialog',
+      data: { coffeeLotId: 1 } // ← este ID debe cambiar cuando haya integración real
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Dialog result:', result);
-        // Handle the result here
+        this.inventoryService.addInventoryEntry(result).subscribe({
+          next: () => {
+            this.loadMovements();
+          },
+          error: (err) => console.error('Error al guardar consumo:', err)
+        });
       }
+    });
+  }
+
+  loadMovements(): void {
+    this.inventoryService.getInventoryEntries().subscribe({
+      next: (entries) => {
+        this.recentMovements = entries.map(entry => ({
+          fecha: entry.dateUsed,
+          producto: 'Café', // Esto debería mapearse a algo más específico con coffeeLotId
+          lote: entry.coffeeLotId,
+          cantidad: `${entry.quantityUsed} kg`
+        }));
+      },
+      error: (err) => console.error('Error cargando movimientos:', err)
     });
   }
 }

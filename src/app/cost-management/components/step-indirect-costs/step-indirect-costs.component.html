@@ -1,90 +1,100 @@
-<h2>Costos indirectos</h2>
+<mat-progress-bar mode="determinate" [value]="100"></mat-progress-bar>
 
 <form [formGroup]="formGroup" class="step-form">
-
   <!-- Transporte -->
-  <fieldset>
-    <legend>Costos de transporte</legend>
+  <mat-card>
+    <h3>Costos de transporte</h3>
     <div [formGroup]="transportForm">
-      <label>
-        Costo por kg:
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Costo por kg</mat-label>
         <input matInput type="number" formControlName="costPerKg" />
-      </label>
-      <label>
-        Cantidad:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Cantidad (kg)</mat-label>
         <input matInput type="number" formControlName="quantity" />
-      </label>
-      <p><strong>Total:</strong> {{ transportTotal | currency: 'PEN' }}</p>
+      </mat-form-field>
+
+      <p><strong>Total:</strong> S/. {{ transportTotal | number:'1.2-2' }}</p>
     </div>
-  </fieldset>
+  </mat-card>
 
   <!-- Almacenamiento -->
-  <fieldset>
-    <legend>Costos de almacenamiento</legend>
+  <mat-card>
+    <h3>Costos de almacenamiento</h3>
     <div [formGroup]="storageForm">
-      <label>
-        Días en almacenamiento:
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Días en almacenamiento</mat-label>
         <input matInput type="number" formControlName="daysInStorage" />
-      </label>
-      <label>
-        Costo diario:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Costo diario</mat-label>
         <input matInput type="number" formControlName="dailyCost" />
-      </label>
-      <p><strong>Total:</strong> {{ storageTotal | currency: 'PEN' }}</p>
+      </mat-form-field>
+
+      <p><strong>Total:</strong> S/. {{ storageTotal | number:'1.2-2' }}</p>
     </div>
-  </fieldset>
+  </mat-card>
 
   <!-- Procesamiento -->
-  <fieldset>
-    <legend>Costos de procesamiento</legend>
+  <mat-card>
+    <h3>Costos de procesamiento</h3>
     <div [formGroup]="processingForm">
-      <label>
-        Electricidad:
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Electricidad</mat-label>
         <input matInput type="number" formControlName="electricity" />
-      </label>
-      <label>
-        Mantenimiento:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Mantenimiento</mat-label>
         <input matInput type="number" formControlName="maintenance" />
-      </label>
-      <label>
-        Suministros:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Suministros</mat-label>
         <input matInput type="number" formControlName="supplies" />
-      </label>
-      <label>
-        Agua:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Agua</mat-label>
         <input matInput type="number" formControlName="water" />
-      </label>
-      <label>
-        Depreciación:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Depreciación</mat-label>
         <input matInput type="number" formControlName="depreciation" />
-      </label>
-      <p><strong>Total:</strong> {{ processingTotal | currency: 'PEN' }}</p>
+      </mat-form-field>
+
+      <p><strong>Total:</strong> S/. {{ processingTotal | number:'1.2-2' }}</p>
     </div>
-  </fieldset>
+  </mat-card>
 
   <!-- Otros -->
-  <fieldset>
-    <legend>Otros costos indirectos</legend>
+  <mat-card>
+    <h3>Otros costos indirectos</h3>
     <div [formGroup]="othersForm">
-      <label>
-        Control de calidad:
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Control de calidad</mat-label>
         <input matInput type="number" formControlName="qualityControl" />
-      </label>
-      <label>
-        Certificaciones:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Certificaciones</mat-label>
         <input matInput type="number" formControlName="certifications" />
-      </label>
-      <label>
-        Seguro:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Seguro</mat-label>
         <input matInput type="number" formControlName="insurance" />
-      </label>
-      <label>
-        Costos administrativos:
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Costos administrativos</mat-label>
         <input matInput type="number" formControlName="administrative" />
-      </label>
-      <p><strong>Total:</strong> {{ othersTotal | currency: 'PEN' }}</p>
+      </mat-form-field>
+
+      <p><strong>Total:</strong> S/. {{ othersTotal | number:'1.2-2' }}</p>
     </div>
-  </fieldset>
-
-
+  </mat-card>
 </form>

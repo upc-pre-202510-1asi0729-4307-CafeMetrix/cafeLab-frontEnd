@@ -49,6 +49,8 @@ export class ProductionCostPageComponent {
   indirectCostsForm!: FormGroup;
   currentStep = 0;
   totalSteps = 3;
+  totalMateriaPrima = 0;
+  totalManoObra = 0;
   isSubmitting = false;
   readonly CUPS_PER_KG = 20;
   isSuccess = false;
@@ -241,5 +243,9 @@ export class ProductionCostPageComponent {
         type: 'info'
       });
     }
+  }
+  updateDirectCosts(event: { materiaPrima: number; manoObra: number }): void {
+    this.totalMateriaPrima = event.materiaPrima;
+    this.totalManoObra = event.manoObra;
   }
 }

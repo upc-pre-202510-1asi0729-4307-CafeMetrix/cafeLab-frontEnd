@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-step-indirect-costs',
@@ -18,6 +19,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatButtonModule,
     MatFormFieldModule,
     MatProgressBarModule,
+    MatCardModule
   ]
 })
 export class StepIndirectCostsComponent {
@@ -52,11 +54,11 @@ export class StepIndirectCostsComponent {
 
   get processingTotal(): number {
     const p = this.processingForm.value;
-    return p.electricity + p.maintenance + p.supplies + p.water + p.depreciation;
+    return (p.electricity || 0) + (p.maintenance || 0) + (p.supplies || 0) + (p.water || 0) + (p.depreciation || 0);
   }
 
   get othersTotal(): number {
     const o = this.othersForm.value;
-    return o.qualityControl + o.certifications + o.insurance + o.administrative;
+    return (o.qualityControl || 0) + (o.certifications || 0) + (o.insurance || 0) + (o.administrative || 0);
   }
 }

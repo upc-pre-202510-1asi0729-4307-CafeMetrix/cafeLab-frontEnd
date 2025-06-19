@@ -52,7 +52,7 @@
       <mat-step [stepControl]="directCostsForm" [completed]="directCostsForm.valid">
         <ng-template matStepLabel>Costos directos</ng-template>
         <form [formGroup]="directCostsForm">
-          <app-step-direct-costs [formGroup]="directCostsForm"></app-step-direct-costs>
+          <app-step-direct-costs [formGroup]="directCostsForm"(totalsCalculated)="updateDirectCosts($event)">></app-step-direct-costs>
 
           <div class="button-container">
             <button mat-button matStepperPrevious>Anterior</button>

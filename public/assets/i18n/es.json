@@ -3,7 +3,10 @@
     "HOME": "Inicio",
     "FEATURES": "Funcionalidades",
     "CONTACT": "Contáctanos",
-    "PROFILE": "Perfil"
+    "PROFILE": "Perfil",
+    "DRINKS": "Bebidas",
+    "RECIPES": "Recetas",
+    "PORTFOLIO": "Portafolio"
   },
   "CONSULTATIONS": {
     "TITLE": "Biblioteca de defectos",
@@ -461,7 +464,8 @@
       "submit": "Guardar Receta",
       "success": "Receta creada con éxito",
       "error": "Error al crear la receta",
-      "error_loading_portfolios": "Error al cargar los portafolios"
+      "error_loading_portfolios": "Error al cargar los portafolios",
+      "error_loading_lots": "Error al cargar los lotes"
     },
     "detail": {
       "basic_info": "Información Básica",

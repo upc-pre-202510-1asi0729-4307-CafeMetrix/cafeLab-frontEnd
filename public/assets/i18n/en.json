@@ -3,7 +3,10 @@
     "HOME": "Home",
     "FEATURES": "Features",
     "CONTACT": "Contact us",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "DRINKS": "Drinks",
+    "RECIPES": "Recipes",
+    "PORTFOLIO": "Portfolio"
   },
   "CONSULTATIONS": {
     "TITLE": "Defects Library",
@@ -391,7 +394,7 @@
       "error_deleting": "Error deleting portfolio"
     }
   },
-  "recipes": {
+   "recipes": {
     "title": "Unassigned Drinks",
     "create": "Create Drink",
     "add_to_portfolio": "Add recipes to portfolio",
@@ -429,7 +432,7 @@
       "image_required": "Image URL is required",
       "lote": "Batch",
       "tueste": "Roast",
-      "cata": "Tasting",
+      "cata": "Cupping",
       "portfolio": "Portfolio",
       "no_portfolio": "No portfolio",
       "molienda": "Grind",
@@ -457,7 +460,8 @@
       "submit": "Save Recipe",
       "success": "Recipe created successfully",
       "error": "Error creating recipe",
-      "error_loading_portfolios": "Error loading portfolios"
+      "error_loading_portfolios": "Error loading portfolios",
+      "error_loading_lots": "Error al cargar los lotes"
     },
     "detail": {
       "basic_info": "Basic Information",

@@ -1,100 +1,38 @@
-<mat-progress-bar mode="determinate" [value]="100"></mat-progress-bar>
+<mat-card>
+  <h3>Costos de materia prima</h3>
 
-<form [formGroup]="formGroup" class="step-form">
-  <!-- Transporte -->
-  <mat-card>
-    <h3>Costos de transporte</h3>
-    <div [formGroup]="transportForm">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Costo por kg</mat-label>
-        <input matInput type="number" formControlName="costPerKg" />
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Costo por kg de café verde</mat-label>
+    <input matInput type="number" formControlName="costoKgCafe" />
+  </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Cantidad (kg)</mat-label>
-        <input matInput type="number" formControlName="quantity" />
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cantidad de café verde (kg)</mat-label>
+    <input matInput type="number" formControlName="cantidadKgCafe" />
+  </mat-form-field>
 
-      <p><strong>Total:</strong> S/. {{ transportTotal | number:'1.2-2' }}</p>
-    </div>
-  </mat-card>
+  <p><strong>Total:</strong> S/. {{ formGroup.get('costoKgCafe')?.value * formGroup.get('cantidadKgCafe')?.value || 0 }}</p>
+</mat-card>
 
-  <!-- Almacenamiento -->
-  <mat-card>
-    <h3>Costos de almacenamiento</h3>
-    <div [formGroup]="storageForm">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Días en almacenamiento</mat-label>
-        <input matInput type="number" formControlName="daysInStorage" />
-      </mat-form-field>
+<mat-card>
+  <h3>Costos de mano de obra directa</h3>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Costo diario</mat-label>
-        <input matInput type="number" formControlName="dailyCost" />
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Horas trabajadas</mat-label>
+    <input matInput type="number" formControlName="horas" />
+  </mat-form-field>
 
-      <p><strong>Total:</strong> S/. {{ storageTotal | number:'1.2-2' }}</p>
-    </div>
-  </mat-card>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Costo por hora</mat-label>
+    <input matInput type="number" formControlName="costoHora" />
+  </mat-form-field>
 
-  <!-- Procesamiento -->
-  <mat-card>
-    <h3>Costos de procesamiento</h3>
-    <div [formGroup]="processingForm">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Electricidad</mat-label>
-        <input matInput type="number" formControlName="electricity" />
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Número de trabajadores</mat-label>
+    <input matInput type="number" formControlName="trabajadores" />
+  </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Mantenimiento</mat-label>
-        <input matInput type="number" formControlName="maintenance" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Suministros</mat-label>
-        <input matInput type="number" formControlName="supplies" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Agua</mat-label>
-        <input matInput type="number" formControlName="water" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Depreciación</mat-label>
-        <input matInput type="number" formControlName="depreciation" />
-      </mat-form-field>
-
-      <p><strong>Total:</strong> S/. {{ processingTotal | number:'1.2-2' }}</p>
-    </div>
-  </mat-card>
-
-  <!-- Otros -->
-  <mat-card>
-    <h3>Otros costos indirectos</h3>
-    <div [formGroup]="othersForm">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Control de calidad</mat-label>
-        <input matInput type="number" formControlName="qualityControl" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Certificaciones</mat-label>
-        <input matInput type="number" formControlName="certifications" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Seguro</mat-label>
-        <input matInput type="number" formControlName="insurance" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Costos administrativos</mat-label>
-        <input matInput type="number" formControlName="administrative" />
-      </mat-form-field>
-
-      <p><strong>Total:</strong> S/. {{ othersTotal | number:'1.2-2' }}</p>
-    </div>
-  </mat-card>
-</form>
+  <p><strong>Total:</strong> S/. {{
+      formGroup.get('horas')?.value * formGroup.get('costoHora')?.value * formGroup.get('trabajadores')?.value || 0
+    }}</p>
+</mat-card>

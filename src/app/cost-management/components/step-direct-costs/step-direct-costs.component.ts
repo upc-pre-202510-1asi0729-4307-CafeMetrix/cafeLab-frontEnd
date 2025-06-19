@@ -1,12 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-step-direct-costs',
@@ -15,27 +13,23 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatCardModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ],
   templateUrl: './step-direct-costs.component.html',
-  styleUrl: './step-direct-costs.component.css'
+  styleUrls: ['./step-direct-costs.component.css']
 })
 export class StepDirectCostsComponent implements OnInit {
   @Input() formGroup!: FormGroup;
-  @Input() progressValue = 0;
-  @Input() onCancel!: () => void;
   @Output() totalsCalculated = new EventEmitter<{ materiaPrima: number; manoObra: number }>();
-
 
   totalMateriaPrima = 0;
   totalManoObra = 0;
 
   ngOnInit(): void {
-    this.formGroup.valueChanges.subscribe(() => this.calculateTotals());
+    if (this.formGroup) {
+      this.formGroup.valueChanges.subscribe(() => this.calculateTotals());
+    }
   }
 
   calculateTotals(): void {
@@ -47,10 +41,10 @@ export class StepDirectCostsComponent implements OnInit {
 
     this.totalMateriaPrima = costoKg * cantidad;
     this.totalManoObra = horas * costoHora * trabajadores;
+
     this.totalsCalculated.emit({
       materiaPrima: this.totalMateriaPrima,
       manoObra: this.totalManoObra
     });
-
   }
 }

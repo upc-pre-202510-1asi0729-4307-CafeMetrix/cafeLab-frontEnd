@@ -17,7 +17,7 @@ import { StepDirectCostsComponent } from '../../components/step-direct-costs/ste
 import { StepIndirectCostsComponent } from '../../components/step-indirect-costs/step-indirect-costs.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProductionCostEntity } from "../../model/production-cost.entity";
-
+import {MatTable} from '@angular/material/table';
 
 @Component({
   selector: 'app-production-cost-page',
@@ -38,7 +38,8 @@ import { ProductionCostEntity } from "../../model/production-cost.entity";
     StepLotSelectionComponent,
     StepDirectCostsComponent,
     StepIndirectCostsComponent,
-    TranslateModule
+    TranslateModule,
+    MatTable
   ],
   templateUrl: './production-cost-management.component.html',
   styleUrl: './production-cost-management.component.css'
@@ -58,6 +59,8 @@ export class ProductionCostPageComponent {
   readonly EXPECTED_MARGIN = 45;
   readonly TRANSPORT_COST_THRESHOLD = 10;
   recommendations: { message: string; type: 'success' | 'warning' | 'info' }[] = [];
+  costSummary: { tipo: string; monto: number }[] = [];
+  private totalCost: number | undefined;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.firstFormGroup = this.fb.group({
@@ -162,8 +165,7 @@ export class ProductionCostPageComponent {
   }
 
   get costPerKg(): number {
-    const rawMaterials = this.directCostsForm.get('rawMaterials')?.value || {};
-    return rawMaterials.costPerKg || 0;
+    return this.grandTotal / (this.directCostsForm.get('rawMaterials')?.value.quantity || 1);
   }
 
   get costPerCup(): number {
@@ -191,8 +193,18 @@ export class ProductionCostPageComponent {
     ].map(c => ({ ...c, percentage: (c.amount / this.grandTotal) * 100 }));
   }
 
+  calculateResumen(): void {
+    this.costSummary = [
+      { tipo: 'Materia Prima', monto: this.totalMateriaPrima },
+      { tipo: 'Mano de Obra Directa', monto: this.totalManoObra },
+      { tipo: 'Costos Indirectos', monto: this.totalIndirectCosts },
+    ];
+
+  }
+
   onSubmit(): void {
     if (this.firstFormGroup.valid && this.directCostsForm.valid && this.indirectCostsForm.valid) {
+      this.calculateResumen();
       this.isSubmitting = true;
       const year = new Date().getFullYear();
       const random = Math.floor(10000 + Math.random() * 90000);
@@ -244,6 +256,7 @@ export class ProductionCostPageComponent {
       });
     }
   }
+
   updateDirectCosts(event: { materiaPrima: number; manoObra: number }): void {
     this.totalMateriaPrima = event.materiaPrima;
     this.totalManoObra = event.manoObra;

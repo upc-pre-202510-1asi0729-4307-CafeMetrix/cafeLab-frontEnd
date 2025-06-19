@@ -31,7 +31,7 @@ export class CoffeeDataService {
     this.roastService = new (class extends BaseService<RoastProfile> {
       constructor() {
         super();
-        this.resourceEndpoint = environment.roastProfilesEndpointPath;
+        this.resourceEndpoint = environment.roastProfileEndpointPath;
       }
     })();
   }

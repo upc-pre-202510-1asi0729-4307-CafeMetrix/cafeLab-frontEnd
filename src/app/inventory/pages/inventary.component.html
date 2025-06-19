@@ -1,8 +1,10 @@
+<app-toolbar></app-toolbar>
+
 <div class="inventory-container">
   <div class="breadcrumb">
-    <span>Inicio</span>
-    <span class="separator">></span>
-    <span>Inventario</span>
+    <a routerLink="/welcome-barista">{{ 'NAVIGATION.HOME' | translate }}</a>
+    <mat-icon>chevron_right</mat-icon>
+    <span class="active">Inventario</span>
   </div>
 
   <div class="coffee-cards">

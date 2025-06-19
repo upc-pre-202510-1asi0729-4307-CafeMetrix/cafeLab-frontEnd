@@ -7,6 +7,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RegisterConsumptionDialogComponent } from '../../cupping-sessions/components/register-consumption-dialog/register-consumption-dialog.component';
+import {ToolbarComponent} from '../../public/components/toolbar/toolbar.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {RouterLink} from '@angular/router';
 
 interface CoffeeStock {
   type: string;
@@ -28,7 +31,10 @@ interface CoffeeStock {
     MatSelectModule,
     MatTableModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    ToolbarComponent,
+    TranslatePipe,
+    RouterLink
   ],
   templateUrl: './inventary.component.html',
   styleUrl: './inventary.component.css'
@@ -56,6 +62,7 @@ export class InventaryComponent {
 
   displayedColumns: string[] = ['fecha', 'producto', 'lote', 'cantidad', 'acciones'];
   recentMovements: any[] = [];  // This would be populated with actual data
+
 
   constructor(private dialog: MatDialog) {}
 

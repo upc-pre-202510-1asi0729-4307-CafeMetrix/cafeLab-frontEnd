@@ -1,7 +1,7 @@
 <app-toolbar></app-toolbar>
 
 <div class="main-container">
-  <!-- Success Message -->
+  <!-- Pantalla de éxito -->
   <div *ngIf="isSuccess" class="success-screen">
     <div class="success-message">
       <h2>Registro guardado exitosamente</h2>
@@ -28,35 +28,57 @@
     </div>
   </div>
 
-  <!-- Stepper & Form logic -->
+  <!-- Formulario paso a paso -->
   <div *ngIf="!isSuccess">
     <mat-stepper linear [selectedIndex]="currentStep" (selectionChange)="currentStep = $event.selectedIndex">
-      <mat-step [stepControl]="firstFormGroup">
+      <!-- Paso 1: Selección de lote -->
+      <mat-step [stepControl]="firstFormGroup" [completed]="firstFormGroup.valid">
         <ng-template matStepLabel>Selección de lote</ng-template>
-        <app-step-lot-selection
-          [formGroup]="firstFormGroup"
-          [progressValue]="progressValue"
-          [onCancel]="onCancel">
-        </app-step-lot-selection>
+        <form [formGroup]="firstFormGroup">
+          <app-step-lot-selection [formGroup]="firstFormGroup"></app-step-lot-selection>
+
+          <div class="button-container">
+            <button mat-raised-button color="primary" matStepperNext [disabled]="firstFormGroup.invalid">
+              Continuar
+            </button>
+            <button mat-stroked-button color="warn" (click)="onCancel()">
+              Cancelar
+            </button>
+          </div>
+        </form>
       </mat-step>
 
-      <mat-step [stepControl]="directCostsForm">
+      <!-- Paso 2: Costos directos -->
+      <mat-step [stepControl]="directCostsForm" [completed]="directCostsForm.valid">
         <ng-template matStepLabel>Costos directos</ng-template>
-        <app-step-direct-costs
-          [formGroup]="directCostsForm"
-          [progressValue]="progressValue"
-          [onCancel]="onCancel">
-        </app-step-direct-costs>
+        <form [formGroup]="directCostsForm">
+          <app-step-direct-costs [formGroup]="directCostsForm"></app-step-direct-costs>
+
+          <div class="button-container">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="directCostsForm.invalid">
+              Continuar
+            </button>
+          </div>
+        </form>
       </mat-step>
 
-      <mat-step [stepControl]="indirectCostsForm">
+      <!-- Paso 3: Costos indirectos -->
+      <mat-step [stepControl]="indirectCostsForm" [completed]="indirectCostsForm.valid">
         <ng-template matStepLabel>Costos indirectos</ng-template>
-        <app-step-indirect-costs
-          [formGroup]="indirectCostsForm"
-          [onCancel]="onCancel">
-        </app-step-indirect-costs>
+        <form [formGroup]="indirectCostsForm">
+          <app-step-indirect-costs [formGroup]="indirectCostsForm"></app-step-indirect-costs>
+
+          <div class="button-container">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="indirectCostsForm.invalid">
+              Continuar
+            </button>
+          </div>
+        </form>
       </mat-step>
 
+      <!-- Paso 4: Resumen -->
       <mat-step>
         <ng-template matStepLabel>Resumen</ng-template>
         <div class="summary-container">
@@ -69,6 +91,7 @@
           <app-recommendations-card [recommendations]="recommendations"></app-recommendations-card>
 
           <div class="button-container">
+            <button mat-button matStepperPrevious>Anterior</button>
             <button mat-raised-button color="primary" (click)="onSubmit()">
               Finalizar y Guardar
             </button>

@@ -1,4 +1,3 @@
-// src/app/cost-management/services/lot.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of, map, catchError } from 'rxjs';

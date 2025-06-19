@@ -2,25 +2,22 @@
 
 <h2>Selección del lote</h2>
 
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" class="step-form">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Seleccione un lote</mat-label>
+    <mat-label>Lote de café</mat-label>
     <mat-select formControlName="selectedLot">
-      <mat-option value="lot1">Lote 1</mat-option>
-      <mat-option value="lot2">Lote 2</mat-option>
-      <mat-option value="lot3">Lote 3</mat-option>
+      <mat-option *ngFor="let lot of lots" [value]="lot.id">
+        {{ lot.name }} – {{ lot.origin }} ({{ lot.variety }})
+      </mat-option>
     </mat-select>
-    <mat-error *ngIf="formGroup.get('selectedLot')?.invalid">
-      El campo Lote es requerido
-    </mat-error>
   </mat-form-field>
-</form>
 
-<div class="button-container">
-  <button mat-raised-button class="action-button" (click)="onCancel?.()">
-    Cancelar
-  </button>
-  <button mat-raised-button class="action-button" [disabled]="!formGroup.valid" matStepperNext>
-    Continuar
-  </button>
-</div>
+  <div class="button-container">
+    <button mat-raised-button color="primary" [disabled]="formGroup.invalid" matStepperNext>
+      Continuar
+    </button>
+    <button mat-stroked-button color="warn" (click)="onCancel()">
+      Cancelar
+    </button>
+  </div>
+</form>

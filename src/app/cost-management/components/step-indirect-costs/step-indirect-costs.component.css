@@ -1,0 +1,26 @@
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cost-card {
+  padding: 16px;
+}
+
+mat-form-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.total {
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}

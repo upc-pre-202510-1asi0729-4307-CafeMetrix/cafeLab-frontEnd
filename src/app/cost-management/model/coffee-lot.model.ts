@@ -1,5 +1,7 @@
 export interface CoffeeLot {
   id: string;
-  lot_name: string;
-  user_id: string;
+  name: string;
+  variety: string;
+  origin: string;
+  quantityKg: number;
 }

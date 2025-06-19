@@ -15,6 +15,7 @@ import { NuevaCataDialogComponent } from '../../components/nueva-cata-dialog/nue
 import { DetalleCataComponent } from '../../components/detalle-cata/detalle-cata.component';
 import { CuppingSessionService } from '../../services/cupping-session.service';
 import { CuppingSession } from '../../model/cupping-session.entity';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sesiones-cata',
@@ -32,7 +33,8 @@ import { CuppingSession } from '../../model/cupping-session.entity';
     FormsModule,
     FiltroDialogComponent,
     NuevaCataDialogComponent,
-    DetalleCataComponent
+    DetalleCataComponent,
+    TranslatePipe
   ],
   templateUrl: './sesiones-cata.component.html',
   styleUrls: ['./sesiones-cata.component.css']

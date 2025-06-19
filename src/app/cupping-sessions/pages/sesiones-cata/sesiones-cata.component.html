@@ -2,10 +2,10 @@
 <div class="sesiones-container">
   <!-- Breadcrumb -->
   <div class="breadcrumb">
-    <a routerLink="/welcome-barista">Inicio</a>
+    <a routerLink="/welcome-barista"> {{ 'NAVIGATION.HOME' | translate }}</a>
     <mat-icon>chevron_right</mat-icon>
     <ng-container *ngIf="!mostrarComparacion && !mostrarDetalle">
-      <span class="active">Sesiones de Cata</span>
+      <span class="active">{{ 'CONSULTATIONS.CUPPING_SESSIONS' | translate }}</span>
     </ng-container>
     <ng-container *ngIf="mostrarComparacion">
       <a (click)="toggleComparacion()" class="breadcrumb-link">Sesiones de Cata</a>
@@ -25,7 +25,7 @@
     <div class="actions-bar">
       <div class="search-section">
         <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Buscar sesiones de cata</mat-label>
+          <mat-label>{{ 'CUPPING_SESSIONS.HOME' | translate }}</mat-label>
           <input matInput [(ngModel)]="searchText" placeholder="Buscar por nombre, origen...">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
@@ -36,7 +36,7 @@
       </div>
 
       <button mat-raised-button class="compare-button" (click)="toggleComparacion()">
-        Comparar múltiples catas
+        {{ 'CUPPING_SESSIONS.COMPARE' | translate }}
       </button>
     </div>
 
@@ -98,7 +98,7 @@
   <!-- Vista de comparación -->
   <div class="comparison-view" *ngIf="mostrarComparacion">
     <div class="comparison-image-container">
-      <img src="../../../assets/multiple-cupping-exmp.png" alt="Comparación de catas" class="comparison-image">
+      <img src="assets/multiple-cupping-exmp.png" alt="Comparación de catas" class="comparison-image">
     </div>
   </div>
 

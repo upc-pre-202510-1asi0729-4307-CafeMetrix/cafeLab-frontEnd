@@ -11,6 +11,7 @@
     "BREADCRUMB_LIBRARY": "Defects Library",
     "SEARCH_COFFEE": "Coffee Type",
     "SEARCH_DEFECT": "Defect Type",
+    "CUPPING_SESSIONS": "Cupping Sessions",
     "TABLE": {
       "WEIGHT": "Weight",
       "COFFEE": "Coffee",
@@ -25,6 +26,15 @@
     "ROAST_FLAVOR_RELATION": "Roast - Flavor Correlation",
     "GRIND_CALIBRATION": "Grinding Calibration",
     "RECIPES": "Recipes"
+  },
+  "CUPPING_SESSIONS": {
+    "SEARCH_SESSIONS": "Search cupping sessions",
+    "NAME": "Name",
+    "DATE": "Fecha",
+    "ORIGIN": "Origin",
+    "VARIETY": "Variety",
+    "COMPARE": "Compare multiple records",
+    "RECORD_CUPPING": "Start a new record"
   },
   "DEFECT_FILE": {
     "TITLE": "Defect file",

@@ -42,16 +42,12 @@ export class RegisterConsumptionDialogComponent {
 
   submit(): void {
     if (this.form.valid) {
-      const entry: InventoryEntry = {
-        id: 0,
+      const payload = {
+        ...this.form.value,
         coffeeLotId: this.data.coffeeLotId,
-        quantityUsed: this.form.value.quantityUsed,
-        dateUsed: this.form.value.dateUsed
+        dateUsed: new Date(this.form.value.dateUsed + 'T00:00:00').toISOString()
       };
-
-      this.inventoryService.createEntry(entry).subscribe(saved => {
-        this.dialogRef.close(saved);
-      });
+      this.dialogRef.close(payload);
     }
   }
 

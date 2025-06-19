@@ -16,6 +16,8 @@ import { StepLotSelectionComponent } from '../../components/step-lot-selection/s
 import { StepDirectCostsComponent } from '../../components/step-direct-costs/step-direct-costs.component';
 import { StepIndirectCostsComponent } from '../../components/step-indirect-costs/step-indirect-costs.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProductionCostEntity } from "../../model/production-cost.entity";
+
 
 @Component({
   selector: 'app-production-cost-page',

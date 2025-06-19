@@ -28,4 +28,7 @@ export class StepDirectCostsComponent {
   @Input() formGroup!: FormGroup;
   @Input() progressValue = 0;
   @Input() onCancel!: () => void;
+
 }
+
+

@@ -68,18 +68,18 @@
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.lote' | translate }}</mat-label>
                 <mat-select formControlName="lote">
-                  <mat-option value="Lote A">Lote A</mat-option>
-                  <mat-option value="Lote B">Lote B</mat-option>
-                  <mat-option value="Lote C">Lote C</mat-option>
+                  <mat-option *ngFor="let lot of coffeeLots" [value]="lot.lot_name">
+                    {{ lot.lot_name }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.tueste' | translate }}</mat-label>
                 <mat-select formControlName="tueste">
-                  <mat-option value="Perfil Cafe A">Perfil Cafe A</mat-option>
-                  <mat-option value="Perfil Cafe B">Perfil Cafe B</mat-option>
-                  <mat-option value="Perfil Cafe F">Perfil Cafe F</mat-option>
+                  <mat-option *ngFor="let profile of roastProfiles" [value]="profile.name">
+                    {{ profile.name }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -108,7 +108,7 @@
             <!-- Método de extracción específico para café -->
             <div class="form-row" *ngIf="extractionMethod === 'coffee'">
               <mat-form-field appearance="outline">
-                <mat-label>Método de extracción</mat-label>
+                <mat-label>{{ 'recipes.creation.extraction_method' | translate }}</mat-label>
                 <mat-select formControlName="extractionType">
                   <mat-option *ngFor="let method of extractionMethods" [value]="method.value">
                     {{ method.label }}

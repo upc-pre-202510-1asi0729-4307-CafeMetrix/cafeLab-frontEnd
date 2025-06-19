@@ -1,0 +1,53 @@
+<div class="dialog-container">
+  <h2 class="dialog-title">{{ 'CUPPING_SESSIONS.FILTER_TITLE' | translate }}</h2>
+
+  <div class="filters-grid">
+    <div class="filter-item">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'CUPPING_SESSIONS.ORIGIN' | translate }}</mat-label>
+        <mat-select [(ngModel)]="filtros.origen">
+          <mat-option *ngFor="let origen of origenes" [value]="origen">
+            {{ origen }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-item">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'CUPPING_SESSIONS.VARIETY' | translate }}</mat-label>
+        <mat-select [(ngModel)]="filtros.variedad">
+          <mat-option *ngFor="let variedad of variedades" [value]="variedad">
+            {{ variedad }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-item">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'CUPPING_SESSIONS.DATE' | translate }}</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="filtros.fecha">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-item">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'CUPPING_SESSIONS.PROCESSING' | translate }}</mat-label>
+        <mat-select [(ngModel)]="filtros.procesamiento">
+          <mat-option *ngFor="let p of procesamientos" [value]="p">
+            {{ p }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button class="apply-button" (click)="aplicarFiltros()">
+      {{ 'CUPPING_SESSIONS.FILTER_APPLY' | translate }}
+    </button>
+  </div>
+</div>

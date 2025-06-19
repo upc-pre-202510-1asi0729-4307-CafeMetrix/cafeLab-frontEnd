@@ -33,9 +33,11 @@
     "DATE": "Fecha",
     "ORIGIN": "Origin",
     "VARIETY": "Variety",
+    "PROCESSING": "Processing",
     "COMPARE": "Compare multiple records",
     "RECORD_CUPPING": "Start a new record",
-    "FILTER_TITLE": "Filter Cupping Sessions"
+    "FILTER_TITLE": "Filter Cupping Sessions",
+    "FILTER_APPLY": "Apply Filters"
   },
   "DEFECT_FILE": {
     "TITLE": "Defect file",

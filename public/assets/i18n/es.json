@@ -33,9 +33,12 @@
     "DATE": "Fecha",
     "ORIGIN": "Origen",
     "VARIETY": "Variedad",
+    "PROCESSING": "Procesamiento",
     "COMPARE": "Comparar múltiples catas",
     "RECORD_CUPPING": "Iniciar una nueva cata",
-    "FILTER_TITLE": "Filtrar sesiones de cata"
+    "FILTER_TITLE": "Filtrar sesiones de cata",
+    "FILTER_APPLY": "Aplicar filtros"
+
 
   },
   "DEFECT_FILE": {

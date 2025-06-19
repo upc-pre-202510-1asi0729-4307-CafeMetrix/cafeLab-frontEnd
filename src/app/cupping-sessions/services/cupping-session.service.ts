@@ -35,6 +35,25 @@ export class CuppingSessionService {
   }
 
   /**
+   * Obtener valores únicos de origen, variedad y procesamiento
+   */
+  getDistinctValues(userId: string): Observable<{
+    origenes: string[],
+    variedades: string[],
+    procesamientos: string[]
+  }> {
+    return this.getAll().pipe(
+      map(sessions => {
+        const delUsuario = sessions.filter(s => s.user_id === userId);
+        const origenes = [...new Set(delUsuario.map(s => s.origen).filter(Boolean))];
+        const variedades = [...new Set(delUsuario.map(s => s.variedad).filter(Boolean))];
+        const procesamientos = [...new Set(delUsuario.map(s => s.procesamiento).filter(Boolean))] as string[];
+        return { origenes, variedades, procesamientos };
+      })
+    );
+  }
+
+  /**
    * Buscar por nombre, origen o variedad, y filtrar por usuario
    */
   search(query: string, userId: string): Observable<CuppingSession[]> {

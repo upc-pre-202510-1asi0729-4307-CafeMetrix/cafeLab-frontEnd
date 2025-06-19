@@ -9,17 +9,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {MetricsCardComponent} from '../../components/metrics-card/metrics-card.component';
-import {RecommendationsCardComponent} from '../../components/recommendation-cards/recommendation-cards.component';
-import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
+import { MetricsCardComponent } from '../../components/metrics-card/metrics-card.component';
+import { RecommendationsCardComponent } from '../../components/recommendation-cards/recommendation-cards.component';
+import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 import { StepLotSelectionComponent } from '../../components/step-lot-selection/step-lot-selection.component';
-import {StepDirectCostsComponent} from '../../components/step-direct-costs/step-direct-costs.component';
-import {TranslateModule} from '@ngx-translate/core';
-
-interface Recommendation {
-  message: string;
-  type: 'success' | 'warning' | 'info';
-}
+import { StepDirectCostsComponent } from '../../components/step-direct-costs/step-direct-costs.component';
+import { StepIndirectCostsComponent } from '../../components/step-indirect-costs/step-indirect-costs.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-production-cost-page',
@@ -39,6 +35,7 @@ interface Recommendation {
     ToolbarComponent,
     StepLotSelectionComponent,
     StepDirectCostsComponent,
+    StepIndirectCostsComponent,
     TranslateModule
   ],
   templateUrl: './production-cost-management.component.html',
@@ -49,58 +46,69 @@ export class ProductionCostPageComponent {
   directCostsForm!: FormGroup;
   indirectCostsForm!: FormGroup;
   currentStep = 0;
-  totalSteps = 4;
+  totalSteps = 3;
   isSubmitting = false;
-  readonly CUPS_PER_KG = 20; // Constante para el cálculo de costo por taza
+  readonly CUPS_PER_KG = 20;
   isSuccess = false;
   registrationCode = '';
-  readonly EXPECTED_MARGIN = 45; // Margen potencial esperado en porcentaje
-  readonly TRANSPORT_COST_THRESHOLD = 10; // Porcentaje máximo esperado para costos de transporte
-  recommendations: Recommendation[] = [];
+  readonly EXPECTED_MARGIN = 45;
+  readonly TRANSPORT_COST_THRESHOLD = 10;
+  recommendations: { message: string; type: 'success' | 'warning' | 'info' }[] = [];
 
-  constructor(
-    private _formBuilder: FormBuilder,
-    private router: Router
-  ) {
-    this.firstFormGroup = this._formBuilder.group({
-      selectedLot: ['', [Validators.required]]
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.firstFormGroup = this.fb.group({
+      selectedLot: ['', Validators.required]
     });
 
-    this.directCostsForm = this._formBuilder.group({
-      rawMaterials: this._formBuilder.group({
-        costPerKg: ['', [Validators.required, Validators.min(0)]],
-        quantity: ['', [Validators.required, Validators.min(0)]]
+    this.directCostsForm = this.fb.group({
+      rawMaterials: this.fb.group({
+        costPerKg: [0, [Validators.required, Validators.min(0)]],
+        quantity: [0, [Validators.required, Validators.min(0)]]
       }),
-      labor: this._formBuilder.group({
-        hoursWorked: ['', [Validators.required, Validators.min(0)]],
-        costPerHour: ['', [Validators.required, Validators.min(0)]],
-        numberOfWorkers: ['', [Validators.required, Validators.min(1)]]
+      labor: this.fb.group({
+        hoursWorked: [0, [Validators.required, Validators.min(0)]],
+        costPerHour: [0, [Validators.required, Validators.min(0)]],
+        numberOfWorkers: [1, [Validators.required, Validators.min(1)]]
       })
     });
 
-    this.indirectCostsForm = this._formBuilder.group({
-      transport: this._formBuilder.group({
-        costPerKg: ['', [Validators.required, Validators.min(0)]],
-        quantity: ['', [Validators.required, Validators.min(0)]]
+    this.indirectCostsForm = this.fb.group({
+      transport: this.fb.group({
+        costPerKg: [0, [Validators.required, Validators.min(0)]],
+        quantity: [0, [Validators.required, Validators.min(0)]]
       }),
-      storage: this._formBuilder.group({
-        daysInStorage: ['', [Validators.required, Validators.min(0)]],
-        dailyCost: ['', [Validators.required, Validators.min(0)]]
+      storage: this.fb.group({
+        daysInStorage: [0, [Validators.required, Validators.min(0)]],
+        dailyCost: [0, [Validators.required, Validators.min(0)]]
       }),
-      processing: this._formBuilder.group({
-        electricity: ['', [Validators.required, Validators.min(0)]],
-        maintenance: ['', [Validators.required, Validators.min(0)]],
-        supplies: ['', [Validators.required, Validators.min(0)]],
-        water: ['', [Validators.required, Validators.min(0)]],
-        depreciation: ['', [Validators.required, Validators.min(0)]]
+      processing: this.fb.group({
+        electricity: [0, [Validators.required, Validators.min(0)]],
+        maintenance: [0, [Validators.required, Validators.min(0)]],
+        supplies: [0, [Validators.required, Validators.min(0)]],
+        water: [0, [Validators.required, Validators.min(0)]],
+        depreciation: [0, [Validators.required, Validators.min(0)]]
       }),
-      others: this._formBuilder.group({
-        qualityControl: ['', [Validators.required, Validators.min(0)]],
-        certifications: ['', [Validators.required, Validators.min(0)]],
-        insurance: ['', [Validators.required, Validators.min(0)]],
-        administrative: ['', [Validators.required, Validators.min(0)]]
+      others: this.fb.group({
+        qualityControl: [0, [Validators.required, Validators.min(0)]],
+        certifications: [0, [Validators.required, Validators.min(0)]],
+        insurance: [0, [Validators.required, Validators.min(0)]],
+        administrative: [0, [Validators.required, Validators.min(0)]]
       })
     });
+  }
+
+  onCancel = () => {
+    this.router.navigate(['/']);
+  };
+
+  onSaveAsDraft(): void {
+    const draft = {
+      firstStep: this.firstFormGroup.value,
+      directCosts: this.directCostsForm.value,
+      indirectCosts: this.indirectCostsForm.value,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('costManagementDraft', JSON.stringify(draft));
   }
 
   get progressValue(): number {
@@ -108,44 +116,33 @@ export class ProductionCostPageComponent {
   }
 
   get rawMaterialTotal(): number {
-    const form = this.directCostsForm.get('rawMaterials')?.value;
-    return (form.costPerKg || 0) * (form.quantity || 0);
+    const { costPerKg, quantity } = this.directCostsForm.get('rawMaterials')?.value || {};
+    return costPerKg * quantity;
   }
 
   get laborTotal(): number {
-    const form = this.directCostsForm.get('labor')?.value;
-    return (form.hoursWorked || 0) * (form.costPerHour || 0) * (form.numberOfWorkers || 0);
+    const { hoursWorked, costPerHour, numberOfWorkers } = this.directCostsForm.get('labor')?.value || {};
+    return hoursWorked * costPerHour * numberOfWorkers;
   }
 
   get transportTotal(): number {
-    const form = this.indirectCostsForm.get('transport')?.value;
-    return (form.costPerKg || 0) * (form.quantity || 0);
+    const { costPerKg, quantity } = this.indirectCostsForm.get('transport')?.value || {};
+    return costPerKg * quantity;
   }
 
   get storageTotal(): number {
-    const form = this.indirectCostsForm.get('storage')?.value;
-    return (form.daysInStorage || 0) * (form.dailyCost || 0);
+    const { daysInStorage, dailyCost } = this.indirectCostsForm.get('storage')?.value || {};
+    return daysInStorage * dailyCost;
   }
 
   get processingTotal(): number {
-    const form = this.indirectCostsForm.get('processing')?.value;
-    return (
-      (form.electricity || 0) +
-      (form.maintenance || 0) +
-      (form.supplies || 0) +
-      (form.water || 0) +
-      (form.depreciation || 0)
-    );
+    const p = this.indirectCostsForm.get('processing')?.value || {};
+    return p.electricity + p.maintenance + p.supplies + p.water + p.depreciation;
   }
 
   get othersTotal(): number {
-    const form = this.indirectCostsForm.get('others')?.value;
-    return (
-      (form.qualityControl || 0) +
-      (form.certifications || 0) +
-      (form.insurance || 0) +
-      (form.administrative || 0)
-    );
+    const o = this.indirectCostsForm.get('others')?.value || {};
+    return o.qualityControl + o.certifications + o.insurance + o.administrative;
   }
 
   get totalDirectCosts(): number {
@@ -161,7 +158,7 @@ export class ProductionCostPageComponent {
   }
 
   get costPerKg(): number {
-    const rawMaterials = this.directCostsForm.get('rawMaterials')?.value;
+    const rawMaterials = this.directCostsForm.get('rawMaterials')?.value || {};
     return rawMaterials.costPerKg || 0;
   }
 
@@ -179,96 +176,28 @@ export class ProductionCostPageComponent {
     return this.costPerKg * (1 + this.EXPECTED_MARGIN / 100);
   }
 
-  getPercentage(value: number): number {
-    return (value / this.grandTotal) * 100;
-  }
-
   getCostCategories() {
     return [
-      {
-        category: 'Materia Prima',
-        amount: this.rawMaterialTotal,
-        percentage: this.getPercentage(this.rawMaterialTotal)
-      },
-      {
-        category: 'Mano de Obra Directa',
-        amount: this.laborTotal,
-        percentage: this.getPercentage(this.laborTotal)
-      },
-      {
-        category: 'Transporte',
-        amount: this.transportTotal,
-        percentage: this.getPercentage(this.transportTotal)
-      },
-      {
-        category: 'Almacenamiento',
-        amount: this.storageTotal,
-        percentage: this.getPercentage(this.storageTotal)
-      },
-      {
-        category: 'Procesamiento',
-        amount: this.processingTotal,
-        percentage: this.getPercentage(this.processingTotal)
-      },
-      {
-        category: 'Otros Costos',
-        amount: this.othersTotal,
-        percentage: this.getPercentage(this.othersTotal)
-      }
-    ];
-  }
-
-  getErrorMessage(control: any, fieldName: string): string {
-    if (control.hasError('required')) {
-      return `El campo ${fieldName} es requerido`;
-    }
-    if (control.hasError('min')) {
-      return `El valor de ${fieldName} debe ser mayor o igual a ${control.errors.min.min}`;
-    }
-    return '';
+      { category: 'Materia Prima', amount: this.rawMaterialTotal },
+      { category: 'Mano de Obra Directa', amount: this.laborTotal },
+      { category: 'Transporte', amount: this.transportTotal },
+      { category: 'Almacenamiento', amount: this.storageTotal },
+      { category: 'Procesamiento', amount: this.processingTotal },
+      { category: 'Otros', amount: this.othersTotal }
+    ].map(c => ({ ...c, percentage: (c.amount / this.grandTotal) * 100 }));
   }
 
   onSubmit(): void {
     if (this.firstFormGroup.valid && this.directCostsForm.valid && this.indirectCostsForm.valid) {
       this.isSubmitting = true;
-
-      // Generar código de registro
       const year = new Date().getFullYear();
       const random = Math.floor(10000 + Math.random() * 90000);
       this.registrationCode = `RC-${year}-${random}`;
-
-      // Generar recomendaciones
       this.generateRecommendations();
-
-      // Simular envío al backend
       setTimeout(() => {
         this.isSubmitting = false;
         this.isSuccess = true;
       }, 1000);
-    }
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/']);
-  }
-
-  onSaveAsDraft(): void {
-    const draft = {
-      firstStep: this.firstFormGroup.value,
-      directCosts: this.directCostsForm.value,
-      indirectCosts: this.indirectCostsForm.value,
-      timestamp: new Date().toISOString()
-    };
-    localStorage.setItem('costManagementDraft', JSON.stringify(draft));
-  }
-
-  loadDraft(): void {
-    const draft = localStorage.getItem('costManagementDraft');
-    if (draft) {
-      const data = JSON.parse(draft);
-      this.firstFormGroup.patchValue(data.firstStep);
-      this.directCostsForm.patchValue(data.directCosts);
-      this.indirectCostsForm.patchValue(data.indirectCosts);
     }
   }
 
@@ -283,7 +212,6 @@ export class ProductionCostPageComponent {
   private generateRecommendations(): void {
     this.recommendations = [];
 
-    // Analizar margen potencial
     if (this.potentialMargin >= this.EXPECTED_MARGIN) {
       this.recommendations.push({
         message: 'El margen potencial está dentro del rango esperado.',
@@ -296,18 +224,16 @@ export class ProductionCostPageComponent {
       });
     }
 
-    // Analizar costos de transporte
-    const transportPercentage = this.getPercentage(this.transportTotal);
-    if (transportPercentage > this.TRANSPORT_COST_THRESHOLD) {
+    const transportPct = (this.transportTotal / this.grandTotal) * 100;
+    if (transportPct > this.TRANSPORT_COST_THRESHOLD) {
       this.recommendations.push({
-        message: `Los costos de transporte representan ${transportPercentage.toFixed(1)}% del total. Considere optimizar la logística.`,
+        message: `Los costos de transporte representan ${transportPct.toFixed(1)}% del total. Considere optimizar la logística.`,
         type: 'warning'
       });
     }
 
-    // Analizar eficiencia de procesamiento
-    const processingPercentage = this.getPercentage(this.processingTotal);
-    if (processingPercentage > 30) {
+    const processingPct = (this.processingTotal / this.grandTotal) * 100;
+    if (processingPct > 30) {
       this.recommendations.push({
         message: 'Los costos de procesamiento son elevados. Evalúe la eficiencia de los equipos y procesos.',
         type: 'info'

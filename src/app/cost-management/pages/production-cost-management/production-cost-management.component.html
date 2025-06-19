@@ -4,23 +4,20 @@
   <!-- Success Message -->
   <div *ngIf="isSuccess" class="success-screen">
     <div class="success-message">
-      <h2>¡Registro guardado exitosamente!</h2>
+      <h2>Registro guardado exitosamente</h2>
       <p class="registration-code">Código de registro: {{ registrationCode }}</p>
     </div>
 
     <div class="success-content">
-      <!-- Metrics -->
       <app-metrics-card
         [costPerKg]="costPerKg"
         [potentialMargin]="potentialMargin"
         [suggestedPrice]="suggestedPrice">
       </app-metrics-card>
 
-      <!-- Recommendations -->
       <app-recommendations-card [recommendations]="recommendations"></app-recommendations-card>
     </div>
 
-    <!-- Action Buttons -->
     <div class="button-container">
       <button mat-raised-button class="action-button" (click)="onExit()">
         Salir
@@ -31,29 +28,56 @@
     </div>
   </div>
 
-  <!-- TODO: Stepper & Form logic (sin cambios) -->
+  <!-- Stepper & Form logic -->
   <div *ngIf="!isSuccess">
-    <mat-stepper linear [selectedIndex]="currentStep">
+    <mat-stepper linear [selectedIndex]="currentStep" (selectionChange)="currentStep = $event.selectedIndex">
       <mat-step [stepControl]="firstFormGroup">
         <ng-template matStepLabel>Selección de lote</ng-template>
-
         <app-step-lot-selection
           [formGroup]="firstFormGroup"
           [progressValue]="progressValue"
           [onCancel]="onCancel">
         </app-step-lot-selection>
       </mat-step>
-      <mat-step [stepControl]="firstFormGroup">
+
+      <mat-step [stepControl]="directCostsForm">
         <ng-template matStepLabel>Costos directos</ng-template>
         <app-step-direct-costs
-          [formGroup]="firstFormGroup"
+          [formGroup]="directCostsForm"
           [progressValue]="progressValue"
           [onCancel]="onCancel">
         </app-step-direct-costs>
       </mat-step>
-    </mat-stepper>
-    <mat-stepper (selectionChange)="currentStep = $event.selectedIndex">
-      <!-- Todo el código del stepper permanece igual -->
+
+      <mat-step [stepControl]="indirectCostsForm">
+        <ng-template matStepLabel>Costos indirectos</ng-template>
+        <app-step-indirect-costs
+          [formGroup]="indirectCostsForm"
+          [onCancel]="onCancel">
+        </app-step-indirect-costs>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Resumen</ng-template>
+        <div class="summary-container">
+          <app-metrics-card
+            [costPerKg]="costPerKg"
+            [potentialMargin]="potentialMargin"
+            [suggestedPrice]="suggestedPrice">
+          </app-metrics-card>
+
+          <app-recommendations-card [recommendations]="recommendations"></app-recommendations-card>
+
+          <div class="button-container">
+            <button mat-raised-button color="primary" (click)="onSubmit()">
+              Finalizar y Guardar
+            </button>
+            <button mat-stroked-button color="accent" (click)="onSaveAsDraft()">
+              Guardar Borrador
+            </button>
+          </div>
+        </div>
+      </mat-step>
     </mat-stepper>
   </div>
 </div>

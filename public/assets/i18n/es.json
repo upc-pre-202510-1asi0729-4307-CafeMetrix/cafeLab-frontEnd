@@ -4,7 +4,10 @@
     "FEATURES": "Funcionalidades",
     "CONTACT": "Contáctanos",
     "PROFILE": "Perfil",
-    "LOGOUT": "Cerrar Sesion"
+    "LOGOUT": "Cerrar Sesion",
+    "DRINKS": "Bebidas",
+    "RECIPES": "Recetas",
+    "PORTFOLIO": "Portafolio"
   },
   "CONSULTATIONS": {
     "TITLE": "Biblioteca de defectos",
@@ -428,7 +431,9 @@
         "aeropress": "AeroPress",
         "chemex": "Chemex",
         "v60": "V60",
-        "clever": "Clever Dripper"
+        "clever": "Clever Dripper",
+        "espresso": "Espresso",
+        "coffee": "Café"
       },
       "upload_image": "URL de la imagen",
       "image_placeholder": "Ingrese la URL de la imagen",
@@ -463,13 +468,20 @@
       "submit": "Guardar Receta",
       "success": "Receta creada con éxito",
       "error": "Error al crear la receta",
-      "error_loading_portfolios": "Error al cargar los portafolios"
+      "error_loading_portfolios": "Error al cargar los portafolios",
+      "error_loading_lots": "Error al cargar los lotes"
     },
     "detail": {
       "basic_info": "Información Básica",
       "error_loading": "Error al cargar la receta",
       "back": "Volver",
-      "created_at": "Creada el"
+      "created_at": "Creada el",
+      "delete_confirmation_title": "Eliminar Receta",
+      "delete_confirmation_message": "¿Estás seguro de que deseas eliminar la receta \"{{name}}\"? Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirm_delete": "Eliminar",
+      "delete_success": "Receta eliminada correctamente",
+      "delete_error": "Error al eliminar la receta"
     }
   }
 

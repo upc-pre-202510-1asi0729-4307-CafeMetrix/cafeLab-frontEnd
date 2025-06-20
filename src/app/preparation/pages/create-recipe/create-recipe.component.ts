@@ -239,7 +239,7 @@ export class CreateRecipeComponent implements OnInit {
     const recipeData: Partial<Drink> = {
       name: formData.name,
       image: formData.image,
-      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',
+      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',  // El valor 'espresso' es correcto aquí, es el valor que espera la API
       lote: formData.lote || '',
       tueste: formData.tueste || '',
       cata: formData.cata || '',

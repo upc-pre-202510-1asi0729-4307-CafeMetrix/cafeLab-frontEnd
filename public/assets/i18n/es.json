@@ -429,7 +429,9 @@
         "aeropress": "AeroPress",
         "chemex": "Chemex",
         "v60": "V60",
-        "clever": "Clever Dripper"
+        "clever": "Clever Dripper",
+        "espresso": "Espresso",
+        "coffee": "Café"
       },
       "upload_image": "URL de la imagen",
       "image_placeholder": "Ingrese la URL de la imagen",

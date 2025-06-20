@@ -7,15 +7,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbar } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { PortfolioService } from '../../services/portfolio.service';
+import { CoffeeDataService, CoffeeLot, RoastProfile } from '../../services/coffee-data.service';
 import { Portfolio } from '../../models/portfolio.entity';
 import { Drink, Ingredient } from '../../models/drink.entity';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import {MatToolbar} from '@angular/material/toolbar';
 import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
 
 @Component({
@@ -44,6 +45,8 @@ export class CreateRecipeComponent implements OnInit {
   recipeForm: FormGroup;
   extractionMethod: 'coffee' | 'espresso' = 'coffee';
   portfolios: Portfolio[] = [];
+  coffeeLots: CoffeeLot[] = [];
+  roastProfiles: RoastProfile[] = [];
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   isSubmitting = false;
@@ -73,6 +76,7 @@ export class CreateRecipeComponent implements OnInit {
     private fb: FormBuilder,
     private recipeService: RecipeService,
     private portfolioService: PortfolioService,
+    private coffeeDataService: CoffeeDataService,
     private router: Router,
     private snackBar: MatSnackBar,
     private translate: TranslateService
@@ -83,6 +87,8 @@ export class CreateRecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPortfolios();
+    this.loadCoffeeLots();
+    this.loadRoastProfiles();
   }
 
   loadPortfolios(): void {
@@ -94,6 +100,38 @@ export class CreateRecipeComponent implements OnInit {
         console.error('Error al cargar portafolios', err);
         this.snackBar.open(
           this.translate.instant('recipes.creation.error_loading_portfolios'),
+          this.translate.instant('Cerrar'),
+          { duration: 3000 }
+        );
+      }
+    });
+  }
+
+  loadCoffeeLots(): void {
+    this.coffeeDataService.getCoffeeLots().subscribe({
+      next: (data) => {
+        this.coffeeLots = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar lotes de café', err);
+        this.snackBar.open(
+          this.translate.instant('recipes.creation.error_loading_lots'),
+          this.translate.instant('Cerrar'),
+          { duration: 3000 }
+        );
+      }
+    });
+  }
+
+  loadRoastProfiles(): void {
+    this.coffeeDataService.getRoastProfiles().subscribe({
+      next: (data) => {
+        this.roastProfiles = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar perfiles de tueste', err);
+        this.snackBar.open(
+          this.translate.instant('recipes.creation.error_loading_roast_profiles'),
           this.translate.instant('Cerrar'),
           { duration: 3000 }
         );
@@ -133,7 +171,7 @@ export class CreateRecipeComponent implements OnInit {
 
   changeExtractionMethod(method: 'coffee' | 'espresso'): void {
     this.extractionMethod = method;
-
+    
     // Limpiar ingredientes existentes
     while (this.ingredientes.length) {
       this.ingredientes.removeAt(0);
@@ -201,11 +239,11 @@ export class CreateRecipeComponent implements OnInit {
     const recipeData: Partial<Drink> = {
       name: formData.name,
       image: formData.image,
-      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',
+      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',  // El valor 'espresso' es correcto aquí, es el valor que espera la API
       lote: formData.lote || '',
       tueste: formData.tueste || '',
       cata: formData.cata || '',
-      portfolioId: formData.portfolioId,
+      portfolioId: formData.portfolioId ? Number(formData.portfolioId) : null,
       molienda: formData.molienda || '',
       ratio: formData.ratio || '',
       preparationTime: formData.tiempo || '',

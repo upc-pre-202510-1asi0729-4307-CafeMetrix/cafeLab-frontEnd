@@ -9,7 +9,7 @@
 <div class="container">
   <!-- Breadcrumb -->
   <div class="breadcrumb" *ngIf="!isLoading && !error">
-    <a routerLink="/dashboard">{{ 'NAVIGATION.HOME' | translate }}</a> &gt;
+    <a routerLink="/dashboard/complete">{{ 'NAVIGATION.HOME' | translate }}</a> &gt;
     <a [routerLink]="getNavigationPath()">{{ getNavigationText() | translate }}</a> &gt;
     <span>{{ recipe?.name }}</span>
   </div>
@@ -37,12 +37,19 @@
         <div class="recipe-title">
           <h1>{{ recipe.name }}</h1>
           <p class="extraction-method">
-            {{ 'recipes.creation.extraction_methods.' + recipe.extractionMethod | translate }}
-            <span *ngIf="recipe.extractionMethod === 'coffee'">
-              - {{ 'recipes.creation.extraction_methods.' + (recipe.extractionMethod || 'pour-over') | translate }}
-            </span>
+            <ng-container *ngIf="recipe.extractionMethod === 'coffee'">
+              {{ 'recipes.creation.extraction_methods.coffee' | translate }}
+              - {{ 'recipes.creation.extraction_methods.' + recipe.extractionType | translate }}
+            </ng-container>
+            <ng-container *ngIf="recipe.extractionMethod === 'espresso'">
+              {{ 'recipes.creation.extraction_methods.espresso' | translate }}
+            </ng-container>
           </p>
         </div>
+        <!-- Botón de eliminar -->
+        <button mat-icon-button color="warn" class="delete-button" (click)="deleteRecipe()">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
 
       <mat-divider></mat-divider>

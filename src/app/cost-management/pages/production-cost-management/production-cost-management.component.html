@@ -1,24 +1,26 @@
+<mat-toolbar color="primary">
+  <app-toolbar/>
+
+</mat-toolbar>
+
 <div class="main-container">
-  <!-- Success Message -->
+  <!-- Pantalla de éxito -->
   <div *ngIf="isSuccess" class="success-screen">
     <div class="success-message">
-      <h2>¡Registro guardado exitosamente!</h2>
+      <h2>Registro guardado exitosamente</h2>
       <p class="registration-code">Código de registro: {{ registrationCode }}</p>
     </div>
 
     <div class="success-content">
-      <!-- Metrics -->
       <app-metrics-card
         [costPerKg]="costPerKg"
         [potentialMargin]="potentialMargin"
         [suggestedPrice]="suggestedPrice">
       </app-metrics-card>
 
-      <!-- Recommendations -->
       <app-recommendations-card [recommendations]="recommendations"></app-recommendations-card>
     </div>
 
-    <!-- Action Buttons -->
     <div class="button-container">
       <button mat-raised-button class="action-button" (click)="onExit()">
         Salir
@@ -29,11 +31,108 @@
     </div>
   </div>
 
-  <!-- TODO: Stepper & Form logic (sin cambios) -->
+  <!-- Formulario paso a paso -->
   <div *ngIf="!isSuccess">
-    <!-- Aquí colocas tu stepper y formularios -->
-    <mat-stepper (selectionChange)="currentStep = $event.selectedIndex">
-      <!-- Todo el código del stepper permanece igual -->
+    <mat-stepper linear [selectedIndex]="currentStep" (selectionChange)="currentStep = $event.selectedIndex">
+      <!-- Paso 1: Selección de lote -->
+      <mat-step [stepControl]="firstFormGroup" [completed]="firstFormGroup.valid">
+        <ng-template matStepLabel>Selección de lote</ng-template>
+        <form [formGroup]="firstFormGroup">
+          <app-step-lot-selection [formGroup]="firstFormGroup"></app-step-lot-selection>
+
+          <div class="button-container">
+            <button mat-raised-button color="primary" matStepperNext [disabled]="firstFormGroup.invalid">
+              Continuar
+            </button>
+            <button mat-stroked-button color="warn" (click)="onCancel()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Paso 2: Costos directos -->
+      <mat-step [stepControl]="directCostsForm" [completed]="directCostsForm.valid">
+        <ng-template matStepLabel>Costos directos</ng-template>
+        <form [formGroup]="directCostsForm">
+          <app-step-direct-costs [formGroup]="directCostsForm"></app-step-direct-costs>
+
+          <div class="button-container">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="directCostsForm.invalid">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Paso 3: Costos indirectos -->
+      <mat-step [stepControl]="indirectCostsForm" [completed]="indirectCostsForm.valid">
+        <ng-template matStepLabel>Costos indirectos</ng-template>
+        <form [formGroup]="indirectCostsForm">
+          <app-step-indirect-costs [formGroup]="indirectCostsForm"></app-step-indirect-costs>
+
+          <div class="button-container">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="indirectCostsForm.invalid">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Paso 4: Resumen -->
+      <mat-step>
+        <ng-template matStepLabel>Resumen</ng-template>
+        <div class="summary-container">
+
+          <!-- Tabla de resumen de costos -->
+          <mat-card>
+            <h3>Resumen de costos</h3>
+            <table mat-table [dataSource]="costSummary" class="mat-elevation-z8 full-width">
+
+              <!-- Columna: Tipo -->
+              <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                <td mat-cell *matCellDef="let element"> {{ element.tipo }} </td>
+              </ng-container>
+
+              <!-- Columna: Monto -->
+              <ng-container matColumnDef="monto">
+                <th mat-header-cell *matHeaderCellDef> Monto (S/.) </th>
+                <td mat-cell *matCellDef="let element"> {{ element.monto | number:'1.2-2' }} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['tipo', 'monto']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['tipo', 'monto'];"></tr>
+            </table>
+          </mat-card>
+
+          <!-- Tarjeta de métricas -->
+          <app-metrics-card
+            [costPerKg]="costPerKg"
+            [potentialMargin]="potentialMargin"
+            [suggestedPrice]="suggestedPrice">
+          </app-metrics-card>
+
+          <!-- Tarjeta de recomendaciones -->
+          <app-recommendations-card [recommendations]="recommendations"></app-recommendations-card>
+
+          <!-- Botones -->
+          <div class="button-container">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button color="primary" (click)="onSubmit()">
+              Finalizar y Guardar
+            </button>
+            <button mat-stroked-button color="accent" (click)="onSaveAsDraft()">
+              Guardar Borrador
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+
+
     </mat-stepper>
   </div>
 </div>

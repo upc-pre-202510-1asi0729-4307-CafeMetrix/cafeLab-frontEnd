@@ -1,6 +1,9 @@
+.body{
+  background-color: #F8F7F2;
+}
+
 .sesiones-container {
   padding: 2rem;
-  margin-top: 64px;
 }
 
 .breadcrumb {
@@ -154,4 +157,4 @@ table {
   width: 100%;
   height: auto;
   object-fit: contain;
-} 
+}

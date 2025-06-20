@@ -63,10 +63,7 @@ export const routes: Routes = [
 
   { path: 'dashboard/owner', component: OwnerDashboardComponent},
   {path: 'inventory', component: InventaryComponent},
-  {path: 'production-cost-management', loadComponent: () =>
-      import('./cost-management/pages/production-cost-management/production-cost-management.component')
-        .then(m => m.ProductionCostPageComponent)},
-
+  { path: 'production-cost-management', component: ProductionCostPageComponent },
   { path: 'dashboard/complete', component: CompleteDashboardComponent},
   { path: 'contacto', loadComponent: () => import('./public/components/contact-us/contact-us.component').then(m => m.ContactUsComponent)
   },

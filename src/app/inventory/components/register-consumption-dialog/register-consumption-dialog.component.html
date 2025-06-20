@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Registrar Consumo</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cantidad Usada (kg)</mat-label>
+    <input matInput type="number" formControlName="quantityUsed" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Fecha de Uso</mat-label>
+    <input matInput type="date" formControlName="dateUsed" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">Guardar</button>
+</mat-dialog-actions>

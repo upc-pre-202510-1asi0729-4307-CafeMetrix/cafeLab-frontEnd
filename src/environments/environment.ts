@@ -2,7 +2,7 @@
 export const environment = {
   production: true,
   serverBaseUrl: 'https://682697d8397e48c913169c83.mockapi.io/',
-  coffeeLotsEndpointPath: '/coffee-lots-page',
+  coffeeLotsEndpointPath: '/coffee-lots',
   suppliersEndpointPath: '/suppliers',
   roastProfileEndpointPath: '/roast-profile',
   coffeesEndpointPath: '/coffees',

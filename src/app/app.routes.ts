@@ -30,8 +30,6 @@ import { CreateRecipeComponent } from './preparation/pages/create-recipe/create-
 import { PortfolioDetailComponent } from './preparation/pages/portfolio-detail/portfolio-detail.component';
 import { RecipeDetailComponent } from './preparation/pages/recipe-detail/recipe-detail.component';
 
-
-
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },

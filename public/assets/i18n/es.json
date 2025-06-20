@@ -289,8 +289,8 @@
     }
   },
   "NAV":{
-  "LOTS": "Lotes"
-},
+    "LOTS": "Lotes"
+  },
   "BUTTON": {
     "VIEW": "Ver",
     "SAVE": "Guardar",

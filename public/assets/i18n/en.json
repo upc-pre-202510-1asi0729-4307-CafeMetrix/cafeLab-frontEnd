@@ -469,7 +469,13 @@
       "basic_info": "Basic Information",
       "error_loading": "Error loading recipe",
       "back": "Back",
-      "created_at": "Created on"
+      "created_at": "Created on",
+      "delete_confirmation_title": "Delete Recipe",
+      "delete_confirmation_message": "Are you sure you want to delete the recipe \"{{name}}\"? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm_delete": "Delete",
+      "delete_success": "Recipe deleted successfully",
+      "delete_error": "Error deleting recipe"
     }
   }
 }

@@ -1,7 +1,6 @@
-
 <div class="lot-container">
   <div class="breadcrumb">
-    <a routerLink="/inicio">{{ 'BREADCRUMB.HOME' | translate }}</a> &gt; {{ 'BREADCRUMB.COFFEE_LOTS' | translate }}
+    <span>{{ 'BREADCRUMB.COFFEE_LOTS' | translate }}</span>
   </div>
 
   <div *ngIf="error" class="error-message">
@@ -29,38 +28,38 @@
       <p>Cargando...</p>
     </div>
 
-  <table class="lot-table">
-    <thead>
-    <tr>
-      <th>{{ 'TABLE.HEADER.NAME' | translate }}</th>
-      <th>{{ 'TABLE.HEADER.COFFEE_TYPE' | translate }}</th>
-      <th>{{ 'TABLE.HEADER.ALTITUDE' | translate }}</th>
-      <th>{{ 'TABLE.HEADER.SUPPLIER' | translate }}</th>
-      <th colspan="2">{{ 'TABLE.HEADER.ACTIONS' | translate }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngIf="lots.length === 0">
-      <td colspan="6">{{ 'TABLE.NO_LOTS' | translate }}</td>
-    </tr>
-    <tr *ngFor="let lot of lots">
-      <td>{{ lot.lot_name }}</td>
-      <td>{{ lot.coffee_type }}</td>
-      <td>{{ lot.altitude }}</td>
-      <td>{{ getSupplierName(lot.supplier_id) }}</td>
-      <td class="action-cell">
-        <button class="action-button" (click)="viewLotDetails(lot)" [title]="'BUTTON.VIEW' | translate">
-          <i class="material-icons">search</i>
-        </button>
-      </td>
-      <td class="action-cell">
-        <button class="action-button" (click)="editLot(lot)" [title]="'BUTTON.EDIT' | translate">
-          <i class="material-icons">edit</i>
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="lot-table">
+      <thead>
+      <tr>
+        <th>{{ 'TABLE.HEADER.NAME' | translate }}</th>
+        <th>{{ 'TABLE.HEADER.COFFEE_TYPE' | translate }}</th>
+        <th>{{ 'TABLE.HEADER.ALTITUDE' | translate }}</th>
+        <th>{{ 'TABLE.HEADER.SUPPLIER' | translate }}</th>
+        <th colspan="2">{{ 'TABLE.HEADER.ACTIONS' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngIf="lots.length === 0">
+        <td colspan="6">{{ 'TABLE.NO_LOTS' | translate }}</td>
+      </tr>
+      <tr *ngFor="let lot of lots">
+        <td>{{ lot.lot_name }}</td>
+        <td>{{ lot.coffee_type }}</td>
+        <td>{{ lot.altitude }}</td>
+        <td>{{ getSupplierName(lot.supplier_id) }}</td>
+        <td class="action-cell">
+          <button class="action-button" (click)="viewLotDetails(lot)" [title]="'BUTTON.VIEW' | translate">
+            <i class="material-icons">search</i>
+          </button>
+        </td>
+        <td class="action-cell">
+          <button class="action-button" (click)="editLot(lot)" [title]="'BUTTON.EDIT' | translate">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- Botón para registrar lote -->
@@ -216,59 +215,59 @@
       <h2>{{ 'MODAL.EDIT_LOT' | translate }}</h2>
       <form #editForm="ngForm" (ngSubmit)="saveLotChanges()">
         <div class="form-row">
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.NAME' | translate }}</label>
-          <input type="text" [(ngModel)]="editingLot.lot_name" name="lot_name" required />
-          <i class="material-icons">edit</i>
-        </div>
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.NAME' | translate }}</label>
+            <input type="text" [(ngModel)]="editingLot.lot_name" name="lot_name" required />
+            <i class="material-icons">edit</i>
+          </div>
 
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.COFFEE_TYPE' | translate }}</label>
-          <select [(ngModel)]="editingLot.coffee_type" name="coffee_type" required>
-            <option *ngFor="let type of coffeeTypes" [value]="type">{{ type }}</option>
-          </select>
-          <i class="material-icons">edit</i>
-        </div>
-        </div>
-
-        <div class="form-row">
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.ALTITUDE' | translate }}</label>
-          <input type="number" [(ngModel)]="editingLot.altitude" name="altitude_masl" required />
-          <i class="material-icons">edit</i>
-        </div>
-
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.ORIGIN' | translate }}</label>
-          <input type="text" [(ngModel)]="editingLot.origin" name="origin_country" required />
-          <i class="material-icons">edit</i>
-        </div>
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.COFFEE_TYPE' | translate }}</label>
+            <select [(ngModel)]="editingLot.coffee_type" name="coffee_type" required>
+              <option *ngFor="let type of coffeeTypes" [value]="type">{{ type }}</option>
+            </select>
+            <i class="material-icons">edit</i>
+          </div>
         </div>
 
         <div class="form-row">
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.WEIGHT' | translate }}</label>
-          <input type="number" [(ngModel)]="editingLot.weight" name="weight_kg" required />
-          <i class="material-icons">edit</i>
-        </div>
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.ALTITUDE' | translate }}</label>
+            <input type="number" [(ngModel)]="editingLot.altitude" name="altitude_masl" required />
+            <i class="material-icons">edit</i>
+          </div>
 
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.PROCESS' | translate }}</label>
-          <select [(ngModel)]="editingLot.processing_method" name="processing_method" required>
-            <option *ngFor="let process of processTypes" [value]="process">{{ process }}</option>
-          </select>
-          <i class="material-icons">edit</i>
-        </div>
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.ORIGIN' | translate }}</label>
+            <input type="text" [(ngModel)]="editingLot.origin" name="origin_country" required />
+            <i class="material-icons">edit</i>
+          </div>
         </div>
 
         <div class="form-row">
-        <div class="form-group">
-          <label>{{ 'FORM.LABEL.SUPPLIER' | translate }}</label>
-          <select [(ngModel)]="editingLot.supplier_id" name="supplier_id" required>
-            <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }}</option>
-          </select>
-          <i class="material-icons">edit</i>
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.WEIGHT' | translate }}</label>
+            <input type="number" [(ngModel)]="editingLot.weight" name="weight_kg" required />
+            <i class="material-icons">edit</i>
+          </div>
+
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.PROCESS' | translate }}</label>
+            <select [(ngModel)]="editingLot.processing_method" name="processing_method" required>
+              <option *ngFor="let process of processTypes" [value]="process">{{ process }}</option>
+            </select>
+            <i class="material-icons">edit</i>
+          </div>
         </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ 'FORM.LABEL.SUPPLIER' | translate }}</label>
+            <select [(ngModel)]="editingLot.supplier_id" name="supplier_id" required>
+              <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }}</option>
+            </select>
+            <i class="material-icons">edit</i>
+          </div>
         </div>
 
         <div class="form-group">
@@ -286,8 +285,8 @@
         </div>
 
         <div class="btn-edit">
-        <button class="save-edit"  type="submit">{{ 'BUTTON.SAVE' | translate }}</button>
-        <button class="cancel-edit"  type="button" (click)="closeEditModal()">{{ 'BUTTON.CANCEL' | translate }}</button>
+          <button class="save-edit"  type="submit">{{ 'BUTTON.SAVE' | translate }}</button>
+          <button class="cancel-edit"  type="button" (click)="closeEditModal()">{{ 'BUTTON.CANCEL' | translate }}</button>
         </div>
       </form>
     </div>
@@ -295,5 +294,3 @@
 
 
 </div>
-
-

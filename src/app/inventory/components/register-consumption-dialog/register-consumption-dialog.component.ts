@@ -8,6 +8,7 @@ import { MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/mat
 import { MatButtonModule } from '@angular/material/button';
 import { InventoryService } from '../../services/inventory.service';
 import { InventoryEntry } from '../../model/inventory-entry.entity';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register-consumption-dialog',
@@ -22,7 +23,8 @@ import { InventoryEntry } from '../../model/inventory-entry.entity';
     MatDialogActions,
     MatDialogContent,
     MatDialogTitle,
-    MatButtonModule
+    MatButtonModule,
+    TranslatePipe
   ]
 })
 export class RegisterConsumptionDialogComponent {

@@ -13,6 +13,7 @@
     "TITLE": "Defects Library",
     "BREADCRUMB_HOME": "Home",
     "BREADCRUMB_LIBRARY": "Defects Library",
+    "CUPPING_SESSIONS": "Cupping Sessions",
     "SEARCH_COFFEE": "Coffee Type",
     "SEARCH_DEFECT": "Defect Type",
     "TABLE": {
@@ -285,7 +286,7 @@
       "SELECT_CERTIFICATION": "Select certification"
     }
   },
-  "NAV":{
+  "NAV": {
     "LOTS": "Lots"
   },
   "BUTTON": {
@@ -365,7 +366,7 @@
     "ASC": "Latest",
     "DESC": "Oldest"
   },
-  "breadcrumb":{
+  "breadcrumb": {
     "perfilesTueste": "Roasting Profiles",
     "comparacionTuestes": "Roast Comparison",
     "inicio": "Home",
@@ -396,7 +397,7 @@
       "error_deleting": "Error deleting portfolio"
     }
   },
-   "recipes": {
+  "recipes": {
     "title": "Unassigned Drinks",
     "create": "Create Drink",
     "add_to_portfolio": "Add recipes to portfolio",
@@ -479,5 +480,127 @@
       "delete_success": "Recipe deleted successfully",
       "delete_error": "Error deleting recipe"
     }
+  },
+  "CUPPING_SESSIONS": {
+    "SEARCH_SESSIONS": "Search sessions",
+    "NAME": "Name",
+    "DATE": "Date",
+    "ORIGIN": "Origin",
+    "VARIETY": "Variety",
+    "COMPARE": "Compare Multiple Cuppings",
+    "RECORD_CUPPING": "Record New Cupping",
+    "FILTER_TITLE": "Filter Sessions",
+    "PROCESSING": "Processing",
+    "FILTER_APPLY": "Apply Filters",
+    "NEW_SESSION_TITLE": "New Cupping Session",
+    "SESSION_NAME_LABEL": "Cupping session name",
+    "SESSION_NAME_PLACEHOLDER": "Enter the session name",
+    "LINKED_LOT_LABEL": "Linked lot",
+    "ROAST_PROFILE_LABEL": "Roast Profile",
+    "CREATE_BUTTON": "Create new cupping session"
+  },
+  "CUPPING_DETAILS": {
+    "TITLE": "Sensory Evaluation",
+    "AROMA": "Aroma",
+    "BODY": "Body",
+    "ACIDITY": "Acidity",
+    "SWEETNESS": "Sweetness",
+    "BITTERNESS": "Bitterness",
+    "AFTERTASTE": "Aftertaste",
+    "GENERATE_HEXAGON": "Generate sensory hexagon",
+    "DETECT_DEFECTS_PROMPT": "Did you detect any defects during the tasting?",
+    "DEFECTS_LIBRARY_BUTTON": "Defects Library",
+    "LINKED_LOT": "Linked Lot:",
+    "LINKED_ROAST_PROFILE": "Linked roast profile:",
+    "SAVE_SESSION_BUTTON": "Save cupping session"
+  },
+  "CUPPING_CONSUMPTION_DIALOG": {
+    "TITLE": "Register Consumption",
+    "DATE_LABEL": "Date",
+    "LOT_LABEL": "Lot",
+    "FINAL_PRODUCT_LABEL": "Final Product",
+    "USED_QUANTITY_LABEL": "Quantity Used (kg)",
+    "LOT_SUMMARY_TITLE": "Lot Summary",
+    "PREVIOUS_MOVEMENTS_TITLE": "Previous movements",
+    "SUBMIT_BUTTON": "Register consumption"
+  },
+  "COST_MANAGEMENT": {
+    "TITLE": "Production Cost Management",
+    "STEP_LOT_SELECTION": "Lot Selection",
+    "STEP_DIRECT_COSTS": "Direct Costs",
+    "STEP_INDIRECT_COSTS": "Indirect Costs",
+    "STEP_SUMMARY": "Summary",
+    "LOT_LABEL": "Coffee Lot",
+    "CONTINUE": "Continue",
+    "CANCEL": "Cancel",
+    "BACK": "Back",
+    "FINISH_AND_SAVE": "Finish and Save",
+    "SAVE_DRAFT": "Save Draft",
+    "SUCCESS_MESSAGE": "Record saved successfully",
+    "REGISTRATION_CODE": "Registration code",
+    "EXIT": "Exit",
+    "PRINT_REPORT": "Print report",
+    "SUMMARY_TITLE": "Cost Summary",
+    "SUMMARY_TYPE": "Type",
+    "SUMMARY_AMOUNT": "Amount ($)",
+    "RAW_MATERIAL": "Raw Material",
+    "DIRECT_LABOR": "Direct Labor",
+    "INDIRECT_COSTS": "Indirect Costs",
+    "RECOMMENDATIONS_TITLE": "Recommendations",
+    "METRICS_COST_PER_KG": "Cost per Kilogram",
+    "METRICS_POTENTIAL_MARGIN": "Potential Margin",
+    "METRICS_SUGGESTED_PRICE": "Suggested Price",
+    "RAW_MATERIAL_COSTS_TITLE": "Raw Material Costs",
+    "COST_PER_KG_GREEN_COFFEE": "Cost per kg of green coffee",
+    "GREEN_COFFEE_QUANTITY_KG": "Green coffee quantity (kg)",
+    "TOTAL": "Total",
+    "DIRECT_LABOR_COSTS_TITLE": "Direct Labor Costs",
+    "HOURS_WORKED": "Hours worked",
+    "COST_PER_HOUR": "Cost per hour",
+    "NUMBER_OF_WORKERS": "Number of workers",
+    "TRANSPORT_COSTS": "Transport Costs",
+    "TRANSPORT_COST_PER_KG": "Cost per kg",
+    "TRANSPORT_QUANTITY_KG": "Quantity (kg)",
+    "STORAGE_COSTS": "Storage Costs",
+    "DAYS_IN_STORAGE": "Days in storage",
+    "DAILY_COST": "Daily cost",
+    "PROCESSING_COSTS": "Processing Costs",
+    "ELECTRICITY": "Electricity",
+    "WATER": "Water",
+    "SUPPLIES": "Supplies",
+    "MAINTENANCE": "Maintenance",
+    "DEPRECIATION": "Depreciation",
+    "OTHER_COSTS": "Other Costs",
+    "QUALITY_CONTROL": "Quality control",
+    "CERTIFICATIONS": "Certifications",
+    "INSURANCE": "Insurance",
+    "ADMINISTRATIVE": "Administrative"
+  },
+  "INVENTORY": {
+    "PAGE": {
+      "TOTAL": "Total",
+      "ORIGIN": "Origin",
+      "REGISTER_CONSUMPTION": "Register Consumption",
+      "RECENT_MOVEMENTS": "Recent Movements",
+      "TABLE": {
+        "DATE": "Date",
+        "PRODUCT": "Product",
+        "LOT": "Lot",
+        "QUANTITY": "Quantity",
+        "ACTIONS": "Actions"
+      }
+    },
+    "STOCK_STATUS": {
+      "LOW": "Low stock",
+      "OK": "Adequate stock"
+    },
+    "CONSUMPTION_DIALOG": {
+      "TITLE": "Register Consumption",
+      "QUANTITY_USED": "Quantity Used (kg)",
+      "DATE_USED": "Date of Use",
+      "CANCEL": "Cancel",
+      "SAVE": "Save"
+    }
   }
+
 }

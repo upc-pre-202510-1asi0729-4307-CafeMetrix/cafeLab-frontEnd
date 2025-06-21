@@ -17,8 +17,9 @@ import { StepDirectCostsComponent } from '../../components/step-direct-costs/ste
 import { StepIndirectCostsComponent } from '../../components/step-indirect-costs/step-indirect-costs.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProductionCostEntity } from "../../model/production-cost.entity";
-import {MatTable} from '@angular/material/table';
-import {MatToolbar} from '@angular/material/toolbar';
+import {MatTable, MatTableModule} from '@angular/material/table';
+import {MatToolbar, MatToolbarModule} from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
   selector: 'app-production-cost-page',
@@ -41,7 +42,13 @@ import {MatToolbar} from '@angular/material/toolbar';
     StepIndirectCostsComponent,
     TranslateModule,
     MatTable,
-    MatToolbar
+    MatToolbar,
+    StepDirectCostsComponent,
+    StepIndirectCostsComponent,
+    TranslateModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatListModule
   ],
   templateUrl: './production-cost-management.component.html',
   styleUrl: './production-cost-management.component.css'

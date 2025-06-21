@@ -1,36 +1,38 @@
-<mat-card>
-  <h3>Costos de materia prima</h3>
+<div [formGroup]="formGroup">
+  <mat-card formGroupName="rawMaterials">
+    <h3>{{ 'COST_MANAGEMENT.RAW_MATERIAL_COSTS_TITLE' | translate }}</h3>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Costo por kg de café verde</mat-label>
-    <input matInput type="number" formControlName="costoKgCafe" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'COST_MANAGEMENT.COST_PER_KG_GREEN_COFFEE' | translate }}</mat-label>
+      <input matInput type="number" formControlName="costPerKg" />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Cantidad de café verde (kg)</mat-label>
-    <input matInput type="number" formControlName="cantidadKgCafe" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'COST_MANAGEMENT.GREEN_COFFEE_QUANTITY_KG' | translate }}</mat-label>
+      <input matInput type="number" formControlName="quantity" />
+    </mat-form-field>
 
-  <p><strong>Total:</strong> S/. {{ totalMateriaPrima }}</p>
-</mat-card>
+    <p><strong>{{ 'COST_MANAGEMENT.TOTAL' | translate }}:</strong> S/. {{ totalMateriaPrima | number:'1.2-2' }}</p>
+  </mat-card>
 
-<mat-card>
-  <h3>Costos de mano de obra directa</h3>
+  <mat-card formGroupName="labor">
+    <h3>{{ 'COST_MANAGEMENT.DIRECT_LABOR_COSTS_TITLE' | translate }}</h3>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Horas trabajadas</mat-label>
-    <input matInput type="number" formControlName="horas" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'COST_MANAGEMENT.HOURS_WORKED' | translate }}</mat-label>
+      <input matInput type="number" formControlName="hoursWorked" />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Costo por hora</mat-label>
-    <input matInput type="number" formControlName="costoHora" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'COST_MANAGEMENT.COST_PER_HOUR' | translate }}</mat-label>
+      <input matInput type="number" formControlName="costPerHour" />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Número de trabajadores</mat-label>
-    <input matInput type="number" formControlName="trabajadores" />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'COST_MANAGEMENT.NUMBER_OF_WORKERS' | translate }}</mat-label>
+      <input matInput type="number" formControlName="numberOfWorkers" />
+    </mat-form-field>
 
-  <p><strong>Total:</strong> S/. {{ totalManoObra }}</p>
-</mat-card>
+    <p><strong>{{ 'COST_MANAGEMENT.TOTAL' | translate }}:</strong> S/. {{ totalManoObra | number:'1.2-2' }}</p>
+  </mat-card>
+</div>

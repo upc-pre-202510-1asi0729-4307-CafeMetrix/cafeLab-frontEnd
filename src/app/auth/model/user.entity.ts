@@ -35,6 +35,9 @@ export class User {
   /** Flag indicating if the user has a plan */
   hasPlan: boolean;
 
+  /** The user's home dashboard route */
+  home?: string;
+
   /**
    * Creates a new User instance
    * @param user - The user initialization object
@@ -50,6 +53,7 @@ export class User {
    * @param user.isFirstLogin - Flag indicating if it is the user's first login (defaults to false if not provided)
    * @param user.plan - The user plan (defaults to empty string if not provided)
    * @param user.hasPlan - Flag indicating if the user has a plan (defaults to false if not provided)
+   * @param user.home - The user's home dashboard route (defaults to empty string if not provided)
    */
   constructor(user: {
     id?: number,
@@ -63,8 +67,9 @@ export class User {
     paymentMethod?: string,
     isFirstLogin?: boolean,
     plan?: string,
-    hasPlan?: boolean
-  }) {
+    hasPlan?: boolean,
+    home?: string;
+  } = {}) {
     this.id = user.id || 0;
     this.name = user.name || '';
     this.email = user.email || '';
@@ -77,6 +82,6 @@ export class User {
     this.isFirstLogin = user.isFirstLogin || false;
     this.plan = user.plan || '';
     this.hasPlan = user.hasPlan || false;
+    this.home = user.home || '';
   }
-
 }

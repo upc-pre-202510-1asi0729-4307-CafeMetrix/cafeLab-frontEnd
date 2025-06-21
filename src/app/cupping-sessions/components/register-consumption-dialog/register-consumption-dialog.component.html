@@ -1,30 +1,28 @@
 <div class="dialog-container">
-  <h2 class="dialog-title">Registrar consumo</h2>
+  <h2 class="dialog-title">{{ 'CUPPING_CONSUMPTION_DIALOG.TITLE' | translate }}</h2>
 
   <div class="dialog-content">
     <!-- Columna izquierda - Formulario -->
     <div class="form-column">
       <mat-form-field appearance="outline">
-        <mat-label>Fecha</mat-label>
+        <mat-label>{{ 'CUPPING_CONSUMPTION_DIALOG.DATE_LABEL' | translate }}</mat-label>
         <input matInput type="date" [(ngModel)]="date">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Lote</mat-label>
+        <mat-label>{{ 'CUPPING_CONSUMPTION_DIALOG.LOT_LABEL' | translate }}</mat-label>
         <mat-select [(ngModel)]="selectedLot">
-          @for (lot of lots; track lot) {
-            <mat-option [value]="lot">{{lot}}</mat-option>
-          }
+          // ... existing code ...
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Producto Final</mat-label>
+        <mat-label>{{ 'CUPPING_CONSUMPTION_DIALOG.FINAL_PRODUCT_LABEL' | translate }}</mat-label>
         <input matInput [(ngModel)]="productName">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Cantidad Usada (kg)</mat-label>
+        <mat-label>{{ 'CUPPING_CONSUMPTION_DIALOG.USED_QUANTITY_LABEL' | translate }}</mat-label>
         <input matInput type="number" [(ngModel)]="quantity">
       </mat-form-field>
     </div>
@@ -32,25 +30,16 @@
     <!-- Columna derecha - Cards -->
     <div class="info-column">
       <div class="info-card">
-        <h3>Resumen de lote</h3>
+        <h3>{{ 'CUPPING_CONSUMPTION_DIALOG.LOT_SUMMARY_TITLE' | translate }}</h3>
         <mat-card>
-          <mat-card-content>
-            <!-- Aquí irá el contenido del resumen -->
-            <p>Cantidad inicial: 10kg</p>
-            <p>Cantidad usada: 2kg</p>
-            <p>Cantidad restante: 8kg</p>
-          </mat-card-content>
+          // ... existing code ...
         </mat-card>
       </div>
 
       <div class="info-card">
-        <h3>Movimientos anteriores</h3>
+        <h3>{{ 'CUPPING_CONSUMPTION_DIALOG.PREVIOUS_MOVEMENTS_TITLE' | translate }}</h3>
         <mat-card>
-          <mat-card-content>
-            <!-- Aquí irán los movimientos anteriores -->
-            <p>12/03/24 - Consumo: 1kg</p>
-            <p>10/03/24 - Consumo: 1kg</p>
-          </mat-card-content>
+          // ... existing code ...
         </mat-card>
       </div>
     </div>
@@ -58,7 +47,7 @@
 
   <div class="dialog-actions">
     <button mat-raised-button class="submit-button" (click)="onSubmit()">
-      Registrar consumo
+      {{ 'CUPPING_CONSUMPTION_DIALOG.SUBMIT_BUTTON' | translate }}
     </button>
   </div>
-</div> 
+</div>

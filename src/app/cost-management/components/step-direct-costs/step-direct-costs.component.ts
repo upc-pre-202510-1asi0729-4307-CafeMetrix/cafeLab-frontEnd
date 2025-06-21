@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step-direct-costs',
@@ -14,7 +14,9 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    TranslateModule,
+    DecimalPipe
   ],
   templateUrl: './step-direct-costs.component.html',
   styleUrls: ['./step-direct-costs.component.css']
@@ -29,18 +31,16 @@ export class StepDirectCostsComponent implements OnInit {
   ngOnInit(): void {
     if (this.formGroup) {
       this.formGroup.valueChanges.subscribe(() => this.calculateTotals());
+      this.calculateTotals(); // Llamada inicial para calcular los totales
     }
   }
 
   calculateTotals(): void {
-    const costoKg = this.formGroup.get('costoKgCafe')?.value || 0;
-    const cantidad = this.formGroup.get('cantidadKgCafe')?.value || 0;
-    const horas = this.formGroup.get('horas')?.value || 0;
-    const costoHora = this.formGroup.get('costoHora')?.value || 0;
-    const trabajadores = this.formGroup.get('trabajadores')?.value || 0;
+    const rawMaterials = this.formGroup.get('rawMaterials')?.value;
+    const labor = this.formGroup.get('labor')?.value;
 
-    this.totalMateriaPrima = costoKg * cantidad;
-    this.totalManoObra = horas * costoHora * trabajadores;
+    this.totalMateriaPrima = (rawMaterials?.costPerKg || 0) * (rawMaterials?.quantity || 0);
+    this.totalManoObra = (labor?.hoursWorked || 0) * (labor?.costPerHour || 0) * (labor?.numberOfWorkers || 0);
 
     this.totalsCalculated.emit({
       materiaPrima: this.totalMateriaPrima,

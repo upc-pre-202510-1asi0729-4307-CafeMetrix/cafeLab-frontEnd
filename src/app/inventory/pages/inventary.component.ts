@@ -6,31 +6,28 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { RegisterConsumptionDialogComponent } from '../../cupping-sessions/components/register-consumption-dialog/register-consumption-dialog.component';
+import { RegisterConsumptionDialogComponent } from '../components/register-consumption-dialog/register-consumption-dialog.component';
 import { ToolbarComponent } from '../../public/components/toolbar/toolbar.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { RouterLink } from '@angular/router';
 import { InventoryService } from '../services/inventory.service';
 import { CoffeeLot } from '../../cost-management/model/coffee-lot.model';
-import { InventoryEntry } from '../model/inventory-entry.entity';
 import {MatToolbar} from "@angular/material/toolbar";
 
 @Component({
   selector: 'app-inventary',
   standalone: true,
-    imports: [
-        CommonModule,
-        MatCardModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatTableModule,
-        MatIconModule,
-        MatDialogModule,
-        ToolbarComponent,
-        TranslatePipe,
-        RouterLink,
-        MatToolbar
-    ],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatTableModule,
+    MatIconModule,
+    MatDialogModule,
+    ToolbarComponent,
+    TranslatePipe,
+    MatToolbar
+  ],
   templateUrl: './inventary.component.html',
   styleUrl: './inventary.component.css'
 })
@@ -64,7 +61,7 @@ export class InventaryComponent implements OnInit {
             origin: 'Perú',
             variety: 'Típica',
             quantityKg: 10,
-            stockStatus: 'stock bajo'
+            stockStatus: 'low'
           },
           {
             id: '2',
@@ -72,13 +69,13 @@ export class InventaryComponent implements OnInit {
             origin: 'Colombia',
             variety: 'Caturra',
             quantityKg: 25,
-            stockStatus: 'stock adecuado'
+            stockStatus: 'ok'
           }
         ];
       } else {
         this.coffeeStocks = lots.map(lot => ({
           ...lot,
-          stockStatus: lot.quantityKg < 15 ? 'stock bajo' : 'stock adecuado'
+          stockStatus: lot.quantityKg < 15 ? 'low' : 'ok'
         }));
       }
     });

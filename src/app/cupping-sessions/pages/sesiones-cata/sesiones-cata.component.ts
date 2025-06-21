@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,12 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 import { FormsModule } from '@angular/forms';
 import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
-import { NuevaCataDialogComponent } from '../../components/nueva-cata-dialog/nueva-cata-dialog.component';
-import { DetalleCataComponent } from '../../components/detalle-cata/detalle-cata.component';
+import { NuevasCataComponent } from '../../components/nuevas-cata/nuevas-cata.component';
+import { DetallesCataComponent } from '../../components/detalles-cata/detalles-cata.component';
 import { CuppingSessionService } from '../../services/cupping-session.service';
 import { CuppingSession } from '../../model/cupping-session.entity';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatToolbar} from '@angular/material/toolbar';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-sesiones-cata',
@@ -32,11 +32,10 @@ import {MatToolbar} from '@angular/material/toolbar';
     MatMenuModule,
     ToolbarComponent,
     FormsModule,
-    FiltroDialogComponent,
-    NuevaCataDialogComponent,
-    DetalleCataComponent,
-    TranslatePipe,
-    MatToolbar
+    DetallesCataComponent,
+    TranslateModule,
+    MatToolbarModule,
+    DatePipe
   ],
   templateUrl: './sesiones-cata.component.html',
   styleUrls: ['./sesiones-cata.component.css']
@@ -128,7 +127,7 @@ export class SesionesCataComponent implements OnInit {
   }
 
   iniciarNuevaCata(): void {
-    const dialogRef = this.dialog.open(NuevaCataDialogComponent, {
+    const dialogRef = this.dialog.open(NuevasCataComponent, {
       width: '500px',
       backdropClass: 'dialog-backdrop',
       panelClass: 'filter-dialog-panel'
@@ -140,13 +139,12 @@ export class SesionesCataComponent implements OnInit {
           nombre: nueva.nombre,
           lote: nueva.loteId,
           perfil_tueste: nueva.perfilId,
-          origen: nueva.origen,
-          variedad: nueva.variedad,
-          procesamiento: nueva.procesamiento,
+          origen: 'Por definir', // Estos valores deberían venir del lote/perfil seleccionado
+          variedad: 'Por definir',
+          procesamiento: 'Lavado',
           favorito: false,
-          user_id: 'user1'
+          user_id: 'user1' // Reemplazar con el ID del usuario actual
         };
-
         this.cuppingSessionService.add(nuevaSesion).subscribe({
           next: (creada) => {
             this.sesiones.push(creada);

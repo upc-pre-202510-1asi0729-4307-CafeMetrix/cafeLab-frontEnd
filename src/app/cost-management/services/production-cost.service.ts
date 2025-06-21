@@ -31,11 +31,7 @@ export class LotService {
   /**
    * Get lots by user id
    */
-  getLotsByUserId(userId: string): Observable<CoffeeLot[]> {
-    return this.getLots().pipe(
-      map(lots => lots.filter(lot => lot.user_id === userId))
-    );
-  }
+
 
   /**
    * Error handling

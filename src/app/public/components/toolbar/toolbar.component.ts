@@ -27,24 +27,30 @@ export class ToolbarComponent {
   redirectToFeatures() {
     const user = this.authService.getCurrentUser();
     if (!user) {
-      // Usuario no autenticado: opcionalmente redirigir a login
+      // Si no hay usuario, redirigir a login
       this.router.navigate(['/login']);
       return;
     }
 
-    // Rutas por plan
-    switch (user.plan) {
-      case 'barista':
-        this.router.navigate(['/dashboard/barista']);
-        break;
-      case 'owner':
-        this.router.navigate(['/dashboard/owner']);
-        break;
-      case 'full':
-        this.router.navigate(['/dashboard/complete']);
-        break;
-      default:
-        this.router.navigate(['/features']); // Ruta genérica
+    // Usar la propiedad 'home' del usuario para redirigir al dashboard correcto
+    if (user.home) {
+      this.router.navigate([user.home]);
+    } else {
+      // Como fallback, si 'home' no existe, usamos la lógica de planes
+      switch (user.plan) {
+        case 'barista':
+          this.router.navigate(['/dashboard/barista']);
+          break;
+        case 'owner':
+          this.router.navigate(['/dashboard/owner']);
+          break;
+        case 'full':
+          this.router.navigate(['/dashboard/complete']);
+          break;
+        default:
+          // Si el plan no se reconoce, redirigir a una página segura
+          this.router.navigate(['/login']);
+      }
     }
   }
 

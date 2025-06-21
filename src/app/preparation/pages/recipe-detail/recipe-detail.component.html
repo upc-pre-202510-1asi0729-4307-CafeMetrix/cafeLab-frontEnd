@@ -9,7 +9,7 @@
 <div class="container">
   <!-- Breadcrumb -->
   <div class="breadcrumb" *ngIf="!isLoading && !error">
-    <a routerLink="/dashboard/complete">{{ 'NAVIGATION.HOME' | translate }}</a> &gt;
+
     <a [routerLink]="getNavigationPath()">{{ getNavigationText() | translate }}</a> &gt;
     <span>{{ recipe?.name }}</span>
   </div>

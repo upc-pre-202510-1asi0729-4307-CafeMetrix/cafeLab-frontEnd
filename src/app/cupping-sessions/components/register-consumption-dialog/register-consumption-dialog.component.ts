@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register-consumption-dialog',
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     MatButtonModule,
     MatCardModule,
-    FormsModule
+    FormsModule,
+    TranslatePipe
   ],
   templateUrl: './register-consumption-dialog.component.html',
   styleUrl: './register-consumption-dialog.component.css'
@@ -46,4 +48,4 @@ export class RegisterConsumptionDialogComponent {
       quantity: this.quantity
     });
   }
-} 
+}

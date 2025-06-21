@@ -1,16 +1,14 @@
 <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
 
-<h2>Selección del lote</h2>
+<h2>{{ 'COST_MANAGEMENT.STEP_LOT_SELECTION' | translate }}</h2>
 
 <form [formGroup]="formGroup" class="step-form">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Lote de café</mat-label>
+    <mat-label>{{ 'COST_MANAGEMENT.LOT_LABEL' | translate }}</mat-label>
     <mat-select formControlName="selectedLot">
       <mat-option *ngFor="let lot of lots" [value]="lot.id">
         {{ lot.name }} – {{ lot.origin }} ({{ lot.variety }})
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-
 </form>

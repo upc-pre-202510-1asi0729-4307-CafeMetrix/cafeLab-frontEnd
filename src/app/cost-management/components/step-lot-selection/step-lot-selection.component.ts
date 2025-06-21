@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CoffeeLot} from '../../model/coffee-lot.model';
 import { CoffeeLotService} from '../../services/coffee-lot.service';
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-step-lot-selection',
@@ -17,7 +18,8 @@ import { CoffeeLotService} from '../../services/coffee-lot.service';
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    TranslateModule
   ],
   templateUrl: './step-lot-selection.component.html',
   styleUrls: ['./step-lot-selection.component.css']

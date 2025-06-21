@@ -1,14 +1,13 @@
 <mat-toolbar color="primary">
   <app-toolbar/>
-
 </mat-toolbar>
 
 <div class="main-container">
   <!-- Pantalla de éxito -->
   <div *ngIf="isSuccess" class="success-screen">
     <div class="success-message">
-      <h2>Registro guardado exitosamente</h2>
-      <p class="registration-code">Código de registro: {{ registrationCode }}</p>
+      <h2>{{ 'COST_MANAGEMENT.SUCCESS_MESSAGE' | translate }}</h2>
+      <p class="registration-code">{{ 'COST_MANAGEMENT.REGISTRATION_CODE' | translate }}: {{ registrationCode }}</p>
     </div>
 
     <div class="success-content">
@@ -23,10 +22,10 @@
 
     <div class="button-container">
       <button mat-raised-button class="action-button" (click)="onExit()">
-        Salir
+        {{ 'COST_MANAGEMENT.EXIT' | translate }}
       </button>
       <button mat-raised-button class="action-button" (click)="onPrint()">
-        Imprimir reporte
+        {{ 'COST_MANAGEMENT.PRINT_REPORT' | translate }}
       </button>
     </div>
   </div>
@@ -36,16 +35,16 @@
     <mat-stepper linear [selectedIndex]="currentStep" (selectionChange)="currentStep = $event.selectedIndex">
       <!-- Paso 1: Selección de lote -->
       <mat-step [stepControl]="firstFormGroup" [completed]="firstFormGroup.valid">
-        <ng-template matStepLabel>Selección de lote</ng-template>
+        <ng-template matStepLabel>{{ 'COST_MANAGEMENT.STEP_LOT_SELECTION' | translate }}</ng-template>
         <form [formGroup]="firstFormGroup">
           <app-step-lot-selection [formGroup]="firstFormGroup"></app-step-lot-selection>
 
           <div class="button-container">
             <button mat-raised-button color="primary" matStepperNext [disabled]="firstFormGroup.invalid">
-              Continuar
+              {{ 'COST_MANAGEMENT.CONTINUE' | translate }}
             </button>
             <button mat-stroked-button color="warn" (click)="onCancel()">
-              Cancelar
+              {{ 'COST_MANAGEMENT.CANCEL' | translate }}
             </button>
           </div>
         </form>
@@ -53,14 +52,14 @@
 
       <!-- Paso 2: Costos directos -->
       <mat-step [stepControl]="directCostsForm" [completed]="directCostsForm.valid">
-        <ng-template matStepLabel>Costos directos</ng-template>
+        <ng-template matStepLabel>{{ 'COST_MANAGEMENT.STEP_DIRECT_COSTS' | translate }}</ng-template>
         <form [formGroup]="directCostsForm">
-          <app-step-direct-costs [formGroup]="directCostsForm"></app-step-direct-costs>
+          <app-step-direct-costs [formGroup]="directCostsForm" (totalsCalculated)="updateDirectCosts($event)"></app-step-direct-costs>
 
           <div class="button-container">
-            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button matStepperPrevious>{{ 'COST_MANAGEMENT.BACK' | translate }}</button>
             <button mat-raised-button color="primary" matStepperNext [disabled]="directCostsForm.invalid">
-              Continuar
+              {{ 'COST_MANAGEMENT.CONTINUE' | translate }}
             </button>
           </div>
         </form>
@@ -68,14 +67,14 @@
 
       <!-- Paso 3: Costos indirectos -->
       <mat-step [stepControl]="indirectCostsForm" [completed]="indirectCostsForm.valid">
-        <ng-template matStepLabel>Costos indirectos</ng-template>
+        <ng-template matStepLabel>{{ 'COST_MANAGEMENT.STEP_INDIRECT_COSTS' | translate }}</ng-template>
         <form [formGroup]="indirectCostsForm">
           <app-step-indirect-costs [formGroup]="indirectCostsForm"></app-step-indirect-costs>
 
           <div class="button-container">
-            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button matStepperPrevious>{{ 'COST_MANAGEMENT.BACK' | translate }}</button>
             <button mat-raised-button color="primary" matStepperNext [disabled]="indirectCostsForm.invalid">
-              Continuar
+              {{ 'COST_MANAGEMENT.CONTINUE' | translate }}
             </button>
           </div>
         </form>
@@ -83,23 +82,23 @@
 
       <!-- Paso 4: Resumen -->
       <mat-step>
-        <ng-template matStepLabel>Resumen</ng-template>
+        <ng-template matStepLabel>{{ 'COST_MANAGEMENT.STEP_SUMMARY' | translate }}</ng-template>
         <div class="summary-container">
 
           <!-- Tabla de resumen de costos -->
           <mat-card>
-            <h3>Resumen de costos</h3>
+            <h3>{{ 'COST_MANAGEMENT.SUMMARY_TITLE' | translate }}</h3>
             <table mat-table [dataSource]="costSummary" class="mat-elevation-z8 full-width">
 
               <!-- Columna: Tipo -->
               <ng-container matColumnDef="tipo">
-                <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                <td mat-cell *matCellDef="let element"> {{ element.tipo }} </td>
+                <th mat-header-cell *matHeaderCellDef> {{ 'COST_MANAGEMENT.SUMMARY_TYPE' | translate }} </th>
+                <td mat-cell *matCellDef="let element"> {{ element.tipo | translate }} </td>
               </ng-container>
 
               <!-- Columna: Monto -->
               <ng-container matColumnDef="monto">
-                <th mat-header-cell *matHeaderCellDef> Monto (S/.) </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'COST_MANAGEMENT.SUMMARY_AMOUNT' | translate }} </th>
                 <td mat-cell *matCellDef="let element"> {{ element.monto | number:'1.2-2' }} </td>
               </ng-container>
 
@@ -120,19 +119,16 @@
 
           <!-- Botones -->
           <div class="button-container">
-            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button matStepperPrevious>{{ 'COST_MANAGEMENT.BACK' | translate }}</button>
             <button mat-raised-button color="primary" (click)="onSubmit()">
-              Finalizar y Guardar
+              {{ 'COST_MANAGEMENT.FINISH_AND_SAVE' | translate }}
             </button>
             <button mat-stroked-button color="accent" (click)="onSaveAsDraft()">
-              Guardar Borrador
+              {{ 'COST_MANAGEMENT.SAVE_DRAFT' | translate }}
             </button>
           </div>
         </div>
       </mat-step>
-
-
-
     </mat-stepper>
   </div>
 </div>

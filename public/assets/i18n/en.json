@@ -1,0 +1,29 @@
+{
+  "CALIBRATIONS": {
+    "SEARCH": "Search calibration",
+    "SEARCH_PLACEHOLDER": "Search by method, equipment or aperture",
+    "TABLE": {
+      "NAME": "Name",
+      "METHOD": "Method",
+      "EQUIPMENT": "Equipment",
+      "APERTURE": "Aperture"
+    },
+    "REGISTER": "Register Calibration",
+    "NO_DATA": "No calibrations registered.",
+    "FORM": {
+      "METHOD": "Method selection",
+      "GRIND_NUMBER": "Grind number",
+      "APERTURE": "Aperture (mm)",
+      "CUP_VOLUME": "Cup volume (ml)",
+      "EQUIPMENT": "Equipment selection",
+      "CALIBRATION_DATE": "Calibration date",
+      "FINAL_VOLUME": "Final volume (ml)",
+      "ATTACH_SAMPLE": "Visualization",
+      "ATTACH_SAMPLE_BTN": "Attach samples",
+      "DOWNLOAD_SAMPLE": "Download sample",
+      "VIEW_SAMPLE": "View sample",
+      "COMMENTS": "Comments",
+      "NOTES": "Notes"
+    }
+  }
+}

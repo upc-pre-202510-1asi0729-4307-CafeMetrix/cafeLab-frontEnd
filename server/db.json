@@ -1,0 +1,124 @@
+{
+  "calibrations": [
+    {
+      "id": 1,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "5-15",
+      "aperture": 58,
+      "cupVolume": 30,
+      "finalVolume": 25,
+      "calibrationDate": "2025-03-21",
+      "comments": "La densidad del espresso puede variar entre 0.95–1.05 g/ml",
+      "notes": "A mayor altitud, menor punto de ebullición del agua"
+    },
+    {
+      "id": 2,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "6-14",
+      "aperture": 56,
+      "cupVolume": 28,
+      "finalVolume": 23,
+      "calibrationDate": "2025-03-22",
+      "comments": "Tiempo de extracción ideal entre 25-30 segundos",
+      "notes": "Ajustar temperatura si se excede el tiempo"
+    },
+    {
+      "id": 3,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "7-13",
+      "aperture": 60,
+      "cupVolume": 32,
+      "finalVolume": 26,
+      "calibrationDate": "2025-03-23",
+      "comments": "Cuerpo medio y acidez brillante",
+      "notes": "Evitar compactación excesiva del café"
+    },
+    {
+      "id": 4,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "8-12",
+      "aperture": 57,
+      "cupVolume": 30,
+      "finalVolume": 24,
+      "calibrationDate": "2025-03-24",
+      "comments": "Requiere prueba de densidad en cada lote",
+      "notes": "Verificar presión de bomba (9 bares)"
+    },
+    {
+      "id": 5,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "5-10",
+      "aperture": 59,
+      "cupVolume": 30,
+      "finalVolume": 25,
+      "calibrationDate": "2025-03-25",
+      "comments": "Sabor balanceado, notas cítricas",
+      "notes": "Evitar canalización del flujo"
+    },
+    {
+      "id": 6,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "6-13",
+      "aperture": 58,
+      "cupVolume": 31,
+      "finalVolume": 27,
+      "calibrationDate": "2025-03-26",
+      "comments": "Extracción óptima a 92 °C",
+      "notes": "Filtrar agua antes del uso"
+    },
+    {
+      "id": 7,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "7-12",
+      "aperture": 60,
+      "cupVolume": 33,
+      "finalVolume": 28,
+      "calibrationDate": "2025-03-27",
+      "comments": "Notas florales presentes, cuerpo bajo",
+      "notes": "Revisar válvula de presión semanalmente"
+    },
+    {
+      "id": 8,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "5-11",
+      "aperture": 55,
+      "cupVolume": 29,
+      "finalVolume": 24,
+      "calibrationDate": "2025-03-28",
+      "comments": "Densidad consistente en lote actual",
+      "notes": "Evitar fluctuaciones de temperatura"
+    },
+    {
+      "id": 9,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "6-14",
+      "aperture": 58,
+      "cupVolume": 30,
+      "finalVolume": 26,
+      "calibrationDate": "2025-03-29",
+      "comments": "Notas achocolatadas con buen cuerpo",
+      "notes": "Verificar limpieza diaria del grupo"
+    },
+    {
+      "id": 10,
+      "method": "Espresso",
+      "equipment": "Maquina Espresso",
+      "grindNumber": "7-15",
+      "aperture": 59,
+      "cupVolume": 30,
+      "finalVolume": 25,
+      "calibrationDate": "2025-03-30",
+      "comments": "Ligera sobreextracción detectada",
+      "notes": "Reducir presión ligeramente o ajustar molienda"
+    }
+  ]
+}

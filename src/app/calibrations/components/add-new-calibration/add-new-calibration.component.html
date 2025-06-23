@@ -1,0 +1,71 @@
+<div class="modal-container">
+  <h2 class="modal-title">{{ 'CALIBRATIONS.REGISTER' | translate }}</h2>
+  <form (ngSubmit)="onSubmit()" #calibrationForm="ngForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.METHOD' | translate }}</label>
+        <input class="form-control" name="method" [(ngModel)]="calibration.method" required>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.GRIND_NUMBER' | translate }}</label>
+        <input class="form-control" name="grindNumber" [(ngModel)]="calibration.grindNumber" required>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.APERTURE' | translate }}</label>
+        <input class="form-control" name="aperture" type="number" [(ngModel)]="calibration.aperture" required>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.CUP_VOLUME' | translate }}</label>
+        <input class="form-control" name="cupVolume" type="number" [(ngModel)]="calibration.cupVolume" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.EQUIPMENT' | translate }}</label>
+        <input class="form-control" name="equipment" [(ngModel)]="calibration.equipment" required>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.CALIBRATION_DATE' | translate }}</label>
+        <input class="form-control" name="calibrationDate" type="date" [(ngModel)]="calibration.calibrationDate" required>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.FINAL_VOLUME' | translate }}</label>
+        <input class="form-control" name="finalVolume" type="number" [(ngModel)]="calibration.finalVolume" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.ATTACH_SAMPLE' | translate }}</label>
+        <button type="button" class="attach-btn" (click)="fileInput.click()">
+          {{ 'CALIBRATIONS.FORM.ATTACH_SAMPLE_BTN' | translate }}
+          <mat-icon>upload</mat-icon>
+        </button>
+        <input type="file" #fileInput style="display:none" (change)="onFileSelected($event)">
+        <div *ngIf="sampleFileName">
+          <span>{{ sampleFileName }}</span>
+          <button type="button" class="download-btn" (click)="downloadSample()">
+            {{ 'CALIBRATIONS.FORM.DOWNLOAD_SAMPLE' | translate }}
+            <mat-icon>download</mat-icon>
+          </button>
+          <button type="button" class="view-btn" (click)="viewSample()">
+            {{ 'CALIBRATIONS.FORM.VIEW_SAMPLE' | translate }}
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.COMMENTS' | translate }}</label>
+        <textarea class="form-control" name="comments" [(ngModel)]="calibration.comments"></textarea>
+      </div>
+      <div class="form-group">
+        <label>{{ 'CALIBRATIONS.FORM.NOTES' | translate }}</label>
+        <textarea class="form-control" name="notes" [(ngModel)]="calibration.notes"></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" class="submit-btn" type="submit">
+        {{ 'CALIBRATIONS.REGISTER' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

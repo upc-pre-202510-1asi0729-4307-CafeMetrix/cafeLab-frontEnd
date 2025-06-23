@@ -1,0 +1,29 @@
+{
+  "CALIBRATIONS": {
+    "SEARCH": "Buscar calibración",
+    "SEARCH_PLACEHOLDER": "Buscar por método, equipo o apertura",
+    "TABLE": {
+      "NAME": "Nombre",
+      "METHOD": "Método",
+      "EQUIPMENT": "Equipo",
+      "APERTURE": "Apertura"
+    },
+    "REGISTER": "Registrar Calibracion",
+    "NO_DATA": "No hay calibraciones registradas.",
+    "FORM": {
+      "METHOD": "Selección de Método",
+      "GRIND_NUMBER": "N° de molienda",
+      "APERTURE": "Apertura (mm)",
+      "CUP_VOLUME": "Volumen en taza (ml)",
+      "EQUIPMENT": "Selección de equipo",
+      "CALIBRATION_DATE": "Fecha de calibración",
+      "FINAL_VOLUME": "Volumen final (ml)",
+      "ATTACH_SAMPLE": "Visualización",
+      "ATTACH_SAMPLE_BTN": "Adjuntar muestras",
+      "DOWNLOAD_SAMPLE": "Descargar muestra",
+      "VIEW_SAMPLE": "Ver muestra",
+      "COMMENTS": "Comentarios",
+      "NOTES": "Notas"
+    }
+  }
+}

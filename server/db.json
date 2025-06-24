@@ -1,0 +1,351 @@
+{
+  "coffees": [
+    {
+      "id": 1,
+      "name": "Caturra",
+      "region": "Cajamarca",
+      "variety": "Arabica",
+      "totalWeight": 300
+    },
+    {
+      "id": 2,
+      "name": "Geisha",
+      "region": "Cusco",
+      "variety": "Arabica",
+      "totalWeight": 250
+    },
+    {
+      "id": 3,
+      "name": "Bourbon",
+      "region": "Junin",
+      "variety": "Arabica",
+      "totalWeight": 350
+    },
+    {
+      "id": 4,
+      "name": "Typica",
+      "region": "Puno",
+      "variety": "Arabica",
+      "totalWeight": 200
+    },
+    {
+      "id": 5,
+      "name": "Catimor",
+      "region": "San Martin",
+      "variety": "Robusta",
+      "totalWeight": 400
+    },
+    {
+      "id": 6,
+      "name": "Pacamara",
+      "region": "Amazonas",
+      "variety": "Arabica",
+      "totalWeight": 275
+    },
+    {
+      "id": 7,
+      "name": "Villa Sarchi",
+      "region": "Huanuco",
+      "variety": "Arabica",
+      "totalWeight": 320
+    }
+  ],
+  "defects": [
+    {
+      "id": 1,
+      "coffeeId": 1,
+      "name": "Broca",
+      "defectType": "Primary",
+      "defectWeight": 15,
+      "percentage": 5,
+      "probableCause": "Hypothenemus hampei infestation",
+      "suggestedSolution": "Apply biological control and timely harvesting"
+    },
+    {
+      "id": 2,
+      "coffeeId": 2,
+      "name": "Total Black",
+      "defectType": "Primary",
+      "defectWeight": 10,
+      "percentage": 4,
+      "probableCause": "Over-fermentation or poor drying",
+      "suggestedSolution": "Use raised beds with proper ventilation"
+    },
+    {
+      "id": 3,
+      "coffeeId": 3,
+      "name": "Broken Bean",
+      "defectType": "Secondary",
+      "defectWeight": 8,
+      "percentage": 2.29,
+      "probableCause": "Improper depulper calibration",
+      "suggestedSolution": "Calibrate depulper before use"
+    },
+    {
+      "id": 4,
+      "coffeeId": 4,
+      "name": "Over-Fermented",
+      "defectType": "Primary",
+      "defectWeight": 12,
+      "percentage": 6,
+      "probableCause": "Uncontrolled fermentation time",
+      "suggestedSolution": "Monitor time and temperature during fermentation"
+    },
+    {
+      "id": 5,
+      "coffeeId": 5,
+      "name": "Mold",
+      "defectType": "Primary",
+      "defectWeight": 20,
+      "percentage": 5,
+      "probableCause": "Humid storage conditions",
+      "suggestedSolution": "Use dry jute sacks and avoid humidity"
+    },
+    {
+      "id": 6,
+      "coffeeId": 6,
+      "name": "Foreign Matter",
+      "defectType": "Secondary",
+      "defectWeight": 5,
+      "percentage": 1.82,
+      "probableCause": "Poor post-harvest selection",
+      "suggestedSolution": "Improve manual and mechanical sorting"
+    },
+    {
+      "id": 7,
+      "coffeeId": 7,
+      "name": "Immature Bean",
+      "defectType": "Secondary",
+      "defectWeight": 10,
+      "percentage": 3.13,
+      "probableCause": "Premature harvesting",
+      "suggestedSolution": "Harvest only ripe cherries with manual selection"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Adrián",
+      "email": "adrian@gmail.com",
+      "password": "12345",
+      "role": "barista",
+      "cafeteriaName": "Cafe del Sur",
+      "experience": "2 años",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": true
+    },
+    {
+      "id": 2,
+      "name": "Esteban Gonzales",
+      "email": "esteban@gmail.com",
+      "password": "123456",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": false
+    },
+    {
+      "id": 3,
+      "name": "Rodrigo Wilson",
+      "email": "rodrigo@gmail.com",
+      "password": "123456",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": false
+    },
+    {
+      "id": 4,
+      "name": "Kevin Rodriguez",
+      "email": "kevin1@gmail.com",
+      "password": "123456",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": false
+    },
+    {
+      "id": 5,
+      "name": "Susie Gimenez",
+      "email": "sus@gmail.com",
+      "password": "123456",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "3 años",
+      "profilePicture": "",
+      "paymentMethod": "mastercard",
+      "isFirstLogin": false,
+      "plan": "barista",
+      "hasPlan": true
+    },
+    {
+      "id": 6,
+      "name": "Juan Quevin",
+      "email": "juan@gmail.com",
+      "password": "123456",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "Juanaso",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "",
+      "hasPlan": false
+    },
+    {
+      "id": 7,
+      "name": "Raul Cerati",
+      "email": "rau123@gmail.com",
+      "password": "123456",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": false
+    },
+    {
+      "id": 8,
+      "name": "Mayte Wilson",
+      "email": "mayte@gmail.com",
+      "password": "123456",
+      "role": "barista",
+      "cafeteriaName": "",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "barista",
+      "hasPlan": false
+    },
+    {
+      "id": 9,
+      "name": "Gus Xavier",
+      "email": "gus@gmail.com",
+      "password": "123456",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "Xmen",
+      "experience": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "",
+      "hasPlan": false
+    },
+    {
+      "id": 10,
+      "name": "Jesus Jesus",
+      "email": "jesus@gmail.com",
+      "password": "123456",
+      "experience": "1 año",
+      "role": "",
+      "cafeteriaName": "",
+      "profilePicture": "",
+      "paymentMethod": "",
+      "isFirstLogin": true,
+      "plan": "",
+      "hasPlan": false
+    },
+    {
+      "id": 11,
+      "name": "Gojo Wilson",
+      "email": "gojo@gmail.com",
+      "password": "123456",
+      "experience": "2 años",
+      "role": "",
+      "cafeteriaName": "",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "complete",
+      "hasPlan": true
+    },
+    {
+      "id": 12,
+      "name": "Ricardo Rodriguez",
+      "email": "rodri@gmail.com",
+      "password": "123456",
+      "experience": "4 meses",
+      "role": "barista",
+      "cafeteriaName": "",
+      "profilePicture": "",
+      "paymentMethod": "mastercard",
+      "isFirstLogin": false,
+      "plan": "barista",
+      "hasPlan": true
+    },
+    {
+      "id": 13,
+      "name": "Eduardo Dueñas",
+      "email": "duardo@gmail.com",
+      "password": "123456",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "Sui Generis",
+      "experience": "2 años",
+      "profilePicture": "",
+      "paymentMethod": "mastercard",
+      "isFirstLogin": false,
+      "plan": "admin",
+      "hasPlan": true
+    },
+    {
+      "id": 14,
+      "name": "kalet",
+      "email": "kaler@qwe.com",
+      "password": "123456789",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "kaletitos",
+      "experience": "1",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "complete",
+      "hasPlan": true
+    },
+    {
+      "id": 15,
+      "name": "xd",
+      "email": "xd@as.com",
+      "password": "123456",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "xdxdxdxdxdxd",
+      "experience": "1",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "barista",
+      "hasPlan": true
+    },
+    {
+      "id": 16,
+      "name": "xdd",
+      "email": "as@asd.com",
+      "password": "123456789",
+      "role": "dueno_cafeteria",
+      "cafeteriaName": "kaletito",
+      "experience": "1",
+      "profilePicture": "",
+      "paymentMethod": "visa",
+      "isFirstLogin": false,
+      "plan": "admin",
+      "hasPlan": true
+    }
+  ]
+}

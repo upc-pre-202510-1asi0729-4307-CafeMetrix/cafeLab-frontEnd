@@ -1,0 +1,34 @@
+<div class="dialog-container">
+  <h2 class="dialog-title">{{ 'CUPPING_SESSIONS.NEW_SESSION_TITLE' | translate }}</h2>
+
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'CUPPING_SESSIONS.SESSION_NAME_LABEL' | translate }}</mat-label>
+      <input matInput [(ngModel)]="nuevaCata.nombre" placeholder="{{ 'CUPPING_SESSIONS.SESSION_NAME_PLACEHOLDER' | translate }}">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'CUPPING_SESSIONS.LINKED_LOT_LABEL' | translate }}</mat-label>
+      <mat-select [(ngModel)]="nuevaCata.loteId">
+        <mat-option *ngFor="let lote of lotes" [value]="lote.id">
+          {{lote.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'CUPPING_SESSIONS.ROAST_PROFILE_LABEL' | translate }}</mat-label>
+      <mat-select [(ngModel)]="nuevaCata.perfilId">
+        <mat-option *ngFor="let perfil of perfiles" [value]="perfil.id">
+          {{perfil.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button class="create-button" (click)="crearSesion()">
+      {{ 'CUPPING_SESSIONS.CREATE_BUTTON' | translate }}
+    </button>
+  </div>
+</div>

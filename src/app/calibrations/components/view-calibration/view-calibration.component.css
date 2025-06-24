@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Inter:400&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito:500&display=swap');
+
+.filters-container {
+  max-width: 900px;
+  margin: 32px auto 0 auto;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.search-row {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 24px;
+  margin-top: 32px;
+}
+
+.search-col {
+  flex: 1;
+}
+
+.search-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  display: block;
+  color: #000;
+}
+
+.search-field {
+  width: 100%;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #C4C4C4 !important;
+  border-radius: 8px 8px 0 0;
+}
+
+.custom-table {
+  width: 100%;
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.mat-header-row, .mat-header-cell {
+  background: #618985 !important;
+  color: #fff !important;
+  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.mat-row, .mat-cell {
+  background: #fff;
+  color: #414535;
+  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.mat-table {
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+button[mat-icon-button] {
+  color: #414535;
+}
+
+.add-calibration-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+.add-calibration-btn button {
+  background: #414535 !important;
+  color: #fff !important;
+  border-radius: 20px;
+  padding: 8px 32px;
+  font-size: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+  box-shadow: 1px 2px 6px #3332;
+}
+.table-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+  background: transparent;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 0 16px 24px 16px;
+}
+.history-table-scroll {
+  max-height: 350px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  background: #fff;
+}
+.no-data {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 20px;
+  color: #414535;
+  font-family: 'Inter', sans-serif;
+}

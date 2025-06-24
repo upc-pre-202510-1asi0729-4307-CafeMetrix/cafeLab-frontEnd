@@ -1,0 +1,78 @@
+<div class="form-container">
+  <div class="title">{{ 'CALIBRATIONS.REGISTER_TITLE' | translate }}</div>
+  <form (ngSubmit)="onSubmit()" #calibrationForm="ngForm" autocomplete="off">
+    <div class="form-row">
+      <div class="form-col">
+        <label for="method">{{ 'CALIBRATIONS.METHOD_LABEL' | translate }}</label>
+        <select id="method" [(ngModel)]="calibration.method" name="method" required>
+          <option value="" disabled selected hidden>--</option>
+          <option value="Espresso">Espresso</option>
+          <option value="V60">V60</option>
+          <option value="Chemex">Chemex</option>
+          <!-- Agrega más métodos si es necesario -->
+        </select>
+
+        <label for="equipment">{{ 'CALIBRATIONS.EQUIPMENT_LABEL' | translate }}</label>
+        <select id="equipment" [(ngModel)]="calibration.equipment" name="equipment" required>
+          <option value="" disabled selected hidden>--</option>
+          <option value="Maquina Espresso">Maquina Espresso</option>
+          <option value="V60">V60</option>
+          <option value="Chemex">Chemex</option>
+          <!-- Agrega más equipos si es necesario -->
+        </select>
+
+        <label>{{ 'CALIBRATIONS.VISUALIZATION_LABEL' | translate }}</label>
+        <button type="button" class="attach-btn">
+          {{ 'CALIBRATIONS.ATTACH_SAMPLES' | translate }}
+          <span style="font-size: 18px;">&#8679;</span>
+        </button>
+      </div>
+      <div class="form-col">
+        <label for="grindNumber">{{ 'CALIBRATIONS.GRIND_LABEL' | translate }}</label>
+        <select id="grindNumber" [(ngModel)]="calibration.grindNumber" name="grindNumber" required>
+          <option value="" disabled selected hidden>--</option>
+          <option value="5-15">5-15</option>
+          <option value="16-25">16-25</option>
+          <!-- Agrega más rangos si es necesario -->
+        </select>
+
+        <label for="aperture">{{ 'CALIBRATIONS.APERTURE_LABEL' | translate }}</label>
+        <select id="aperture" [(ngModel)]="calibration.aperture" name="aperture" required>
+          <option value="" disabled selected hidden>--</option>
+          <option value="58">58</option>
+          <option value="60">60</option>
+          <!-- Agrega más opciones si es necesario -->
+        </select>
+
+        <label for="calibrationDate">{{ 'CALIBRATIONS.DATE_LABEL' | translate }}</label>
+        <input id="calibrationDate" type="date" [(ngModel)]="calibration.calibrationDate" name="calibrationDate" required>
+      </div>
+      <div class="form-col">
+        <label for="cupVolume">{{ 'CALIBRATIONS.CUP_VOLUME_LABEL' | translate }}</label>
+        <select id="cupVolume" [(ngModel)]="calibration.cupVolume" name="cupVolume" required>
+          <option value="" disabled selected hidden>--</option>
+          <option value="30">30</option>
+          <option value="60">60</option>
+          <!-- Agrega más opciones si es necesario -->
+        </select>
+
+        <label for="finalVolume">{{ 'CALIBRATIONS.FINAL_VOLUME_LABEL' | translate }}</label>
+        <select id="finalVolume" [(ngModel)]="calibration.finalVolume" name="finalVolume" required>
+          <option value="" disabled selected hidden>--</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <!-- Agrega más opciones si es necesario -->
+        </select>
+
+        <label for="comments">{{ 'CALIBRATIONS.COMMENTS_LABEL' | translate }}</label>
+        <textarea id="comments" [(ngModel)]="calibration.comments" name="comments" placeholder="Ej: La densidad del espresso puede variar entre 0.95-1.05 g/mL"></textarea>
+
+        <label for="notes">{{ 'CALIBRATIONS.NOTES_LABEL' | translate }}</label>
+        <textarea id="notes" [(ngModel)]="calibration.notes" name="notes" placeholder="Ej: A mayor altitud, menor punto de ebullición del agua"></textarea>
+      </div>
+    </div>
+    <button class="register-btn" type="submit">
+      {{ 'CALIBRATIONS.REGISTER_BUTTON' | translate }}
+    </button>
+  </form>
+</div>

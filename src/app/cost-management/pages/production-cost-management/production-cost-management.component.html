@@ -2,6 +2,12 @@
   <app-toolbar/>
 </mat-toolbar>
 
+<nav class="breadcrumb">
+  <a (click)="goToHome()">{{ 'BREADCRUMB.HOME' | translate }}</a>
+  <span> &gt; </span>
+  <span>{{ 'BREADCRUMB.COST_MANAGEMENT' | translate }}</span>
+</nav>
+
 <div class="main-container">
   <!-- Pantalla de éxito -->
   <div *ngIf="isSuccess" class="success-screen">

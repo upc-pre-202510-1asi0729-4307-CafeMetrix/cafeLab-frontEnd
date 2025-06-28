@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CoffeeLot } from '../model/coffee-lot.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoffeeLotService {
-  private mockLots: CoffeeLot[] = [
-    { id: '1', name: 'Lote Amazonas', variety: 'Typica', origin: 'Amazonas', quantityKg: 200 },
-    { id: '2', name: 'Lote Cajamarca', variety: 'Bourbon', origin: 'Cajamarca', quantityKg: 150 },
-    { id: '3', name: 'Lote Cusco', variety: 'Caturra', origin: 'Cusco', quantityKg: 300 }
-  ];
+  private apiUrl = 'https://682697d8397e48c913169c83.mockapi.io/coffee-lots';
+
+  constructor(private http: HttpClient) {}
 
   getLots(): Observable<CoffeeLot[]> {
-    return of(this.mockLots);
+    return this.http.get<CoffeeLot[]>(this.apiUrl);
+  }
+
+  getLotsByUser(userId: string): Observable<CoffeeLot[]> {
+    return this.http.get<CoffeeLot[]>(`${this.apiUrl}?user_id=${userId}`);
   }
 }

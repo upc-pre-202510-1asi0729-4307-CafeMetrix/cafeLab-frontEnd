@@ -502,8 +502,32 @@ export class RoastProfileListComponent implements OnInit {
     });
   }
 
-
-
-
-
+  goToHome(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
     }
+    if (user.home) {
+      this.router.navigate([user.home]);
+      return;
+    }
+    switch (user.plan) {
+      case 'barista':
+        this.router.navigate(['/dashboard/barista']);
+        break;
+      case 'owner':
+        this.router.navigate(['/dashboard/owner']);
+        break;
+      case 'full':
+        this.router.navigate(['/dashboard/complete']);
+        break;
+      default:
+        this.router.navigate(['/']);
+    }
+  }
+
+  refreshRoastProfiles(): void {
+    window.location.reload();
+  }
+}

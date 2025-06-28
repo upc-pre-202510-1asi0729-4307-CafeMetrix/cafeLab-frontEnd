@@ -253,7 +253,11 @@
   },
   "BREADCRUMB": {
     "HOME": "Home",
-    "COFFEE_LOTS": "Coffee Lots"
+    "COFFEE_LOTS": "Coffee Lots",
+    "DASHBOARD": "Dashboard",
+    "COST_MANAGEMENT": "Cost Management",
+    "ROAST_PROFILES": "Roast Profiles",
+    "SUPPLIERS": "Suppliers"
   },
   "SEARCH": {
     "PLACEHOLDER": "Search lot..."
@@ -277,13 +281,19 @@
       "WEIGHT": "Weight (kg)",
       "PROCESS": "Processing Method",
       "SUPPLIER": "Supplier",
-      "CERTIFICATIONS": "Certifications"
+      "CERTIFICATIONS": "Certifications",
+      "STATUS": "Status"
     },
     "SELECT_PLACEHOLDER": {
       "SELECT_TYPE": "Select type",
       "SELECT_PROCESS": "Select process",
       "SELECT_SUPPLIER": "Select supplier",
-      "SELECT_CERTIFICATION": "Select certification"
+      "SELECT_CERTIFICATION": "Select certification",
+      "SELECT_STATUS": "Select status"
+    },
+    "STATUS_OPTIONS": {
+      "GREEN": "Green Coffee",
+      "ROASTED": "Roasted Coffee"
     }
   },
   "NAV": {
@@ -294,6 +304,7 @@
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "EDIT": "Edit",
+    "DELETE": "Delete",
     "REGISTER_LOT": "Register Lot",
     "ADD": "Add",
     "REMOVE": "Remove",
@@ -305,7 +316,13 @@
   "MODAL": {
     "NEW_COFFEE_LOT": "New Coffee Lot",
     "LOT_DETAILS": "Details",
-    "EDIT_LOT": "Edit Lot"
+    "EDIT_LOT": "Edit Lot",
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Confirm Deletion",
+      "MESSAGE": "Are you sure you want to delete the lot '{{lotName}}'? This action cannot be undone.",
+      "CONFIRM": "Delete",
+      "CANCEL": "Cancel"
+    }
   },
   "profile": {
     "detailTitle": "Roast profile details",
@@ -574,7 +591,16 @@
     "QUALITY_CONTROL": "Quality control",
     "CERTIFICATIONS": "Certifications",
     "INSURANCE": "Insurance",
-    "ADMINISTRATIVE": "Administrative"
+    "ADMINISTRATIVE": "Administrative",
+    "RECOMMENDATIONS": {
+      "HIGH_DIRECT_COST": "Direct cost represents a very high portion of your total cost. Review supplies and processes to optimize.",
+      "HIGH_INDIRECT_COST": "Indirect cost is high. Consider optimizing overhead or administrative expenses.",
+      "LOW_MARGIN": "Profit margin is low. Consider adjusting prices or reducing costs.",
+      "LOW_LOT_VARIETY": "You have few active lots. Diversifying can help reduce risks and improve income.",
+      "HIGH_COST_PER_KG": "Cost per kilogram is high. Review your processes to improve efficiency.",
+      "ALL_GOOD": "Your cost structure is healthy. Keep up the good work!"
+    },
+    "NO_LOTS": "You have no registered lots. Register a coffee lot first."
   },
   "INVENTORY": {
     "PAGE": {
@@ -600,7 +626,56 @@
       "DATE_USED": "Date of Use",
       "CANCEL": "Cancel",
       "SAVE": "Save"
-    }
+    },
+    "GREEN_COFFEE": "Green Coffee",
+    "ROASTED_COFFEE": "Roasted Coffee",
+    "SELECT_COFFEE_TYPE": "Select coffee type",
+    "TOTAL": "Total",
+    "ACTIVE_LOTS": "Active lots",
+    "SUPPLIERS": "Suppliers",
+    "REGISTER_CONSUMPTION": "Register consumption",
+    "STOCK_STATUS": {
+      "LOW": "Low stock",
+      "ADEQUATE": "Adequate stock"
+    },
+    "CONSUMPTION_DIALOG": {
+      "TITLE": "Register Consumption",
+      "DATE": "Date",
+      "LOT": "Lot",
+      "FINAL_PRODUCT": "Final product",
+      "CONSUMPTION_KG": "Consumption (kg)",
+      "LOT_SUMMARY": "Lot summary",
+      "LOT_NAME": "Lot name",
+      "COFFEE_TYPE": "Coffee type",
+      "STATUS": "Status",
+      "TOTAL_WEIGHT": "Total weight",
+      "REMAINING_WEIGHT": "Remaining weight",
+      "SELECT_LOT_FOR_SUMMARY": "Select a lot to see summary",
+      "PREVIOUS_MOVEMENTS": "Previous movements",
+      "NO_PREVIOUS_MOVEMENTS": "No previous movements for this lot",
+      "CONFIRM": "Confirm",
+      "CANCEL": "Cancel"
+    },
+    "CONSUMPTION_TABLE": {
+      "TITLE": "Consumption History",
+      "DATE": "Date",
+      "LOT": "Lot",
+      "CONSUMPTION": "Consumption",
+      "ACTIONS": "Actions",
+      "VIEW_DETAILS": "View details",
+      "NO_DATA": "No consumption records"
+    },
+    "CONSUMPTION_DETAIL": {
+      "TITLE": "Consumption Details",
+      "DATE": "Date",
+      "LOT": "Lot",
+      "FINAL_PRODUCT": "Final product",
+      "CONSUMPTION": "Consumption",
+      "COFFEE_TYPE": "Coffee type",
+      "STATUS": "Status",
+      "CLOSE": "Close"
+    },
+    "TITLE": "Inventory"
   },
   "CALIBRATIONS": {
     "REGISTER_TITLE": "Register Calibration",
@@ -630,5 +705,4 @@
     "UPDATE_BUTTON": "Update",
     "MORE_INFO_TITLE": "Calibration Information"
   }
-
 }

@@ -1,13 +1,7 @@
 
 
 <div class="supplier-container">
-  <!-- Breadcrumb -->
-  <div class="breadcrumb">
-    <a routerLink="/dashboard/owner">{{ 'navbar.home' | translate }}</a> &gt;
-    <a *ngIf="!showSupplierDetails" routerLink="/proveedores">{{ 'supply.suppliers.title' | translate }}</a>
-    <span *ngIf="showSupplierDetails">{{ 'supply.suppliers.title' | translate }}</span>
-    <span *ngIf="showSupplierDetails"> &gt; {{ 'supply.suppliers.details.general_info' | translate }}</span>
-  </div>
+
 
   <div *ngIf="error" class="error-message">
     {{ error }}

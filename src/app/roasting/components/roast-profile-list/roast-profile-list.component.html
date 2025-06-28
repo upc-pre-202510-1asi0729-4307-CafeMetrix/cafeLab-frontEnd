@@ -1,8 +1,11 @@
+<nav class="breadcrumb">
+  <a (click)="goToHome()">{{ 'BREADCRUMB.HOME' | translate }}</a>
+  <span> &gt; </span>
+  <a (click)="refreshRoastProfiles()">{{ 'BREADCRUMB.ROAST_PROFILES' | translate }}</a>
+</nav>
 
 <div class="profile-container">
-  <div class="breadcrumb">
-    <a routerLink="/dashboard/owner">{{ 'profile.title' | translate }}</a> &gt; {{ 'profile.secondTile' | translate }}
-  </div>
+
 
   <div *ngIf="error" class="error-message">
     {{ error }}

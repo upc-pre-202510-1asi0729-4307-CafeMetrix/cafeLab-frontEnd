@@ -7,8 +7,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, finalize, of } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
-import {MatToolbar} from '@angular/material/toolbar';
 import { AuthService } from '../../../auth/services/AuthService';
 
 interface Supplier {
@@ -22,7 +20,7 @@ interface Supplier {
 @Component({
   selector: 'app-lot-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, RouterModule, ToolbarComponent, MatToolbar],
+  imports: [CommonModule, FormsModule, TranslateModule, RouterModule],
   templateUrl: './lot-list.component.html',
   styleUrls: ['./lot-list.component.css']
 })
@@ -36,17 +34,20 @@ export class LotListComponent implements OnInit {
   showRegisterModal = false;
   showEditModal = false;
   showLotDetails = false;
+  showDeleteModal = false;
   loading = false;
   error: string | null = null;
   newCertification = '';
 
   coffeeTypes = ['Arábica', 'Robusta', 'Mezcla'];
-  processTypes = ['Grano Verde', 'Lavado', 'Natural', 'Honey'];
+  processTypes = ['Anaeróbico', 'Lavado', 'Natural', 'Honey'];
   certificationsOptions = ['Comercio Justo', 'Bird Friendly', 'UTZ certified', 'Orgánico', 'Rainforest Alliance'];
+  statusOptions = ['green', 'roasted'];
 
   newLot: CoffeeLot = this.getEmptyLot();
   editingLot: CoffeeLot = this.getEmptyLot();
   selectedLot: CoffeeLot | null = null;
+  lotToDelete: CoffeeLot | null = null;
 
   constructor(
     private lotService: CoffeeLotService,
@@ -70,7 +71,8 @@ export class LotListComponent implements OnInit {
       origin: '',
       certifications: [],
       supplier_id: '',
-      user_id: ''
+      user_id: '',
+      status: ''
     };
   }
 
@@ -169,7 +171,8 @@ export class LotListComponent implements OnInit {
       this.newLot.altitude,
       this.newLot.weight,
       this.newLot.origin,
-      this.newLot.supplier_id
+      this.newLot.supplier_id,
+      this.newLot.status
     ];
 
     if (requiredFields.some(field => !field)) {
@@ -211,7 +214,8 @@ export class LotListComponent implements OnInit {
       !this.editingLot.altitude ||
       !this.editingLot.weight||
       !this.editingLot.origin ||
-      !this.editingLot.supplier_id
+      !this.editingLot.supplier_id ||
+      !this.editingLot.status
     ) {
       this.error = "Complete todos los campos obligatorios.";
       return;
@@ -268,6 +272,59 @@ export class LotListComponent implements OnInit {
     if (!id) return '';
     const supplier = this.suppliers.find(s => s.id === id);
     return supplier ? supplier.name : '';
+  }
+
+  getStatusText(status: string | undefined): string {
+    if (!status) return '';
+    return status === 'green' ? 
+      this.translateService.instant('FORM.STATUS_OPTIONS.GREEN') : 
+      this.translateService.instant('FORM.STATUS_OPTIONS.ROASTED');
+  }
+
+  deleteLot(lot: CoffeeLot): void {
+    const currentUserId = this.authService.getCurrentUserId();
+    
+    // Validar que el usuario actual sea el propietario del lote
+    if (!currentUserId || lot.user_id !== currentUserId) {
+      this.error = 'No tiene permisos para eliminar este lote.';
+      return;
+    }
+
+    this.lotToDelete = lot;
+    this.showDeleteModal = true;
+  }
+
+  confirmDelete(): void {
+    if (!this.lotToDelete?.id) {
+      this.error = 'Error: No se pudo identificar el lote a eliminar.';
+      return;
+    }
+
+    this.loading = true;
+    this.lotService.deleteLot(this.lotToDelete.id)
+      .pipe(
+        catchError(err => {
+          this.error = 'Error al eliminar el lote.';
+          return of(null);
+        }),
+        finalize(() => {
+          this.loading = false;
+          this.showDeleteModal = false;
+          this.lotToDelete = null;
+        })
+      )
+      .subscribe(result => {
+        if (result === null) {
+          // Error ya manejado en catchError
+          return;
+        }
+        this.loadLots(); // Recargar la lista
+      });
+  }
+
+  cancelDelete(): void {
+    this.showDeleteModal = false;
+    this.lotToDelete = null;
   }
 
   resetForm(): void {

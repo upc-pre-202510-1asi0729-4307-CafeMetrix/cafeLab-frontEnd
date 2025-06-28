@@ -9,4 +9,5 @@ export interface CoffeeLot {
   origin: string;
   supplier_id: string;
   user_id: string;
+  status: string; // 'green' or 'roasted'
 }

@@ -15,11 +15,12 @@ import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.com
 import { StepLotSelectionComponent } from '../../components/step-lot-selection/step-lot-selection.component';
 import { StepDirectCostsComponent } from '../../components/step-direct-costs/step-direct-costs.component';
 import { StepIndirectCostsComponent } from '../../components/step-indirect-costs/step-indirect-costs.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductionCostEntity } from "../../model/production-cost.entity";
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatToolbar, MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
+import { AuthService } from '../../../auth/services/AuthService';
 
 @Component({
   selector: 'app-production-cost-page',
@@ -70,8 +71,9 @@ export class ProductionCostPageComponent {
   recommendations: { message: string; type: 'success' | 'warning' | 'info' }[] = [];
   costSummary: { tipo: string; monto: number }[] = [];
   private totalCost: number | undefined;
+  lots: any[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private translate: TranslateService, private authService: AuthService) {
     this.firstFormGroup = this.fb.group({
       selectedLot: ['', Validators.required]
     });
@@ -236,32 +238,46 @@ export class ProductionCostPageComponent {
 
   private generateRecommendations(): void {
     this.recommendations = [];
-
-    if (this.potentialMargin >= this.EXPECTED_MARGIN) {
+    // 1. Alto costo directo
+    if (this.totalDirectCosts / this.grandTotal > 0.6) {
       this.recommendations.push({
-        message: 'El margen potencial está dentro del rango esperado.',
-        type: 'success'
-      });
-    } else {
-      this.recommendations.push({
-        message: 'El margen potencial está por debajo del objetivo. Considere optimizar costos o ajustar precios.',
+        message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.HIGH_DIRECT_COST'),
         type: 'warning'
       });
     }
-
-    const transportPct = (this.transportTotal / this.grandTotal) * 100;
-    if (transportPct > this.TRANSPORT_COST_THRESHOLD) {
+    // 2. Alto costo indirecto
+    if (this.totalIndirectCosts / this.grandTotal > 0.4) {
       this.recommendations.push({
-        message: `Los costos de transporte representan ${transportPct.toFixed(1)}% del total. Considere optimizar la logística.`,
-        type: 'warning'
-      });
-    }
-
-    const processingPct = (this.processingTotal / this.grandTotal) * 100;
-    if (processingPct > 30) {
-      this.recommendations.push({
-        message: 'Los costos de procesamiento son elevados. Evalúe la eficiencia de los equipos y procesos.',
+        message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.HIGH_INDIRECT_COST'),
         type: 'info'
+      });
+    }
+    // 3. Bajo margen de ganancia
+    if (this.potentialMargin < 20) {
+      this.recommendations.push({
+        message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.LOW_MARGIN'),
+        type: 'warning'
+      });
+    }
+    // 4. Poca variedad de lotes (menos de 2)
+    if (this.firstFormGroup.value.selectedLot && Array.isArray(this.lots) && this.lots.length < 2) {
+      this.recommendations.push({
+        message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.LOW_LOT_VARIETY'),
+        type: 'info'
+      });
+    }
+    // 5. Alto costo por kg
+    if (this.costPerKg > 15) {
+      this.recommendations.push({
+        message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.HIGH_COST_PER_KG'),
+        type: 'warning'
+      });
+    }
+    // Si no hay recomendaciones, mostrar éxito
+    if (this.recommendations.length === 0) {
+      this.recommendations.push({
+        message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.ALL_GOOD'),
+        type: 'success'
       });
     }
   }
@@ -269,5 +285,30 @@ export class ProductionCostPageComponent {
   updateDirectCosts(event: { materiaPrima: number; manoObra: number }): void {
     this.totalMateriaPrima = event.materiaPrima;
     this.totalManoObra = event.manoObra;
+  }
+
+  goToHome(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (user.home) {
+      this.router.navigate([user.home]);
+      return;
+    }
+    switch (user.plan) {
+      case 'barista':
+        this.router.navigate(['/dashboard/barista']);
+        break;
+      case 'owner':
+        this.router.navigate(['/dashboard/owner']);
+        break;
+      case 'full':
+        this.router.navigate(['/dashboard/complete']);
+        break;
+      default:
+        this.router.navigate(['/']);
+    }
   }
 }

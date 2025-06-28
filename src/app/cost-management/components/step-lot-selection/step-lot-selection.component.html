@@ -7,7 +7,10 @@
     <mat-label>{{ 'COST_MANAGEMENT.LOT_LABEL' | translate }}</mat-label>
     <mat-select formControlName="selectedLot">
       <mat-option *ngFor="let lot of lots" [value]="lot.id">
-        {{ lot.name }} – {{ lot.origin }} ({{ lot.variety }})
+        {{ lot.lot_name }} – {{ lot.coffee_type }} ({{ lot.origin }})
+      </mat-option>
+      <mat-option *ngIf="lots.length === 0" disabled>
+        {{ 'COST_MANAGEMENT.NO_LOTS' | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>

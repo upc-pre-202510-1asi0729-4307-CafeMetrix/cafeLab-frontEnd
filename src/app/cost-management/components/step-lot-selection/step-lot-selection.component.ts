@@ -8,6 +8,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CoffeeLot} from '../../model/coffee-lot.model';
 import { CoffeeLotService} from '../../services/coffee-lot.service';
 import {TranslateModule} from "@ngx-translate/core";
+import { AuthService } from '../../../auth/services/AuthService';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-step-lot-selection',
@@ -30,10 +32,16 @@ export class StepLotSelectionComponent implements OnInit {
   @Input() onCancel!: () => void;
 
   lots: CoffeeLot[] = [];
-  constructor(private coffeeLotService: CoffeeLotService) {}
+  constructor(private coffeeLotService: CoffeeLotService, private authService: AuthService) {}
   ngOnInit(): void {
-    this.coffeeLotService.getLots().subscribe(lots => {
-      this.lots = lots;
+    const userId = this.authService.getCurrentUserId();
+    this.coffeeLotService.getLots().pipe(
+      catchError(err => {
+        console.error('Error loading lots:', err);
+        return of([]);
+      })
+    ).subscribe(lots => {
+      this.lots = lots.filter(lot => lot.user_id === userId);
     });
   }
 }

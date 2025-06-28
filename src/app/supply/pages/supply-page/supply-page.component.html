@@ -3,4 +3,10 @@
 
 </mat-toolbar>
 
+<nav class="breadcrumb">
+  <a (click)="goToHome()">{{ 'BREADCRUMB.HOME' | translate }}</a>
+  <span> &gt; </span>
+  <a (click)="refreshSuppliers()">{{ 'BREADCRUMB.SUPPLIERS' | translate }}</a>
+</nav>
+
 <app-Supplier-list></app-Supplier-list>

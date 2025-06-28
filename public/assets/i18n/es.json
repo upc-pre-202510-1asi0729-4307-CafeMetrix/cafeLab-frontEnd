@@ -255,7 +255,11 @@
     "HOME": "Inicio",
     "perfilesTueste": "Perfiles de tueste",
     "comparacionTuestes": "Comparación de tuestes",
-    "COFFEE_LOTS": "Lotes de Café"
+    "COFFEE_LOTS": "Lotes de Café",
+    "DASHBOARD": "Dashboard",
+    "COST_MANAGEMENT": "Gestión de Costos",
+    "ROAST_PROFILES": "Perfiles de Tueste",
+    "SUPPLIERS": "Proveedores"
   },
   "SEARCH": {
     "PLACEHOLDER": "Buscar lote..."
@@ -279,13 +283,19 @@
       "WEIGHT": "Peso (kg)",
       "PROCESS": "Proceso",
       "SUPPLIER": "Proveedor",
-      "CERTIFICATIONS": "Certificaciones"
+      "CERTIFICATIONS": "Certificaciones",
+      "STATUS": "Estado"
     },
     "SELECT_PLACEHOLDER": {
       "SELECT_TYPE": "Seleccionar tipo",
       "SELECT_PROCESS": "Seleccionar proceso",
       "SELECT_SUPPLIER": "Seleccionar proveedor",
-      "SELECT_CERTIFICATION": "Seleccionar certificación"
+      "SELECT_CERTIFICATION": "Seleccionar certificación",
+      "SELECT_STATUS": "Seleccionar estado"
+    },
+    "STATUS_OPTIONS": {
+      "GREEN": "Café Verde",
+      "ROASTED": "Café Tostado"
     }
   },
   "NAV": {
@@ -296,6 +306,7 @@
     "SAVE": "Guardar",
     "CANCEL": "Cancelar",
     "EDIT": "Editar",
+    "DELETE": "Eliminar",
     "REGISTER_LOT": "Registrar Lote",
     "ADD": "Agregar",
     "REMOVE": "Eliminar",
@@ -307,7 +318,13 @@
   "MODAL": {
     "NEW_COFFEE_LOT": "Nuevo Lote de Café",
     "LOT_DETAILS": "Detalles",
-    "EDIT_LOT": "Editar Lote"
+    "EDIT_LOT": "Editar Lote",
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Confirmar Eliminación",
+      "MESSAGE": "¿Está seguro de que desea eliminar el lote '{{lotName}}'? Esta acción no se puede deshacer.",
+      "CONFIRM": "Eliminar",
+      "CANCEL": "Cancelar"
+    }
   },
   "profile": {
     "detailTitle": "Detalles del perfil de tueste",
@@ -576,7 +593,16 @@
     "QUALITY_CONTROL": "Control de calidad",
     "CERTIFICATIONS": "Certificaciones",
     "INSURANCE": "Seguro",
-    "ADMINISTRATIVE": "Administrativos"
+    "ADMINISTRATIVE": "Administrativos",
+    "RECOMMENDATIONS": {
+      "HIGH_DIRECT_COST": "El costo directo representa una parte muy alta de tu costo total. Revisa insumos y procesos para optimizar.",
+      "HIGH_INDIRECT_COST": "El costo indirecto es elevado. Considera optimizar gastos generales o administrativos.",
+      "LOW_MARGIN": "El margen de ganancia es bajo. Evalúa ajustar precios o reducir costos.",
+      "LOW_LOT_VARIETY": "Tienes pocos lotes activos. Diversificar puede ayudarte a reducir riesgos y mejorar ingresos.",
+      "HIGH_COST_PER_KG": "El costo por kilogramo es alto. Revisa tus procesos para mejorar la eficiencia.",
+      "ALL_GOOD": "¡Tu estructura de costos es saludable! Sigue así."
+    },
+    "NO_LOTS": "No tienes lotes registrados. Registra un lote de café primero."
   },
   "INVENTORY": {
     "PAGE": {
@@ -592,17 +618,55 @@
         "ACTIONS": "Acciones"
       }
     },
+    "GREEN_COFFEE": "Café Verde",
+    "ROASTED_COFFEE": "Café Tostado",
+    "SELECT_COFFEE_TYPE": "Seleccionar tipo de café",
+    "TOTAL": "Total",
+    "ACTIVE_LOTS": "Lotes activos",
+    "SUPPLIERS": "Proveedores",
+    "REGISTER_CONSUMPTION": "Registrar consumo",
     "STOCK_STATUS": {
       "LOW": "Stock bajo",
-      "OK": "Stock adecuado"
+      "ADEQUATE": "Stock adecuado"
     },
     "CONSUMPTION_DIALOG": {
       "TITLE": "Registrar Consumo",
-      "QUANTITY_USED": "Cantidad Usada (kg)",
-      "DATE_USED": "Fecha de Uso",
-      "CANCEL": "Cancelar",
-      "SAVE": "Guardar"
-    }
+      "DATE": "Fecha",
+      "LOT": "Lote",
+      "FINAL_PRODUCT": "Producto final",
+      "CONSUMPTION_KG": "Consumo (kg)",
+      "LOT_SUMMARY": "Resumen de lote",
+      "LOT_NAME": "Nombre del lote",
+      "COFFEE_TYPE": "Tipo de café",
+      "STATUS": "Estado",
+      "TOTAL_WEIGHT": "Peso total",
+      "REMAINING_WEIGHT": "Peso restante",
+      "SELECT_LOT_FOR_SUMMARY": "Seleccione un lote para ver el resumen",
+      "PREVIOUS_MOVEMENTS": "Movimientos anteriores",
+      "NO_PREVIOUS_MOVEMENTS": "No hay movimientos anteriores para este lote",
+      "CONFIRM": "Confirmar",
+      "CANCEL": "Cancelar"
+    },
+    "CONSUMPTION_TABLE": {
+      "TITLE": "Historial de Consumos",
+      "DATE": "Fecha",
+      "LOT": "Lote",
+      "CONSUMPTION": "Consumo",
+      "ACTIONS": "Acciones",
+      "VIEW_DETAILS": "Ver detalles",
+      "NO_DATA": "No hay registros de consumo"
+    },
+    "CONSUMPTION_DETAIL": {
+      "TITLE": "Detalles del Consumo",
+      "DATE": "Fecha",
+      "LOT": "Lote",
+      "FINAL_PRODUCT": "Producto final",
+      "CONSUMPTION": "Consumo",
+      "COFFEE_TYPE": "Tipo de café",
+      "STATUS": "Estado",
+      "CLOSE": "Cerrar"
+    },
+    "TITLE": "Inventario"
   },
   "CALIBRATIONS": {
     "REGISTER_TITLE": "Registrar Calibracion",

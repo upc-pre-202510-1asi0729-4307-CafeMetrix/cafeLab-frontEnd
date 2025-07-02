@@ -12,7 +12,6 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } fr
 import { RouterModule, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { PortfolioService } from '../../services/portfolio.service';
-import { CoffeeDataService, CoffeeLot, RoastProfile } from '../../services/coffee-data.service';
 import { Portfolio } from '../../models/portfolio.entity';
 import { Recipe, Ingredient, ExtractionMethod } from '../../models/recipe.entity';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -46,8 +45,6 @@ export class CreateRecipeComponent implements OnInit {
   extractionCategory: 'coffee' | 'espresso' = 'coffee';
   extractionMethod: ExtractionMethod = 'pour-over';
   portfolios: Portfolio[] = [];
-  coffeeLots: CoffeeLot[] = [];
-  roastProfiles: RoastProfile[] = [];
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   isSubmitting = false;
@@ -75,7 +72,6 @@ export class CreateRecipeComponent implements OnInit {
     private fb: FormBuilder,
     private recipeService: RecipeService,
     private portfolioService: PortfolioService,
-    private coffeeDataService: CoffeeDataService,
     private router: Router,
     private snackBar: MatSnackBar,
     private translate: TranslateService
@@ -86,8 +82,6 @@ export class CreateRecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPortfolios();
-    this.loadCoffeeLots();
-    this.loadRoastProfiles();
   }
 
   createForm(): FormGroup {
@@ -124,28 +118,6 @@ export class CreateRecipeComponent implements OnInit {
       next: data => this.portfolios = data,
       error: () => this.snackBar.open(
         this.translate.instant('recipes.creation.error_loading_portfolios'),
-        this.translate.instant('Cerrar'),
-        { duration: 3000 }
-      )
-    });
-  }
-
-  loadCoffeeLots(): void {
-    this.coffeeDataService.getCoffeeLots().subscribe({
-      next: data => this.coffeeLots = data,
-      error: () => this.snackBar.open(
-        this.translate.instant('recipes.creation.error_loading_lots'),
-        this.translate.instant('Cerrar'),
-        { duration: 3000 }
-      )
-    });
-  }
-
-  loadRoastProfiles(): void {
-    this.coffeeDataService.getRoastProfiles().subscribe({
-      next: data => this.roastProfiles = data,
-      error: () => this.snackBar.open(
-        this.translate.instant('recipes.creation.error_loading_roast_profiles'),
         this.translate.instant('Cerrar'),
         { duration: 3000 }
       )

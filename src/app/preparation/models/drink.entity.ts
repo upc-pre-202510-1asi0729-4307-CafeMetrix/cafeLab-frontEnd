@@ -12,8 +12,6 @@ export interface Drink {
   image: string;
   extractionMethod: 'coffee' | 'espresso';
   extractionType?: CoffeeExtractionType;
-  lote: string;
-  tueste: string;
   cata: string;
   portfolioId: number | null;
   molienda: string;

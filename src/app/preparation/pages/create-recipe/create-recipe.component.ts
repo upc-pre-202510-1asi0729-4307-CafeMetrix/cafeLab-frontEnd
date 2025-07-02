@@ -143,8 +143,6 @@ export class CreateRecipeComponent implements OnInit {
     return this.fb.group({
       name: ['', [Validators.required]],
       image: ['', [Validators.required]], // URL de la imagen
-      lote: [''],
-      tueste: [''],
       cata: [''],
       portfolioId: [null],
       molienda: [''],
@@ -239,9 +237,7 @@ export class CreateRecipeComponent implements OnInit {
     const recipeData: Partial<Drink> = {
       name: formData.name,
       image: formData.image,
-      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',  // El valor 'espresso' es correcto aquí, es el valor que espera la API
-      lote: formData.lote || '',
-      tueste: formData.tueste || '',
+      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',
       cata: formData.cata || '',
       portfolioId: formData.portfolioId ? Number(formData.portfolioId) : null,
       molienda: formData.molienda || '',

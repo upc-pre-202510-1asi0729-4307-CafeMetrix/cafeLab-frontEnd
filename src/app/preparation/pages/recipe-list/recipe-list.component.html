@@ -55,8 +55,8 @@
           <h3 class="recipe-title">{{ drink.name }}</h3>
           <p class="recipe-type">
             {{ 'recipes.creation.extraction_methods.' + drink.extractionMethod | translate }}
-            <span *ngIf="drink.extractionMethod === 'coffee'">
-              - {{ 'recipes.creation.extraction_methods.' + (drink.extractionMethod || 'pour-over') | translate }}
+            <span *ngIf="drink.extractionMethod === 'espresso'">
+              - {{ 'recipes.creation.extraction_methods.' + (drink.extractionType || 'pour-over') | translate }}
             </span>
           </p>
         </mat-card-content>

@@ -414,7 +414,7 @@
       "error_deleting": "Error deleting portfolio"
     }
   },
-  "recipes": {
+   "recipes": {
     "title": "Unassigned Drinks",
     "create": "Create Drink",
     "add_to_portfolio": "Add recipes to portfolio",
@@ -616,17 +616,6 @@
         "ACTIONS": "Actions"
       }
     },
-    "STOCK_STATUS": {
-      "LOW": "Low stock",
-      "OK": "Adequate stock"
-    },
-    "CONSUMPTION_DIALOG": {
-      "TITLE": "Register Consumption",
-      "QUANTITY_USED": "Quantity Used (kg)",
-      "DATE_USED": "Date of Use",
-      "CANCEL": "Cancel",
-      "SAVE": "Save"
-    },
     "GREEN_COFFEE": "Green Coffee",
     "ROASTED_COFFEE": "Roasted Coffee",
     "SELECT_COFFEE_TYPE": "Select coffee type",
@@ -654,7 +643,10 @@
       "PREVIOUS_MOVEMENTS": "Previous movements",
       "NO_PREVIOUS_MOVEMENTS": "No previous movements for this lot",
       "CONFIRM": "Confirm",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "QUANTITY_USED": "Quantity Used (kg)",
+      "DATE_USED": "Date of Use",
+      "SAVE": "Save"
     },
     "CONSUMPTION_TABLE": {
       "TITLE": "Consumption History",

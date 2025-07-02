@@ -59,14 +59,6 @@
         <div class="info-section">
           <h2>{{ 'recipes.detail.basic_info' | translate }}</h2>
           <div class="info-grid">
-            <div class="info-item" *ngIf="recipe.lote">
-              <span class="label">{{ 'recipes.creation.lote' | translate }}:</span>
-              <span>{{ recipe.lote }}</span>
-            </div>
-            <div class="info-item" *ngIf="recipe.tueste">
-              <span class="label">{{ 'recipes.creation.tueste' | translate }}:</span>
-              <span>{{ recipe.tueste }}</span>
-            </div>
             <div class="info-item" *ngIf="recipe.cata">
               <span class="label">{{ 'recipes.creation.cata' | translate }}:</span>
               <span>{{ recipe.cata }}</span>

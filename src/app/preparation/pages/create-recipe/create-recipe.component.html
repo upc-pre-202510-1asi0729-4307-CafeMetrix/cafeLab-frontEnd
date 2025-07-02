@@ -66,26 +66,6 @@
             <!-- Campos comunes para ambos métodos -->
             <div class="form-row">
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'recipes.creation.lote' | translate }}</mat-label>
-                <mat-select formControlName="lote">
-                  <mat-option *ngFor="let lot of coffeeLots" [value]="lot.lot_name">
-                    {{ lot.lot_name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'recipes.creation.tueste' | translate }}</mat-label>
-                <mat-select formControlName="tueste">
-                  <mat-option *ngFor="let profile of roastProfiles" [value]="profile.name">
-                    {{ profile.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="form-row">
-              <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.cata' | translate }}</mat-label>
                 <mat-select formControlName="cata">
                   <mat-option value="Sesion Cata X">Sesion Cata X</mat-option>

@@ -33,6 +33,9 @@ import {ViewCalibrationPageComponent} from './calibrations/pages/view-calibratio
 import {AddCalibrationPageComponent} from './calibrations/pages/add-calibration-page/add-calibration-page.component';
 import {EditCalibrationPageComponent} from './calibrations/pages/edit-calibration-page/edit-calibration-page.component';
 import {MoreInfoPageComponent} from './calibrations/pages/more-info-page/more-info-page.component';
+import { EditProfileSessionPageComponent } from './auth/pages/edit-profile-session-page/edit-profile-session-page.component';
+import {ChangePlanComponent} from './subscription/components/change-plan/change-plan.component';
+import {ConfirmChangePlanComponent} from './subscription/components/confirm-change-plan/confirm-change-plan.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -44,10 +47,13 @@ export const routes: Routes = [
   { path: 'logup/owner/success', component: LogupOwnerSuccessPageComponent },
   { path: 'edit-profile', component: EditProfilePageComponent },
   { path: 'subscription/select-plan', component: SelectPlanComponent },
+  { path: 'subscription/change-plan', component: ChangePlanComponent },
   { path: 'subscription/confirm-plan', component: ConfirmPlanComponent },
+  { path: 'subscription/confirm-change-plan', component: ConfirmChangePlanComponent },
   { path: 'confirm-plan/select-plan', component: SelectPlanComponent },
+  { path: 'edit-profile-session', component: EditProfileSessionPageComponent },
   { path: 'select-plan', component: SelectPlanComponent  },
-  // esto se modifica acá y en edit-profile-form.component.ts se cambia el nombre de ruteos si fuese necesario
+  // esto se modifica acá y en edit-profile-session.component.ts se cambia el nombre de ruteos si fuese necesario
   { path: 'dashboard/barista', component: BaristaDashboardComponent },
   { path: 'libraryDefects',             component: ViewConsultationsComponent },
   {path: 'cupping-sessions', component: SesionesCataComponent},

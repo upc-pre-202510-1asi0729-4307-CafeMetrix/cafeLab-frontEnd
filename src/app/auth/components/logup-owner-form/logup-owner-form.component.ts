@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-logup-owner-form',
@@ -21,7 +21,8 @@ import {NgIf} from '@angular/common';
     MatButtonModule,
     TranslateModule,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgClass
   ]
 })
 export class LogupOwnerFormComponent extends BaseFormComponent {

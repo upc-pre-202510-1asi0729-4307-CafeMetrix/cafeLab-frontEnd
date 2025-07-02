@@ -64,9 +64,16 @@
     "NAME": "Nombre",
     "EMAIL": "Correo electrónico",
     "PASSWORD": "Contraseña",
-    "EXPERIENCE": "Experiencia",
+    "EXPERIENCE": "Nivel de Experiencia",
     "CAFETERIA_NAME": "Nombre de la Cafetería",
-    "SUBMIT": "Registrarse"
+    "EXPERIENCE_INITIAL": "Inicial",
+    "EXPERIENCE_INTERMEDIATE": "Intermedio",
+    "EXPERIENCE_PROFESSIONAL": "Profesional",
+    "SUBMIT": "Registrarse",
+    "EXPERIENCEY": "Años de experiencia",
+    "EXPERIENCE_0_3": "0 - 3 años",
+    "EXPERIENCE_4_7": "4 - 7 años",
+    "EXPERIENCE_8_PLUS": "8 o màs años"
   },
   "LOGUP_BARISTA": {
     "TITLE": "Registro de Barista"
@@ -77,7 +84,7 @@
     "CONTINUE": "Ir a Editar Perfil"
   },
   "LOGUP_OWNER": {
-    "TITLE": "Registro de Dueño de Cafetería"
+    "TITLE": "Registro de Dueño/Administrador de Cafetería"
   },
   "LOGUP_OWNER_SUCCESS": {
     "TITLE": "Registro Exitoso",
@@ -94,8 +101,33 @@
     "VISA": "Visa",
     "MASTERCARD": "Mastercard",
     "SUBMIT": "Guardar",
-    "CHANGE_PLAN": "Cambiar de plan"
+    "CONTINUE": "Continuar",
+    "SAVE_CHANGES": "Guardar cambios",
+    "CHANGE_PLAN": "Cambiar Plan"
   },
+  "COUNTRIES": {
+    "ARGENTINA": "Argentina",
+    "BOLIVIA": "Bolivia",
+    "BRAZIL": "Brasil",
+    "CHILE": "Chile",
+    "COLOMBIA": "Colombia",
+    "COSTA_RICA": "Costa Rica",
+    "CUBA": "Cuba",
+    "DOMINICAN_REPUBLIC": "República Dominicana",
+    "ECUADOR": "Ecuador",
+    "GUATEMALA": "Guatemala",
+    "HONDURAS": "Honduras",
+    "MEXICO": "México",
+    "NICARAGUA": "Nicaragua",
+    "PANAMA": "Panamá",
+    "PARAGUAY": "Paraguay",
+    "PERU": "Perú",
+    "PUERTO_RICO": "Puerto Rico",
+    "EL_SALVADOR": "El Salvador",
+    "URUGUAY": "Uruguay",
+    "VENEZUELA": "Venezuela"
+  },
+
   "PLANS": {
     "MONTH": "mes",
     "BARISTA": {

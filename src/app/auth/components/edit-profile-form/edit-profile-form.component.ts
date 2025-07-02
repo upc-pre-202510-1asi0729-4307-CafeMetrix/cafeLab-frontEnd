@@ -105,8 +105,11 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
       this.router.navigate(['/subscription/select-plan']);
     }
   }
-  goToChangePlan() {
-    this.router.navigate(['/select-plan']);
+  continueToSelectPlan() {
+    if (this.editProfileForm.valid) {
+      this.router.navigate(['/subscription/select-plan']);
+    }
   }
+
 
 }

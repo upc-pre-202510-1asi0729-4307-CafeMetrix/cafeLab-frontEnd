@@ -9,6 +9,8 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
 import {NgIf} from '@angular/common';
+import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-logup-barista-form',
@@ -21,7 +23,8 @@ import {NgIf} from '@angular/common';
     MatButtonModule,
     TranslateModule,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgClass
   ]
 })
 export class LogupBaristaFormComponent extends BaseFormComponent {

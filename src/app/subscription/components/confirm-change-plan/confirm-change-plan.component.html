@@ -1,10 +1,12 @@
 <mat-toolbar color="primary">
-  <app-toolbar-component/>
+  <app-toolbar/>
 </mat-toolbar>
+
 
 <div class="background">
   <div class="container">
     <div class="card">
+
       <!-- Botón Volver -->
       <button class="back-button" (click)="goBack()">
         {{ 'CONFIRM.BACK' | translate }}
@@ -14,7 +16,9 @@
       <div class="plan-section">
         <h2 class="plan-title">{{ selectedPlan?.translationKey | translate }}</h2>
         <div class="plan-card">
-          <p class="plan-price">${{ selectedPlan?.price }} / {{ 'PLANS.MONTH' | translate }}</p>
+          <p class="plan-price">
+            ${{ selectedPlan?.price }} / {{ 'PLANS.MONTH' | translate }}
+          </p>
           <ul class="plan-features">
             <li *ngFor="let feature of translatedFeatures">• {{ feature }}</li>
           </ul>
@@ -24,6 +28,7 @@
       <!-- Columna Derecha: Formulario de pago -->
       <div class="payment-section">
         <h2 class="payment-title">{{ 'CONFIRM.PAYMENT.TITLE' | translate }}</h2>
+
         <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
 
           <!-- Email Field -->
@@ -32,7 +37,7 @@
               formControlName="email"
               type="email"
               placeholder="{{ 'CONFIRM.PAYMENT.EMAIL' | translate }}"
-              [class]="isFieldInvalid('email') ? 'form-input form-input-error' : 'form-input'"
+              [ngClass]="{ 'form-input': true, 'form-input-error': isFieldInvalid('email') }"
             />
             <div *ngIf="hasError('email', 'required')" class="error-message">
               {{ 'CONFIRM.ERRORS.EMAIL_REQUIRED' | translate }}
@@ -49,13 +54,12 @@
               formControlName="cardNumber"
               type="text"
               placeholder="{{ 'CONFIRM.PAYMENT.CARD_NUMBER' | translate }}"
-              [class]="isFieldInvalid('cardNumber') ? 'form-input form-input-error' : 'form-input'"
               maxlength="16"
               inputmode="numeric"
               pattern="\d{16}"
               (input)="sanitizeInput($event, 16)"
+              [ngClass]="{ 'form-input': true, 'form-input-error': isFieldInvalid('cardNumber') }"
             />
-
             <div *ngIf="hasError('cardNumber', 'required')" class="error-message">
               {{ 'CONFIRM.ERRORS.CARD_NUMBER_REQUIRED' | translate }}
             </div>
@@ -71,8 +75,8 @@
               formControlName="expiry"
               type="text"
               placeholder="{{ 'CONFIRM.PAYMENT.EXPIRY' | translate }}"
-              [class]="isFieldInvalid('expiry') ? 'form-input form-input-error' : 'form-input'"
               maxlength="5"
+              [ngClass]="{ 'form-input': true, 'form-input-error': isFieldInvalid('expiry') }"
             />
             <div *ngIf="hasError('expiry', 'required')" class="error-message">
               {{ 'CONFIRM.ERRORS.EXPIRY_REQUIRED' | translate }}
@@ -89,13 +93,12 @@
               formControlName="cvc"
               type="text"
               placeholder="{{ 'CONFIRM.PAYMENT.CVC' | translate }}"
-              [class]="isFieldInvalid('cvc') ? 'form-input form-input-error' : 'form-input'"
               maxlength="3"
               inputmode="numeric"
               pattern="\d{3}"
               (input)="sanitizeInput($event, 3)"
+              [ngClass]="{ 'form-input': true, 'form-input-error': isFieldInvalid('cvc') }"
             />
-
             <div *ngIf="hasError('cvc', 'required')" class="error-message">
               {{ 'CONFIRM.ERRORS.CVC_REQUIRED' | translate }}
             </div>
@@ -111,7 +114,7 @@
               formControlName="cardHolder"
               type="text"
               placeholder="{{ 'CONFIRM.PAYMENT.HOLDER' | translate }}"
-              [class]="isFieldInvalid('cardHolder') ? 'form-input form-input-error' : 'form-input'"
+              [ngClass]="{ 'form-input': true, 'form-input-error': isFieldInvalid('cardHolder') }"
             />
             <div *ngIf="hasError('cardHolder', 'required')" class="error-message">
               {{ 'CONFIRM.ERRORS.CARD_HOLDER_REQUIRED' | translate }}
@@ -126,26 +129,23 @@
           <div class="form-field">
             <select
               formControlName="country"
-              [class]="isFieldInvalid('country') ? 'form-input form-input-error' : 'form-input'"
+              [ngClass]="{ 'form-input': true, 'form-input-error': isFieldInvalid('country') }"
             >
               <option value="" disabled selected>{{ 'CONFIRM.PAYMENT.COUNTRY' | translate }}</option>
               <option *ngFor="let country of latinCountries" [value]="country.code">
                 {{ country.translationKey | translate }}
               </option>
             </select>
-
             <div *ngIf="hasError('country', 'required')" class="error-message">
               {{ 'CONFIRM.ERRORS.COUNTRY_REQUIRED' | translate }}
             </div>
           </div>
 
-
-          <button
-            type="submit"
-            class="submit-button"
-          >
+          <!-- Submit Button -->
+          <button type="submit" class="submit-button">
             {{ 'CONFIRM.PAYMENT.CONFIRM' | translate }}
           </button>
+
         </form>
       </div>
     </div>

@@ -14,10 +14,10 @@ import { RecipeService } from '../../services/recipe.service';
 import { PortfolioService } from '../../services/portfolio.service';
 import { CoffeeDataService, CoffeeLot, RoastProfile } from '../../services/coffee-data.service';
 import { Portfolio } from '../../models/portfolio.entity';
-import { Drink, Ingredient } from '../../models/drink.entity';
+import { Recipe, Ingredient, ExtractionMethod } from '../../models/recipe.entity';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
+import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'app-create-recipe',
@@ -43,7 +43,8 @@ import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.compo
 })
 export class CreateRecipeComponent implements OnInit {
   recipeForm: FormGroup;
-  extractionMethod: 'coffee' | 'espresso' = 'coffee';
+  extractionCategory: 'coffee' | 'espresso' = 'coffee';
+  extractionMethod: ExtractionMethod = 'pour-over';
   portfolios: Portfolio[] = [];
   coffeeLots: CoffeeLot[] = [];
   roastProfiles: RoastProfile[] = [];
@@ -51,25 +52,23 @@ export class CreateRecipeComponent implements OnInit {
   imagePreview: string | ArrayBuffer | null = null;
   isSubmitting = false;
 
-  // Nuevas propiedades para los métodos de extracción
-  extractionMethods = [
-    { value: 'pour-over', label: 'Pour Over' },
+  extractionMethods: { value: ExtractionMethod; label: string }[] = [
+    { value: 'pour-over',   label: 'Pour Over' },
     { value: 'french-press', label: 'French Press' },
-    { value: 'cold-brew', label: 'Cold Brew' },
-    { value: 'aeropress', label: 'AeroPress' },
-    { value: 'chemex', label: 'Chemex' },
-    { value: 'v60', label: 'V60' },
-    { value: 'clever', label: 'Clever Dripper' }
+    { value: 'cold-brew',   label: 'Cold Brew' },
+    { value: 'aeropress',   label: 'AeroPress' },
+    { value: 'chemex',      label: 'Chemex' },
+    { value: 'v60',         label: 'V60' },
+    { value: 'clever',      label: 'Clever Dripper' }
   ];
 
-  // Unidades disponibles
   availableUnits = [
-    { value: 'gr', label: 'Gramos (gr)' },
-    { value: 'ml', label: 'Mililitros (ml)' },
-    { value: 'oz', label: 'Onzas (oz)' },
-    { value: 'cups', label: 'Tazas' },
-    { value: 'tbsp', label: 'Cucharadas' },
-    { value: 'tsp', label: 'Cucharaditas' }
+    { value: 'gr',    label: 'Gramos (gr)' },
+    { value: 'ml',    label: 'Mililitros (ml)' },
+    { value: 'oz',    label: 'Onzas (oz)' },
+    { value: 'cups',  label: 'Tazas' },
+    { value: 'tbsp',  label: 'Cucharadas' },
+    { value: 'tsp',   label: 'Cucharaditas' }
   ];
 
   constructor(
@@ -82,7 +81,7 @@ export class CreateRecipeComponent implements OnInit {
     private translate: TranslateService
   ) {
     this.recipeForm = this.createForm();
-    this.changeExtractionMethod('coffee'); // Inicializar con ingredientes por defecto
+    this.changeExtractionCategory('coffee');
   }
 
   ngOnInit(): void {
@@ -91,136 +90,118 @@ export class CreateRecipeComponent implements OnInit {
     this.loadRoastProfiles();
   }
 
+  createForm(): FormGroup {
+    return this.fb.group({
+      name:              ['', Validators.required],
+      imageUrl:          ['', Validators.required],
+      cupping:           [''],
+      portfolioId:       [null],
+      grindSize:         [''],
+      ratio:             [''],
+      preparationTime:   [''],
+      steps:             [''],
+      tips:              [''],
+      extractionCategory:['coffee', Validators.required],
+      extractionMethod:  ['pour-over', Validators.required],
+      ingredients:       this.fb.array([])
+    });
+  }
+
+  get ingredients(): FormArray {
+    return this.recipeForm.get('ingredients') as FormArray;
+  }
+
+  createIngredientFormGroup(): FormGroup {
+    return this.fb.group({
+      name:   ['', Validators.required],
+      amount: ['', Validators.required],
+      unit:   ['gr', Validators.required]
+    });
+  }
+
   loadPortfolios(): void {
     this.portfolioService.getAll().subscribe({
-      next: (data) => {
-        this.portfolios = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar portafolios', err);
-        this.snackBar.open(
-          this.translate.instant('recipes.creation.error_loading_portfolios'),
-          this.translate.instant('Cerrar'),
-          { duration: 3000 }
-        );
-      }
+      next: data => this.portfolios = data,
+      error: () => this.snackBar.open(
+        this.translate.instant('recipes.creation.error_loading_portfolios'),
+        this.translate.instant('Cerrar'),
+        { duration: 3000 }
+      )
     });
   }
 
   loadCoffeeLots(): void {
     this.coffeeDataService.getCoffeeLots().subscribe({
-      next: (data) => {
-        this.coffeeLots = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar lotes de café', err);
-        this.snackBar.open(
-          this.translate.instant('recipes.creation.error_loading_lots'),
-          this.translate.instant('Cerrar'),
-          { duration: 3000 }
-        );
-      }
+      next: data => this.coffeeLots = data,
+      error: () => this.snackBar.open(
+        this.translate.instant('recipes.creation.error_loading_lots'),
+        this.translate.instant('Cerrar'),
+        { duration: 3000 }
+      )
     });
   }
 
   loadRoastProfiles(): void {
     this.coffeeDataService.getRoastProfiles().subscribe({
-      next: (data) => {
-        this.roastProfiles = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar perfiles de tueste', err);
-        this.snackBar.open(
-          this.translate.instant('recipes.creation.error_loading_roast_profiles'),
-          this.translate.instant('Cerrar'),
-          { duration: 3000 }
-        );
-      }
+      next: data => this.roastProfiles = data,
+      error: () => this.snackBar.open(
+        this.translate.instant('recipes.creation.error_loading_roast_profiles'),
+        this.translate.instant('Cerrar'),
+        { duration: 3000 }
+      )
     });
   }
 
-  createForm(): FormGroup {
-    return this.fb.group({
-      name: ['', [Validators.required]],
-      image: ['', [Validators.required]], // URL de la imagen
-      cata: [''],
-      portfolioId: [null],
-      molienda: [''],
-      ratio: [''],
-      tiempo: [''],
-      pasos: [''],
-      consejos: [''],
-      extractionType: ['pour-over'],
-      ingredientes: this.fb.array([])
-    });
-  }
+  changeExtractionCategory(category: 'coffee' | 'espresso'): void {
+    this.extractionCategory = category;
+    this.recipeForm.get('extractionCategory')!.setValue(category);
 
-  get ingredientes() {
-    return this.recipeForm.get('ingredientes') as FormArray;
-  }
-
-  createIngredientFormGroup(): FormGroup {
-    return this.fb.group({
-      name: ['', Validators.required],
-      amount: ['', Validators.required],
-      unit: ['gr', Validators.required]
-    });
-  }
-
-  changeExtractionMethod(method: 'coffee' | 'espresso'): void {
+    const method = category === 'espresso'
+      ? 'espresso'
+      : this.extractionMethods[0].value;
     this.extractionMethod = method;
-    
-    // Limpiar ingredientes existentes
-    while (this.ingredientes.length) {
-      this.ingredientes.removeAt(0);
+    this.recipeForm.get('extractionMethod')!.setValue(method);
+
+    while (this.ingredients.length) {
+      this.ingredients.removeAt(0);
     }
 
-    if (method === 'coffee') {
-      // Para extracción de café, siempre tendremos agua y café como ingredientes
-      this.ingredientes.push(this.fb.group({
-        name: ['Agua', Validators.required],
+    if (category === 'coffee') {
+      this.ingredients.push(this.fb.group({
+        name:   ['Agua', Validators.required],
         amount: ['', Validators.required],
-        unit: ['ml', Validators.required]
+        unit:   ['ml', Validators.required]
       }));
-      this.ingredientes.push(this.fb.group({
-        name: ['Café', Validators.required],
+      this.ingredients.push(this.fb.group({
+        name:   ['Café', Validators.required],
         amount: ['', Validators.required],
-        unit: ['gr', Validators.required]
+        unit:   ['gr', Validators.required]
       }));
-    } else if (method === 'espresso' && this.ingredientes.length === 0) {
-      // Para espresso, añadimos un ingrediente inicial vacío
+    } else {
       this.addIngredient();
     }
   }
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      this.selectedFile = fileInput.files[0];
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(this.selectedFile);
-    }
+    if (!fileInput.files?.length) return;
+    this.selectedFile = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = () => this.imagePreview = reader.result;
+    reader.readAsDataURL(this.selectedFile);
   }
 
   addIngredient(): void {
-    this.ingredientes.push(this.createIngredientFormGroup());
+    this.ingredients.push(this.createIngredientFormGroup());
   }
 
   removeIngredient(index: number): void {
-    this.ingredientes.removeAt(index);
+    this.ingredients.removeAt(index);
   }
 
   onSubmit(): void {
     if (this.recipeForm.invalid) {
-      Object.keys(this.recipeForm.controls).forEach(key => {
-        const control = this.recipeForm.get(key);
-        control?.markAsTouched();
-      });
-
+      Object.values(this.recipeForm.controls).forEach(ctrl => ctrl.markAsTouched());
       this.snackBar.open(
         this.translate.instant('recipes.creation.name_required'),
         this.translate.instant('Cerrar'),
@@ -230,41 +211,38 @@ export class CreateRecipeComponent implements OnInit {
     }
 
     if (this.isSubmitting) return;
-
     this.isSubmitting = true;
-    const formData = this.recipeForm.value;
 
-    const recipeData: Partial<Drink> = {
-      name: formData.name,
-      image: formData.image,
-      extractionMethod: this.extractionMethod === 'coffee' ? formData.extractionType : 'espresso',
-      cata: formData.cata || '',
-      portfolioId: formData.portfolioId ? Number(formData.portfolioId) : null,
-      molienda: formData.molienda || '',
-      ratio: formData.ratio || '',
-      preparationTime: formData.tiempo || '',
-      steps: formData.pasos || '',
-      tips: formData.consejos || '',
-      ingredients: formData.ingredientes.map((ing: any) => ({
-        name: ing.name,
+    const f = this.recipeForm.value;
+    const payload: Partial<Recipe> = {
+      name:               f.name,
+      imageUrl:           f.imageUrl,
+      extractionCategory: f.extractionCategory,
+      extractionMethod:   f.extractionMethod,
+      cupping:            f.cupping || '',
+      grindSize:          f.grindSize || '',
+      ratio:              f.ratio || '',
+      preparationTime:    Number(f.preparationTime) || 0,
+      steps:              f.steps || '',
+      tips:               f.tips || '',
+      portfolioId:        f.portfolioId != null ? Number(f.portfolioId) : null,
+      ingredients:        f.ingredients.map((ing: any) => ({
+        name:   ing.name,
         amount: ing.amount.toString(),
-        unit: ing.unit
-      })),
-      createdAt: new Date().toISOString()
+        unit:   ing.unit
+      }))
     };
 
-    this.recipeService.create(recipeData as Drink).subscribe({
-      next: (response) => {
+    this.recipeService.create(payload as Recipe).subscribe({
+      next: () => {
         this.snackBar.open(
           this.translate.instant('recipes.creation.success'),
           this.translate.instant('Cerrar'),
           { duration: 3000 }
         );
-        this.isSubmitting = false;
         this.router.navigate(['/preparation/recipes']);
       },
-      error: (err) => {
-        console.error('Error al crear la receta:', err);
+      error: () => {
         this.isSubmitting = false;
         this.snackBar.open(
           this.translate.instant('recipes.creation.error'),
@@ -274,4 +252,5 @@ export class CreateRecipeComponent implements OnInit {
       }
     });
   }
+
 }

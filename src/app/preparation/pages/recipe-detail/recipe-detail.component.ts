@@ -10,7 +10,7 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { RecipeService } from '../../services/recipe.service';
 import { PortfolioService } from '../../services/portfolio.service';
-import { Drink } from '../../models/drink.entity';
+import { Recipe } from '../../models/recipe.entity';
 import { Portfolio } from '../../models/portfolio.entity';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -41,7 +41,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Drink | null = null;
+  recipe: Recipe | null = null;
   portfolio: Portfolio | null = null;
   isLoading = true;
   error = false;
@@ -104,13 +104,13 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   getNavigationPath(): string {
-    return this.recipe?.portfolioId 
+    return this.recipe?.portfolioId
       ? `/preparation/portfolios/${this.recipe.portfolioId}`
       : '/preparation/recipes';
   }
 
   getNavigationText(): string {
-    return this.recipe?.portfolioId 
+    return this.recipe?.portfolioId
       ? 'NAVIGATION.PORTFOLIO'
       : 'NAVIGATION.DRINKS';
   }

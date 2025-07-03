@@ -50,7 +50,7 @@ export class LogupOwnerFormComponent extends BaseFormComponent {
         name,
         email,
         password,
-        role: 'dueno_cafeteria',
+        role: 'owner',
         cafeteriaName,
         experience,
         profilePicture: '',

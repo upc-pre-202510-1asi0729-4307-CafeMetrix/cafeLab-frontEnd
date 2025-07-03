@@ -16,17 +16,17 @@ export class RecipeService extends BaseService<Recipe> {
 
   override getAll(): Observable<Array<Recipe>> {
     return super.getAll().pipe(
-      map(recipes => recipes.filter(recipe => recipe.user_id === Number(this.authService.getCurrentUserId())))
+      map(recipes => recipes.filter(recipe => recipe.userId === Number(this.authService.getCurrentUserId())))
     );
   }
 
   override create(recipe: Recipe): Observable<Recipe> {
-    recipe.user_id = Number(this.authService.getCurrentUserId())
+    recipe.userId = Number(this.authService.getCurrentUserId())
     return super.create(recipe);
   }
 
   override update(id: any, recipe: Recipe): Observable<Recipe> {
-    recipe.user_id = Number(this.authService.getCurrentUserId())
+    recipe.userId = Number(this.authService.getCurrentUserId())
     return super.update(id, recipe);
   }
 }

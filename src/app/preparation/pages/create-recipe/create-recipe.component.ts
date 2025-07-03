@@ -85,7 +85,7 @@ export class CreateRecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPortfolios();
-    
+
     // Verificar si estamos en modo edición
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -100,12 +100,12 @@ export class CreateRecipeComponent implements OnInit {
       next: (recipe) => {
         this.extractionCategory = recipe.extractionCategory;
         this.extractionMethod = recipe.extractionMethod;
-        
+
         // Limpiar los ingredientes existentes
         while (this.ingredients.length) {
           this.ingredients.removeAt(0);
         }
-        
+
         // Agregar los ingredientes de la receta
         if (recipe.ingredients) {
           recipe.ingredients.forEach(ingredient => {
@@ -189,7 +189,7 @@ export class CreateRecipeComponent implements OnInit {
 
   changeExtractionCategory(category: 'coffee' | 'espresso'): void {
     if (this.isEditMode) return; // No cambiar ingredientes automáticamente en modo edición
-    
+
     this.extractionCategory = category;
     this.recipeForm.get('extractionCategory')!.setValue(category);
 
@@ -253,7 +253,7 @@ export class CreateRecipeComponent implements OnInit {
     const f = this.recipeForm.value;
     const payload: Recipe = {
       id: this.isEditMode && this.recipeId ? parseInt(this.recipeId) : 0,
-      user_id: 0, // Este valor será establecido por el servicio
+      userId: 0, // Este valor será establecido por el servicio
       name: f.name,
       imageUrl: f.imageUrl,
       extractionCategory: f.extractionCategory,
@@ -281,7 +281,7 @@ export class CreateRecipeComponent implements OnInit {
           this.translate.instant('Cerrar'),
           { duration: 3000 }
         );
-        
+
         if (recipe.portfolioId) {
           this.router.navigate(['/preparation/portfolios', recipe.portfolioId]);
         } else {

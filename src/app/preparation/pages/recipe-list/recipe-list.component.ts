@@ -94,7 +94,7 @@ export class RecipeListComponent implements OnInit {
           id: 0,
           name: result.name,
           createdAt: new Date().toISOString(),
-          user_id: Number(this.authService.getCurrentUserId())
+          userId: Number(this.authService.getCurrentUserId())
         };
         this.portfolioService.create(newPortfolio).subscribe(() => {
           this.loadPortfolios();

@@ -19,7 +19,7 @@ export type ExtractionMethod =
 
 export interface Recipe {
   id: number
-  user_id: number
+  userId: number
   name: string
   imageUrl: string
   extractionMethod: ExtractionMethod

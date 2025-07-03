@@ -60,14 +60,14 @@ export class LogupOwnerFormComponent extends BaseFormComponent {
         hasPlan: false
       };
 
-      this.userService.register(newUser).subscribe({
+      this.userService.createProfile(newUser).subscribe({
         next: (user: User) => {
-          localStorage.setItem('currentUser', JSON.stringify(user));  // <-- Guarda usuario
+          localStorage.setItem('currentUser', JSON.stringify(user));
           this.router.navigate(['/logup/owner/success']);
         },
         error: (error: any) => {
           console.error('Registration error:', error);
-          // Manejar el error de registro, como mostrar un mensaje de error al usuario
+
         }
       });
     }

@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {inject} from '@angular/core';
 import {catchError, Observable, retry, throwError} from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * Abstract base service class providing common CRUD operations for REST API endpoints.
@@ -62,13 +63,14 @@ export abstract class BaseService<T> {
 
   /**
    * Updates an existing resource
-   * @param id - The ID of the resource to update
-   * @param resource - The updated resource data
-   * @returns An Observable of the updated resource
    */
-  public update(id: any, resource: T): Observable<T> {
-    return this.http.put<T>(`${this.resourcePath()}/${id}`, JSON.stringify(resource), this.httpOptions)
-      .pipe(retry(2), catchError(this.handleError));
+  public update(id: any, resource: T, options?: any): Observable<T> {
+    return this.http.put<T>(`${this.resourcePath()}/${id}`, JSON.stringify(resource), { ...this.httpOptions, ...options })
+      .pipe(
+        map(response => response as T),
+        retry(2),
+        catchError(this.handleError)
+      );
   }
 
   /**

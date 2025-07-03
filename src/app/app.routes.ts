@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth/services/auth.guard';
 import { Routes } from '@angular/router';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { LoginSuccessPageComponent } from './auth/pages/login-success-page/login-success-page.component';
@@ -37,46 +38,46 @@ import {MoreInfoPageComponent} from './calibrations/pages/more-info-page/more-in
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
-  { path: 'login/success', component: LoginSuccessPageComponent },
+  { path: 'login/success', component: LoginSuccessPageComponent, canActivate: [AuthGuard] },
   { path: 'register/barista', component: LogupBaristaPageComponent },
-  { path: 'logup/barista/success', component: LogupBaristaSuccessPageComponent },
+  { path: 'logup/barista/success', component: LogupBaristaSuccessPageComponent},
   { path: 'register/owner', component: LogupOwnerPageComponent },
-  { path: 'logup/owner/success', component: LogupOwnerSuccessPageComponent },
-  { path: 'edit-profile', component: EditProfilePageComponent },
-  { path: 'subscription/select-plan', component: SelectPlanComponent },
-  { path: 'subscription/confirm-plan', component: ConfirmPlanComponent },
-  { path: 'confirm-plan/select-plan', component: SelectPlanComponent },
-  { path: 'select-plan', component: SelectPlanComponent  },
+  { path: 'logup/owner/success', component: LogupOwnerSuccessPageComponent},
+  { path: 'edit-profile', component: EditProfilePageComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/select-plan', component: SelectPlanComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/confirm-plan', component: ConfirmPlanComponent, canActivate: [AuthGuard] },
+  { path: 'confirm-plan/select-plan', component: SelectPlanComponent, canActivate: [AuthGuard] },
+  { path: 'select-plan', component: SelectPlanComponent, canActivate: [AuthGuard]  },
   // esto se modifica acá y en edit-profile-form.component.ts se cambia el nombre de ruteos si fuese necesario
-  { path: 'dashboard/barista', component: BaristaDashboardComponent },
-  { path: 'libraryDefects',             component: ViewConsultationsComponent },
-  {path: 'cupping-sessions', component: SesionesCataComponent},
-  { path: 'new-defect', component: ViewNewDefectComponent },
-  { path: 'file/:id', component: ViewFileComponent },
+  { path: 'dashboard/barista', component: BaristaDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'libraryDefects',             component: ViewConsultationsComponent, canActivate: [AuthGuard] },
+  {path: 'cupping-sessions', component: SesionesCataComponent, canActivate: [AuthGuard]},
+  { path: 'new-defect', component: ViewNewDefectComponent, canActivate: [AuthGuard] },
+  { path: 'file/:id', component: ViewFileComponent, canActivate: [AuthGuard] },
   {
     path: 'preparation',
     children: [
-      { path: 'recipes', component: RecipeListComponent },
-      { path: 'recipes/create', component: CreateRecipeComponent },
-      { path: 'recipes/:id', component: RecipeDetailComponent },
-      { path: 'portfolios/:id', component: PortfolioDetailComponent }
+      { path: 'recipes', component: RecipeListComponent, canActivate: [AuthGuard] },
+      { path: 'recipes/create', component: CreateRecipeComponent, canActivate: [AuthGuard] },
+      { path: 'recipes/:id', component: RecipeDetailComponent, canActivate: [AuthGuard] },
+      { path: 'portfolios/:id', component: PortfolioDetailComponent, canActivate: [AuthGuard] }
     ]
   },
 
-  { path: 'dashboard/owner', component: OwnerDashboardComponent},
-  {path: 'inventory', component: InventaryComponent},
-  { path: 'production-cost-management', component: ProductionCostPageComponent },
-  { path: 'dashboard/complete', component: CompleteDashboardComponent},
-  { path: 'contacto', loadComponent: () => import('./public/components/contact-us/contact-us.component').then(m => m.ContactUsComponent)
+  { path: 'dashboard/owner', component: OwnerDashboardComponent, canActivate: [AuthGuard]},
+  {path: 'inventory', component: InventaryComponent, canActivate: [AuthGuard]},
+  { path: 'production-cost-management', component: ProductionCostPageComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard/complete', component: CompleteDashboardComponent, canActivate: [AuthGuard]},
+  { path: 'contacto', loadComponent: () => import('./public/components/contact-us/contact-us.component').then(m => m.ContactUsComponent), canActivate: [AuthGuard]
   },
-  { path:'grind-calibration', component: ViewCalibrationPageComponent },
-  { path:'add-new-calibration', component: AddCalibrationPageComponent },
-  { path:'edit-calibration/:id', component: EditCalibrationPageComponent },
-  { path:'more-info-calibration/:id', component: MoreInfoPageComponent },
+  { path:'grind-calibration', component: ViewCalibrationPageComponent, canActivate: [AuthGuard] },
+  { path:'add-new-calibration', component: AddCalibrationPageComponent, canActivate: [AuthGuard] },
+  { path:'edit-calibration/:id', component: EditCalibrationPageComponent, canActivate: [AuthGuard] },
+  { path:'more-info-calibration/:id', component: MoreInfoPageComponent, canActivate: [AuthGuard] },
 
-  { path:'suppliers', component: SupplyPageComponent },
-  { path:'coffee-lots', component: LotsComponent },
-  { path:'profiles-roasting', component: RoastingPageComponent},
-  { path:'compare-profile', component: RoastProfileComparisonComponent  },
+  { path:'suppliers', component: SupplyPageComponent, canActivate: [AuthGuard] },
+  { path:'coffee-lots', component: LotsComponent, canActivate: [AuthGuard] },
+  { path:'profiles-roasting', component: RoastingPageComponent, canActivate: [AuthGuard]},
+  { path:'compare-profile', component: RoastProfileComparisonComponent, canActivate: [AuthGuard]  },
   { path: '**', component: PageNotFoundComponent }
 ];

@@ -3,6 +3,8 @@ import { BaseService } from '../../shared/services/base.service';
 import { User } from '../model/user.entity';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, map } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TokenService } from './token.service';
 
 const usersResourceEndpointPath = environment.usersEndpointPath;
 
@@ -10,7 +12,7 @@ const usersResourceEndpointPath = environment.usersEndpointPath;
   providedIn: 'root'
 })
 export class UserService extends BaseService<User> {
-  constructor() {
+  constructor(protected override http: HttpClient, private tokenService: TokenService) {
     super();
     this.resourceEndpoint = usersResourceEndpointPath;
   }
@@ -35,22 +37,24 @@ export class UserService extends BaseService<User> {
   }
 
   /**
-   * Registers a new user
-   * @param user - The user to register
-   * @returns An Observable of the registered user
+   * POST OF A NEW USER PROFILE
    */
-  register(user: User): Observable<User> {
-    return this.create(user);
+  createProfile(user: User): Observable<User> {
+    return this.http.post<User>(`${environment.serverBaseUrl}/api/v1/profiles`, user);
   }
 
   /**
    * Updates a user's profile
-   * @param userId - The ID of the user to update
-   * @param updatedUser - The updated user data
-   * @returns An Observable of the updated user
    */
-  updateProfile(userId: number, updatedUser: User): Observable<User> {
-    return this.update(userId, updatedUser);
+  updateProfile(profileId: number, updatedProfile: Partial<User>): Observable<User> {
+    const authToken = this.tokenService.getToken();
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`
+    });
+
+    return this.http.patch<User>(`${environment.serverBaseUrl}/api/v1/profiles/${profileId}`, updatedProfile, { headers: headers });
   }
 
   /**
@@ -69,4 +73,5 @@ export class UserService extends BaseService<User> {
   getAllUsers(): Observable<User[]> {
     return this.getAll();
   }
+
 }

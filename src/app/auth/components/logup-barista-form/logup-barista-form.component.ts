@@ -59,9 +59,10 @@ export class LogupBaristaFormComponent extends BaseFormComponent {
         hasPlan: false
       };
 
-      this.userService.register(newUser).subscribe({
+      this.userService.createProfile(newUser).subscribe({
         next: (user: User) => {
           localStorage.setItem('currentUser', JSON.stringify(user));  // <-- Guarda usuario
+
           this.router.navigate(['/logup/barista/success']);
         },
         error: (error: any) => {

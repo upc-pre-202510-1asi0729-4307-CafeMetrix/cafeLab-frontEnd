@@ -45,26 +45,35 @@ export class LoginFormComponent extends BaseFormComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
-        next: (user: User) => {
-          console.log('Logged in user:', user);
-          localStorage.setItem('currentUser', JSON.stringify(user));
-
-          if(user.hasPlan){
-          this.router.navigate(['login/success']);
-            } else {
-            this.router.navigate(['/select-plan']);
-          }
+        next: () => {
+          // Agrega un log de debugging
+          console.log('Token después de login:', this.authService['tokenService'].getToken());
+          // Ahora el token ya está, así que cualquier request llevará el Authorization correcto
+          this.userService.getUserByEmail(email).subscribe({
+            next: (user: User) => {
+              if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                if (user.hasPlan) {
+                  this.router.navigate(['login/success']);
+                } else {
+                  this.router.navigate(['/select-plan']);
+                }
+              } else {
+                console.error('Usuario no encontrado tras login');
+              }
+            },
+            error: (error: any) => {
+              console.error('Error obteniendo usuario por email:', error);
+            }
+          });
         },
         error: (error: any) => {
           console.error('Login error:', error);
-          // Manejar el error de inicio de sesión, como mostrar un mensaje de error al usuario
-        },
-        complete: () => {
-          // Completar la suscripción (opcional)
         }
       });
     }
   }
+
 
   onRegisterBarista() {
     this.router.navigate(['/register/barista']);

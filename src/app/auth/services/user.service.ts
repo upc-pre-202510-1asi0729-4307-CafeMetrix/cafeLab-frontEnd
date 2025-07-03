@@ -74,4 +74,10 @@ export class UserService extends BaseService<User> {
     return this.getAll();
   }
 
+  getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${environment.serverBaseUrl}/api/v1/profiles?email=${email}`);
+  }
+
+
+
 }

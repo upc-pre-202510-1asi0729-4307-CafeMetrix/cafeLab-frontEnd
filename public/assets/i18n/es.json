@@ -519,6 +519,13 @@
       "error_loading_portfolios": "Error al cargar los portafolios",
       "error_loading_lots": "Error al cargar los lotes"
     },
+    "edit": {
+      "title": "Editar Receta",
+      "submit": "Actualizar Receta",
+      "success": "Receta actualizada exitosamente",
+      "error": "Error al actualizar la receta",
+      "error_loading": "Error al cargar la receta"
+    },
     "detail": {
       "basic_info": "Información Básica",
       "error_loading": "Error al cargar la receta",

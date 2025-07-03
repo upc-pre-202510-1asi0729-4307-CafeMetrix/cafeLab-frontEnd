@@ -115,6 +115,11 @@ export class RecipeDetailComponent implements OnInit {
       : 'NAVIGATION.DRINKS';
   }
 
+  editRecipe(): void {
+    if (!this.recipe) return;
+    this.router.navigate(['/preparation/recipes/edit', this.recipe.id]);
+  }
+
   deleteRecipe(): void {
     if (!this.recipe) return;
 

@@ -65,6 +65,7 @@ export const routes: Routes = [
       { path: 'recipes', component: RecipeListComponent },
       { path: 'recipes/create', component: CreateRecipeComponent },
       { path: 'recipes/:id', component: RecipeDetailComponent },
+      { path: 'recipes/edit/:id', component: CreateRecipeComponent },
       { path: 'portfolios/:id', component: PortfolioDetailComponent }
     ]
   },

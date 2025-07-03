@@ -9,7 +9,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { PortfolioService } from '../../services/portfolio.service';
 import { Portfolio } from '../../models/portfolio.entity';
@@ -48,6 +48,8 @@ export class CreateRecipeComponent implements OnInit {
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   isSubmitting = false;
+  isEditMode = false;
+  recipeId: string | null = null;
 
   extractionMethods: { value: ExtractionMethod; label: string }[] = [
     { value: 'pour-over',   label: 'Pour Over' },
@@ -73,6 +75,7 @@ export class CreateRecipeComponent implements OnInit {
     private recipeService: RecipeService,
     private portfolioService: PortfolioService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private translate: TranslateService
   ) {
@@ -82,6 +85,66 @@ export class CreateRecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPortfolios();
+    
+    // Verificar si estamos en modo edición
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditMode = true;
+      this.recipeId = id;
+      this.loadRecipe(id);
+    }
+  }
+
+  loadRecipe(id: string): void {
+    this.recipeService.getById(id).subscribe({
+      next: (recipe) => {
+        this.extractionCategory = recipe.extractionCategory;
+        this.extractionMethod = recipe.extractionMethod;
+        
+        // Limpiar los ingredientes existentes
+        while (this.ingredients.length) {
+          this.ingredients.removeAt(0);
+        }
+        
+        // Agregar los ingredientes de la receta
+        if (recipe.ingredients) {
+          recipe.ingredients.forEach(ingredient => {
+            this.ingredients.push(this.fb.group({
+              name: [ingredient.name, Validators.required],
+              amount: [ingredient.amount, Validators.required],
+              unit: [ingredient.unit, Validators.required]
+            }));
+          });
+        }
+
+        // Actualizar el formulario con los datos de la receta
+        this.recipeForm.patchValue({
+          name: recipe.name,
+          imageUrl: recipe.imageUrl,
+          cupping: recipe.cupping,
+          portfolioId: recipe.portfolioId,
+          grindSize: recipe.grindSize,
+          ratio: recipe.ratio,
+          preparationTime: recipe.preparationTime,
+          steps: recipe.steps,
+          tips: recipe.tips,
+          extractionCategory: recipe.extractionCategory,
+          extractionMethod: recipe.extractionMethod
+        });
+
+        // Mostrar la imagen existente
+        this.imagePreview = recipe.imageUrl;
+      },
+      error: (err) => {
+        console.error('Error al cargar la receta:', err);
+        this.snackBar.open(
+          this.translate.instant('recipes.edit.error_loading'),
+          this.translate.instant('Cerrar'),
+          { duration: 3000 }
+        );
+        this.router.navigate(['/preparation/recipes']);
+      }
+    });
   }
 
   createForm(): FormGroup {
@@ -125,6 +188,8 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   changeExtractionCategory(category: 'coffee' | 'espresso'): void {
+    if (this.isEditMode) return; // No cambiar ingredientes automáticamente en modo edición
+    
     this.extractionCategory = category;
     this.recipeForm.get('extractionCategory')!.setValue(category);
 
@@ -186,43 +251,52 @@ export class CreateRecipeComponent implements OnInit {
     this.isSubmitting = true;
 
     const f = this.recipeForm.value;
-    const payload: Partial<Recipe> = {
-      name:               f.name,
-      imageUrl:           f.imageUrl,
+    const payload: Recipe = {
+      id: this.isEditMode && this.recipeId ? parseInt(this.recipeId) : 0,
+      user_id: 0, // Este valor será establecido por el servicio
+      name: f.name,
+      imageUrl: f.imageUrl,
       extractionCategory: f.extractionCategory,
-      extractionMethod:   f.extractionMethod,
-      cupping:            f.cupping || '',
-      grindSize:          f.grindSize || '',
-      ratio:              f.ratio || '',
-      preparationTime:    Number(f.preparationTime) || 0,
-      steps:              f.steps || '',
-      tips:               f.tips || '',
-      portfolioId:        f.portfolioId != null ? Number(f.portfolioId) : null,
-      ingredients:        f.ingredients.map((ing: any) => ({
-        name:   ing.name,
-        amount: ing.amount.toString(),
-        unit:   ing.unit
-      }))
+      extractionMethod: f.extractionMethod,
+      cupping: f.cupping || '',
+      grindSize: f.grindSize || '',
+      ratio: f.ratio || '',
+      preparationTime: Number(f.preparationTime) || 0,
+      steps: f.steps || '',
+      tips: f.tips || '',
+      portfolioId: f.portfolioId != null ? Number(f.portfolioId) : null,
+      ingredients: f.ingredients,
+      cuppingSessionId: 0, // Este valor se maneja en otro lugar
+      createdAt: new Date().toISOString() // Solo para nuevas recetas
     };
 
-    this.recipeService.create(payload as Recipe).subscribe({
-      next: () => {
+    const request = this.isEditMode && this.recipeId
+      ? this.recipeService.update(this.recipeId, payload)
+      : this.recipeService.create(payload);
+
+    request.subscribe({
+      next: (recipe) => {
         this.snackBar.open(
-          this.translate.instant('recipes.creation.success'),
+          this.translate.instant(this.isEditMode ? 'recipes.edit.success' : 'recipes.creation.success'),
           this.translate.instant('Cerrar'),
           { duration: 3000 }
         );
-        this.router.navigate(['/preparation/recipes']);
+        
+        if (recipe.portfolioId) {
+          this.router.navigate(['/preparation/portfolios', recipe.portfolioId]);
+        } else {
+          this.router.navigate(['/preparation/recipes']);
+        }
       },
-      error: () => {
+      error: (err) => {
+        console.error('Error:', err);
         this.isSubmitting = false;
         this.snackBar.open(
-          this.translate.instant('recipes.creation.error'),
+          this.translate.instant(this.isEditMode ? 'recipes.edit.error' : 'recipes.creation.error'),
           this.translate.instant('Cerrar'),
-          { duration: 5000 }
+          { duration: 3000 }
         );
       }
     });
   }
-
 }

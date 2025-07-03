@@ -7,7 +7,7 @@
 <div class="container">
   <div class="breadcrumb">
     <a routerLink="/preparation/recipes">{{ 'NAVIGATION.DRINKS' | translate }}</a> &gt;
-    <span>{{ 'recipes.creation.title' | translate }}</span>
+    <span>{{ isEditMode ? ('recipes.edit.title' | translate) : ('recipes.creation.title' | translate) }}</span>
   </div>
 
   <div class="recipe-form-card">
@@ -222,9 +222,9 @@
             mat-raised-button
             color="primary"
             type="submit"
-            class="submit-button"
-            [disabled]="recipeForm.invalid || isSubmitting">
-            {{ 'recipes.creation.submit' | translate }}
+            [disabled]="recipeForm.invalid || isSubmitting"
+            class="submit-button">
+            {{ isEditMode ? ('recipes.edit.submit' | translate) : ('recipes.creation.submit' | translate) }}
           </button>
         </div>
       </div>

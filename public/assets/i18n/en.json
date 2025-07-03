@@ -517,6 +517,13 @@
       "error_loading_portfolios": "Error loading portfolios",
       "error_loading_lots": "Error al cargar los lotes"
     },
+    "edit": {
+      "title": "Edit Recipe",
+      "submit": "Update Recipe",
+      "success": "Recipe updated successfully",
+      "error": "Error updating recipe",
+      "error_loading": "Error loading recipe"
+    },
     "detail": {
       "basic_info": "Basic Information",
       "error_loading": "Error loading recipe",

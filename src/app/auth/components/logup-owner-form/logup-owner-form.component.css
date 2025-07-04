@@ -11,7 +11,19 @@
   position: relative;
   z-index: 1;
 }
-
+.logup-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
 .logup-form-container h2 {
   margin-bottom: 25px;
   font-size: 28px;

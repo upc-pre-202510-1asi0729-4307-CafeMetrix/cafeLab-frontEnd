@@ -65,6 +65,7 @@
     "EMAIL": "Email",
     "PASSWORD": "Password",
     "EXPERIENCE": "Experience Level",
+    "EXPERIENCEA": "Years of experience",
     "CAFETERIA_NAME": "Cafeteria Name",
     "EXPERIENCE_INITIAL": "Beginner",
     "EXPERIENCE_INTERMEDIATE": "Intermediate",

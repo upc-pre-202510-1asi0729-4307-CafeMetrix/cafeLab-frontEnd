@@ -9,8 +9,6 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
 import { NgClass } from '@angular/common';
-import { AuthService } from '../../services/AuthService';
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -33,8 +31,7 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {
     super();
     this.editProfileForm = this.formBuilder.group({
@@ -66,32 +63,23 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
   onSubmit() {
     if (this.editProfileForm.valid && this.currentUser) {
       const { name, email, cafeteriaName, experience, paymentMethod } = this.editProfileForm.value;
-      const updatedProfile: Partial<User> = {
+      const updatedUser: User = {
+        ...this.currentUser,
         name,
         email,
         cafeteriaName: cafeteriaName || '',
         experience,
-        paymentMethod
+        paymentMethod,
+        isFirstLogin: false
       };
 
-      this.userService.updateProfile(this.currentUser.id, updatedProfile).subscribe({
+      this.userService.updateProfile(this.currentUser.id, updatedUser).subscribe({
         next: (user: User) => {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.redirectAfterUpdate();
         },
-        error: (error: HttpErrorResponse) => {
+        error: (error: any) => {
           console.error('Update profile error:', error);
-
-          if (error.status === 401 || error.status === 403) {
-            // Handle unauthorized or forbidden errors (e.g., redirect to login)
-            console.error('Authentication or authorization error:', error.message);
-          } else if (error.status === 400) {
-            // Handle bad request/validation errors
-            console.error('Validation error:', error.error); // error.error might contain server-side validation messages
-          } else {
-            // Handle other errors
-            console.error('An unexpected error occurred:', error.message);
-          }
         }
       });
     }
@@ -117,8 +105,11 @@ export class EditProfileFormComponent extends BaseFormComponent implements OnIni
       this.router.navigate(['/subscription/select-plan']);
     }
   }
-  goToChangePlan() {
-    this.router.navigate(['/select-plan']);
+  continueToSelectPlan() {
+    if (this.editProfileForm.valid) {
+      this.router.navigate(['/subscription/select-plan']);
+    }
   }
+
 
 }

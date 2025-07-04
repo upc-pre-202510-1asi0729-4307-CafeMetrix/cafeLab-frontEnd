@@ -2,39 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TranslateModule} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ToolbarPlanComponent } from '../toolbar-plan/toolbar-plan.component';
-import {MatToolbar} from '@angular/material/toolbar';
+import { MatToolbar } from '@angular/material/toolbar';
 import { User } from '../../../auth/model/user.entity';
-import {UserService} from '../../../auth/services/user.service';
-import { TranslateService} from '@ngx-translate/core';
-
+import { UserService } from '../../../auth/services/user.service';
+import { TranslateService } from '@ngx-translate/core';
+import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
 
 @Component({
   standalone: true,
-  selector: 'app-confirm-plan',
-  templateUrl: './confirm-plan.component.html',
-  styleUrls: ['./confirm-plan.component.css'],
+  selector: 'app-confirm-change-plan',
+  templateUrl: './confirm-change-plan.component.html',
+  styleUrls: ['./confirm-change-plan.component.css'],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
     ToolbarPlanComponent,
-    MatToolbar
+    MatToolbar,
+    ToolbarComponent
   ]
 })
-export class ConfirmPlanComponent implements OnInit {
+export class ConfirmChangePlanComponent implements OnInit {
   selectedPlan: any;
   paymentForm!: FormGroup;
   formSubmitted = false;
   translatedFeatures: string[] = [];
 
   constructor(
-      private fb: FormBuilder,
-      private router: Router,
-      private userService: UserService,
-      private translate: TranslateService
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private translate: TranslateService
   ) {}
 
   sanitizeInput(event: Event, maxLength: number): void {
@@ -46,11 +47,10 @@ export class ConfirmPlanComponent implements OnInit {
     }
   }
 
-
   ngOnInit(): void {
     const storedPlan = localStorage.getItem('selectedPlan');
     if (!storedPlan) {
-      void this.router.navigate(['/select-plan']);
+      void this.router.navigate(['/change-plan']);
       return;
     }
 
@@ -64,7 +64,7 @@ export class ConfirmPlanComponent implements OnInit {
     this.paymentForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-      expiry: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/\\d{2}$')]],
+      expiry: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])/\\d{2}$')]],
       cvc: ['', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
       cardHolder: ['', [Validators.required, Validators.minLength(2)]],
       country: ['', [Validators.required]]
@@ -91,7 +91,7 @@ export class ConfirmPlanComponent implements OnInit {
   }
 
   goBack(): void {
-    void this.router.navigate(['confirm-plan/select-plan']);
+    void this.router.navigate(['/subscription/change-plan']);
   }
 
   onSubmit(): void {
@@ -108,17 +108,15 @@ export class ConfirmPlanComponent implements OnInit {
 
     const updatedUser: User = {
       ...currentUser,
-      hasPlan: true
+      hasPlan: true,
+      plan: this.selectedPlan.type
     };
 
     this.userService.updateProfile(currentUser.id, updatedUser).subscribe({
       next: (user: User) => {
         localStorage.setItem('currentUser', JSON.stringify(user));
 
-        const planType = this.selectedPlan.type;
-
-
-        switch (planType) {
+        switch (this.selectedPlan.type) {
           case 'owner':
             this.router.navigate(['/dashboard/owner']);
             break;
@@ -131,16 +129,13 @@ export class ConfirmPlanComponent implements OnInit {
           default:
             this.router.navigate(['/page-not-found']);
         }
-
       },
-
       error: (err) => {
         console.error('Error updating user after payment:', err);
       }
     });
   }
 
-  // Métodos para verificar errores específicos
   hasError(field: string, errorType: string): boolean {
     const control = this.paymentForm.get(field);
     return !!(control && control.errors && control.errors[errorType] && (control.touched || this.formSubmitted));
@@ -173,5 +168,4 @@ export class ConfirmPlanComponent implements OnInit {
     { code: 'UY', translationKey: 'COUNTRIES.URUGUAY' },
     { code: 'VE', translationKey: 'COUNTRIES.VENEZUELA' }
   ];
-
 }

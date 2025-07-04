@@ -34,6 +34,10 @@ import {ViewCalibrationPageComponent} from './calibrations/pages/view-calibratio
 import {AddCalibrationPageComponent} from './calibrations/pages/add-calibration-page/add-calibration-page.component';
 import {EditCalibrationPageComponent} from './calibrations/pages/edit-calibration-page/edit-calibration-page.component';
 import {MoreInfoPageComponent} from './calibrations/pages/more-info-page/more-info-page.component';
+import { EditProfileSessionPageComponent } from './auth/pages/edit-profile-session-page/edit-profile-session-page.component';
+import {ChangePlanComponent} from './subscription/components/change-plan/change-plan.component';
+import {ConfirmChangePlanComponent} from './subscription/components/confirm-change-plan/confirm-change-plan.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -45,8 +49,11 @@ export const routes: Routes = [
   { path: 'logup/owner/success', component: LogupOwnerSuccessPageComponent},
   { path: 'edit-profile', component: EditProfilePageComponent, canActivate: [AuthGuard] },
   { path: 'subscription/select-plan', component: SelectPlanComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/change-plan', component: ChangePlanComponent, canActivate: [AuthGuard] },
+  { path: 'subscription/confirm-change-plan', component: ConfirmChangePlanComponent, canActivate: [AuthGuard] },
   { path: 'subscription/confirm-plan', component: ConfirmPlanComponent, canActivate: [AuthGuard] },
   { path: 'confirm-plan/select-plan', component: SelectPlanComponent, canActivate: [AuthGuard] },
+  { path: 'edit-profile-session', component: EditProfileSessionPageComponent, canActivate: [AuthGuard] },
   { path: 'select-plan', component: SelectPlanComponent, canActivate: [AuthGuard]  },
   // esto se modifica acá y en edit-profile-form.component.ts se cambia el nombre de ruteos si fuese necesario
   { path: 'dashboard/barista', component: BaristaDashboardComponent, canActivate: [AuthGuard] },
@@ -60,6 +67,7 @@ export const routes: Routes = [
       { path: 'recipes', component: RecipeListComponent, canActivate: [AuthGuard] },
       { path: 'recipes/create', component: CreateRecipeComponent, canActivate: [AuthGuard] },
       { path: 'recipes/:id', component: RecipeDetailComponent, canActivate: [AuthGuard] },
+      { path: 'recipes/edit/:id', component: CreateRecipeComponent, canActivate: [AuthGuard] },
       { path: 'portfolios/:id', component: PortfolioDetailComponent, canActivate: [AuthGuard] }
     ]
   },

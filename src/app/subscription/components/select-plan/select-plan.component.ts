@@ -33,10 +33,14 @@ export class SelectPlanComponent {
   baristaFeatures: string[] = [];
   ownerFeatures: string[] = [];
   fullFeatures: string[] = [];
+
+  showBaristaPlans: boolean = false;
+  showOwnerPlans: boolean = false;
+
   constructor(
-      private router: Router,
-      private translate: TranslateService,
-      private userService: UserService
+    private router: Router,
+    private translate: TranslateService,
+    private userService: UserService
   ) {
     this.translate.get('PLANS.BARISTA.FEATURES').subscribe((res: string[]) => this.baristaFeatures = res);
     this.translate.get('PLANS.OWNER.FEATURES').subscribe((res: string[]) => this.ownerFeatures = res);
@@ -44,7 +48,16 @@ export class SelectPlanComponent {
     this.translate.onLangChange.subscribe(() => {
       this.loadTranslations();
     });
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}') as User;
+
+    if (currentUser?.role === 'barista') {
+      this.showBaristaPlans = true;
+    } else if (currentUser?.role === 'owner') {
+      this.showOwnerPlans = true;
+    }
   }
+
   loadTranslations(): void {
     this.translate.get('PLANS.BARISTA.FEATURES').subscribe((res: string[]) => this.baristaFeatures = res);
     this.translate.get('PLANS.OWNER.FEATURES').subscribe((res: string[]) => this.ownerFeatures = res);
@@ -81,7 +94,6 @@ export class SelectPlanComponent {
         break;
     }
 
-
     localStorage.setItem('selectedPlan', JSON.stringify(selected));
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}') as User;
@@ -103,3 +115,5 @@ export class SelectPlanComponent {
   }
 
 }
+
+

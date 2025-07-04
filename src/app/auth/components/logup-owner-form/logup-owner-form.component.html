@@ -17,13 +17,39 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{ 'LOGUP.EXPERIENCE' | translate }}</mat-label>
-      <input matInput type="experience" formControlName="experience">
+    <div class="experience-selection">
+      <label class="experience-label">{{ 'LOGUP.EXPERIENCE' | translate }}</label>
+
+      <div class="experience-options">
+        <button type="button"
+                class="experience-button"
+                [ngClass]="{'selected': logupForm.get('experience')?.value === '0-3'}"
+                (click)="selectExperience('0-3')">
+          <span class="button-text">{{ 'LOGUP.EXPERIENCE_0_3' | translate }}</span>
+          <span class="check-icon" *ngIf="logupForm.get('experience')?.value === '0-3'">✓</span>
+        </button>
+
+        <button type="button"
+                class="experience-button"
+                [ngClass]="{'selected': logupForm.get('experience')?.value === '4-7'}"
+                (click)="selectExperience('4-7')">
+          <span class="button-text">{{ 'LOGUP.EXPERIENCE_4_7' | translate }}</span>
+          <span class="check-icon" *ngIf="logupForm.get('experience')?.value === '4-7'">✓</span>
+        </button>
+
+        <button type="button"
+                class="experience-button"
+                [ngClass]="{'selected': logupForm.get('experience')?.value === '8+'}"
+                (click)="selectExperience('8+')">
+          <span class="button-text">{{ 'LOGUP.EXPERIENCE_8_PLUS' | translate }}</span>
+          <span class="check-icon" *ngIf="logupForm.get('experience')?.value === '8+'">✓</span>
+        </button>
+      </div>
+
       <mat-error *ngIf="isInvalidControl(logupForm, 'experience')">
         {{ errorMessagesForControl(logupForm, 'experience') }}
       </mat-error>
-    </mat-form-field>
+    </div>
 
     <mat-form-field>
       <mat-label>{{ 'LOGUP.PASSWORD' | translate }}</mat-label>

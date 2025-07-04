@@ -1,6 +1,7 @@
 <div class="profile-edit-container">
-  <div class="profile-right" style="width:100%;margin:auto;">
-    <form class="profile-form" [formGroup]="editProfileForm">
+  <div class="profile-right" style="width:100%; margin:auto;">
+    <form class="profile-form" [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+
       <div class="form-row">
         <div class="form-group">
           <label>{{ 'EDIT_PROFILE.NAME' | translate }}</label>
@@ -28,6 +29,7 @@
             <img src="assets/Visa.png" alt="Visa">
             {{ 'EDIT_PROFILE.VISA' | translate }}
           </label>
+
           <label class="payment-radio">
             <input type="radio" formControlName="paymentMethod" value="mastercard">
             <img src="assets/MasterCard.png" alt="MasterCard">
@@ -37,10 +39,19 @@
       </div>
 
       <div class="form-actions">
-        <button type="button" [disabled]="!editProfileForm.valid" (click)="continueToSelectPlan()">
-          {{ 'EDIT_PROFILE.CONTINUE' | translate }}
+        <button type="submit"
+                [disabled]="!editProfileForm.valid || !editProfileForm.dirty">
+          {{ 'EDIT_PROFILE.SAVE_CHANGES' | translate }}
+        </button>
+
+        <button type="button" class="change-plan-btn"
+                [disabled]="!editProfileForm.valid"
+                (click)="goToChangePlan()">
+          {{ 'EDIT_PROFILE.CHANGE_PLAN' | translate }}
         </button>
       </div>
+
+
     </form>
   </div>
 </div>

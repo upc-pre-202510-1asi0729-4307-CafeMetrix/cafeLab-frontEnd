@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.entity';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-logup-barista-form',
@@ -21,7 +21,8 @@ import {NgIf} from '@angular/common';
     MatButtonModule,
     TranslateModule,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgClass
   ]
 })
 export class LogupBaristaFormComponent extends BaseFormComponent {
@@ -61,8 +62,6 @@ export class LogupBaristaFormComponent extends BaseFormComponent {
 
       this.userService.createProfile(newUser).subscribe({
         next: (user: User) => {
-          localStorage.setItem('currentUser', JSON.stringify(user));  // <-- Guarda usuario
-
           this.router.navigate(['/logup/barista/success']);
         },
         error: (error: any) => {
@@ -70,5 +69,9 @@ export class LogupBaristaFormComponent extends BaseFormComponent {
         }
       });
     }
+  }
+
+  selectExperience(experience: string): void {
+    this.logupForm.get('experience')?.setValue(experience);
   }
 }

@@ -79,14 +79,14 @@ export class SesionesCataComponent implements OnInit {
     const q = this.searchText.toLowerCase().trim();
     return this.sesiones
       .filter(s =>
-        s.nombre.toLowerCase().includes(q) ||
-        s.origen.toLowerCase().includes(q) ||
-        s.variedad.toLowerCase().includes(q)
+        s.nombre.name.toLowerCase().includes(q) ||
+        s.origen.name.toLowerCase().includes(q) ||
+        s.variedad.name.toLowerCase().includes(q)
       )
       .filter(s =>
-        (!this.filtros.origen || s.origen === this.filtros.origen) &&
-        (!this.filtros.variedad || s.variedad === this.filtros.variedad) &&
-        (!this.filtros.procesamiento || s.procesamiento === this.filtros.procesamiento) &&
+        (!this.filtros.origen || s.origen.name === this.filtros.origen) &&
+        (!this.filtros.variedad || s.variedad.name === this.filtros.variedad) &&
+        (!this.filtros.procesamiento || s.procesamiento?.name === this.filtros.procesamiento) &&
         (!this.filtros.fecha || new Date(s.fecha).toISOString().split('T')[0] === new Date(this.filtros.fecha).toISOString().split('T')[0])
       );
   }
@@ -136,18 +136,20 @@ export class SesionesCataComponent implements OnInit {
     dialogRef.afterClosed().subscribe((nueva) => {
       if (nueva) {
         const nuevaSesion: Omit<CuppingSession, 'id' | 'fecha'> = {
-          nombre: nueva.nombre,
-          lote: nueva.loteId,
-          perfil_tueste: nueva.perfilId,
-          origen: 'Por definir', // Estos valores deberían venir del lote/perfil seleccionado
-          variedad: 'Por definir',
-          procesamiento: 'Lavado',
+          nombre: { name: nueva.nombre },
+          lote: { id: nueva.loteId },
+          perfil_tueste: { id: nueva.perfilId },
+          origen: { name: 'Por definir' }, // Estos valores deberían venir del lote/perfil seleccionado
+          variedad: { name: 'Por definir' },
+          procesamiento: { name: 'Lavado' },
           favorito: false,
           user_id: 'user1' // Reemplazar con el ID del usuario actual
         };
         this.cuppingSessionService.add(nuevaSesion).subscribe({
           next: (creada) => {
             this.sesiones.push(creada);
+            // Recargar todas las sesiones para asegurar sincronización
+            this.obtenerSesiones();
           },
           error: (err) => {
             console.error('Error al crear sesión de cata', err);

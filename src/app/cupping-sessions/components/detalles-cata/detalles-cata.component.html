@@ -68,12 +68,12 @@
   <div class="columna informacion">
     <div class="info-section">
       <h3>{{ 'CUPPING_DETAILS.LINKED_LOT' | translate }}</h3>
-      <p>{{sesion.loteNombre}}</p>
+      <p>{{sesion.lote?.id}}</p>
     </div>
 
     <div class="info-section">
       <h3>{{ 'CUPPING_DETAILS.LINKED_ROAST_PROFILE' | translate }}</h3>
-      <p>{{sesion.perfilNombre}}</p>
+      <p>{{sesion.perfil_tueste?.id}}</p>
     </div>
 
     <button mat-raised-button class="action-button guardar-button" (click)="guardarSesion()">

@@ -446,7 +446,9 @@
       "error_loading": "Error al cargar el portafolio",
       "error_updating": "Error al actualizar el portafolio",
       "error_deleting": "Error al eliminar el portafolio"
-    }
+    },
+    "delete_confirmation_title": "Eliminar Portafolio",
+    "delete_confirmation_message": "¿Estás seguro que deseas eliminar el portafolio '{{name}}'? Esta acción no se puede deshacer."
   },
   "recipes": {
     "title": "Bebidas sin portafolio asociado",
@@ -517,7 +519,8 @@
       "success": "Receta creada con éxito",
       "error": "Error al crear la receta",
       "error_loading_portfolios": "Error al cargar los portafolios",
-      "error_loading_lots": "Error al cargar los lotes"
+      "error_loading_lots": "Error al cargar los lotes",
+      "no_cupping_session": "Sin sesión de cata"
     },
     "detail": {
       "basic_info": "Información Básica",
@@ -530,6 +533,13 @@
       "confirm_delete": "Eliminar",
       "delete_success": "Receta eliminada correctamente",
       "delete_error": "Error al eliminar la receta"
+    },
+    "edit": {
+      "title": "Editar Receta",
+      "submit": "Guardar Cambios",
+      "success": "Receta actualizada correctamente",
+      "error_loading_cupping_sessions": "Error al cargar las sesiones de cata",
+      "error": "Error al actualizar la receta"
     }
   },
   "CUPPING_SESSIONS": {

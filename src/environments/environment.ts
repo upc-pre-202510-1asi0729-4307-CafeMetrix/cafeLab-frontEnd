@@ -10,8 +10,9 @@ export const environment = {
   plansEndPointPath: '/plans',
   usersEndpointPath: '/users',
   cuppingSessionsEndpointPath: '/cupping',
-  recipesEndpointPath: '/recipes',
-  portfoliosEndpointPath: '/portfolios',
+  recipesEndpointPath: '/api/v1/recipes',
+  portfoliosEndpointPath: '/api/v1/portfolios',
+  ingredientsEndpointPath: '/api/v1/recipes/{recipeId}/ingredients',
   contactUsEndpointPath: '/contact-us',
   calibrationsEndpointPath: '/calibrations'
 };

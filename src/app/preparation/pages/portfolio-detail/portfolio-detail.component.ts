@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -13,11 +13,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PortfolioService } from '../../services/portfolio.service';
 import { RecipeService } from '../../services/recipe.service';
 import { Portfolio } from '../../models/portfolio.entity';
-import { Drink } from '../../models/drink.entity';
+import { Recipe } from '../../models/recipe.entity';
 import { AddRecipeDialogComponent } from '../../components/add-recipe-dialog/add-recipe-dialog.component';
 import { CreatePortfolioDialogComponent } from '../../components/create-portfolio-dialog/create-portfolio-dialog.component';
-import {MatToolbar} from '@angular/material/toolbar';
-import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.component';
+import { MatToolbar } from '@angular/material/toolbar';
+import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
+
 @Component({
   selector: 'app-portfolio-detail',
   standalone: true,
@@ -39,8 +40,8 @@ import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.compo
 })
 export class PortfolioDetailComponent implements OnInit {
   portfolio: Portfolio | null = null;
-  portfolioRecipes: Drink[] = [];
-  portfolioId: number = 0;
+  portfolioRecipes: Recipe[] = [];
+  portfolioId = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,21 +55,21 @@ export class PortfolioDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.portfolioId = +params['id'];
-        this.loadPortfolio();
-        this.loadPortfolioRecipes();
+      const id = Number(params['id']);
+      if (isNaN(id)) {
+        this.router.navigate(['/preparation/recipes']);
+        return;
       }
+      this.portfolioId = id;
+      this.loadPortfolio();
+      this.loadPortfolioRecipes();
     });
   }
 
-  loadPortfolio(): void {
+  private loadPortfolio(): void {
     this.portfolioService.getById(this.portfolioId).subscribe({
-      next: (portfolio) => {
-        this.portfolio = portfolio;
-      },
-      error: (error) => {
-        console.error('Error loading portfolio:', error);
+      next: p => this.portfolio = p,
+      error: () => {
         this.snackBar.open(
           this.translate.instant('portfolio.messages.error_loading'),
           this.translate.instant('portfolio.actions.cancel'),
@@ -79,13 +80,12 @@ export class PortfolioDetailComponent implements OnInit {
     });
   }
 
-  loadPortfolioRecipes(): void {
+  private loadPortfolioRecipes(): void {
     this.recipeService.getAll().subscribe({
-      next: (recipes) => {
-        this.portfolioRecipes = recipes.filter(recipe => recipe.portfolioId === this.portfolioId);
+      next: recipes => {
+        this.portfolioRecipes = recipes.filter(r => r.portfolioId === this.portfolioId);
       },
-      error: (error) => {
-        console.error('Error loading recipes:', error);
+      error: () => {
         this.snackBar.open(
           this.translate.instant('recipes.messages.error_loading'),
           this.translate.instant('portfolio.actions.cancel'),
@@ -96,31 +96,24 @@ export class PortfolioDetailComponent implements OnInit {
   }
 
   openAddRecipesDialog(): void {
-    const dialogRef = this.dialog.open(AddRecipeDialogComponent, {
+    const ref = this.dialog.open(AddRecipeDialogComponent, {
       width: '500px',
       data: { portfolioId: this.portfolioId }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.length > 0) {
-        this.addRecipesToPortfolio(result);
-      }
+    ref.afterClosed().subscribe((ids: number[]) => {
+      if (ids?.length) this.addRecipesToPortfolio(ids);
     });
   }
 
-  addRecipesToPortfolio(recipeIds: number[]): void {
-    const updatePromises = recipeIds.map(recipeId => {
-      return this.recipeService.getById(recipeId).pipe(
-        // Update the recipe with the portfolio ID and return an observable
-        switchMap(recipe => {
-          recipe.portfolioId = this.portfolioId;
-          return this.recipeService.update(recipeId, recipe);
-        })
-      );
-    });
-
-    // Execute all update requests
-    forkJoin(updatePromises).subscribe({
+  private addRecipesToPortfolio(ids: number[]): void {
+    const updates = ids.map(id =>
+      this.recipeService.getById(id).pipe(
+        switchMap(recipe =>
+          this.recipeService.update(id, { ...recipe, portfolioId: this.portfolioId })
+        )
+      )
+    );
+    forkJoin(updates).subscribe({
       next: () => {
         this.snackBar.open(
           this.translate.instant('recipes.messages.added'),
@@ -129,8 +122,7 @@ export class PortfolioDetailComponent implements OnInit {
         );
         this.loadPortfolioRecipes();
       },
-      error: (error) => {
-        console.error('Error adding recipes to portfolio:', error);
+      error: () => {
         this.snackBar.open(
           this.translate.instant('recipes.messages.error_adding'),
           this.translate.instant('portfolio.actions.cancel'),
@@ -140,33 +132,23 @@ export class PortfolioDetailComponent implements OnInit {
     });
   }
 
-  removeRecipeFromPortfolio(recipeId: number): void {
-    this.recipeService.getById(recipeId).subscribe({
-      next: (recipe) => {
-        recipe.portfolioId = null;
-        this.recipeService.update(recipeId, recipe).subscribe({
-          next: () => {
-            this.snackBar.open(
-              this.translate.instant('recipes.messages.removed'),
-              this.translate.instant('portfolio.actions.cancel'),
-              { duration: 3000 }
-            );
-            this.portfolioRecipes = this.portfolioRecipes.filter(r => r.id !== recipeId);
-          },
-          error: (error) => {
-            console.error('Error removing recipe from portfolio:', error);
-            this.snackBar.open(
-              this.translate.instant('recipes.messages.error_removing'),
-              this.translate.instant('portfolio.actions.cancel'),
-              { duration: 3000 }
-            );
-          }
-        });
-      },
-      error: (error) => {
-        console.error('Error loading recipe:', error);
+  removeRecipeFromPortfolio(id: number): void {
+    this.recipeService.getById(id).pipe(
+      switchMap(recipe =>
+        this.recipeService.update(id, { ...recipe, portfolioId: null })
+      )
+    ).subscribe({
+      next: () => {
         this.snackBar.open(
-          this.translate.instant('recipes.messages.error_loading'),
+          this.translate.instant('recipes.messages.removed'),
+          this.translate.instant('portfolio.actions.cancel'),
+          { duration: 3000 }
+        );
+        this.portfolioRecipes = this.portfolioRecipes.filter(r => r.id !== id);
+      },
+      error: () => {
+        this.snackBar.open(
+          this.translate.instant('recipes.messages.error_removing'),
           this.translate.instant('portfolio.actions.cancel'),
           { duration: 3000 }
         );
@@ -176,34 +158,29 @@ export class PortfolioDetailComponent implements OnInit {
 
   openEditDialog(): void {
     if (!this.portfolio) return;
-
-    const dialogRef = this.dialog.open(CreatePortfolioDialogComponent, {
+    const ref = this.dialog.open(CreatePortfolioDialogComponent, {
       width: '400px',
       data: { name: this.portfolio.name }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.name && result.name !== this.portfolio?.name) {
+    ref.afterClosed().subscribe(result => {
+      if (result?.name && this.portfolio && result.name !== this.portfolio.name) {
         this.updatePortfolioName(result.name);
       }
     });
   }
 
-  updatePortfolioName(newName: string): void {
+  private updatePortfolioName(name: string): void {
     if (!this.portfolio) return;
-
-    const updatedPortfolio = { ...this.portfolio, name: newName };
-    this.portfolioService.update(this.portfolioId, updatedPortfolio).subscribe({
-      next: (portfolio) => {
-        this.portfolio = portfolio;
+    this.portfolioService.update(this.portfolioId, { ...this.portfolio, name }).subscribe({
+      next: p => {
+        this.portfolio = p;
         this.snackBar.open(
           this.translate.instant('portfolio.messages.updated'),
           this.translate.instant('portfolio.actions.cancel'),
           { duration: 3000 }
         );
       },
-      error: (error) => {
-        console.error('Error updating portfolio:', error);
+      error: () => {
         this.snackBar.open(
           this.translate.instant('portfolio.messages.error_updating'),
           this.translate.instant('portfolio.actions.cancel'),
@@ -214,24 +191,31 @@ export class PortfolioDetailComponent implements OnInit {
   }
 
   deletePortfolio(): void {
-    if (confirm(this.translate.instant('portfolio.delete_confirmation'))) {
-      // First, remove portfolio association from all recipes
-      this.recipeService.getAll().subscribe({
-        next: (recipes) => {
-          const portfolioRecipes = recipes.filter(recipe => recipe.portfolioId === this.portfolioId);
+    if (!this.portfolio) return;
 
-          if (portfolioRecipes.length > 0) {
-            const updatePromises = portfolioRecipes.map(recipe => {
-              recipe.portfolioId = null;
-              return this.recipeService.update(recipe.id, recipe);
-            });
+    const dialogRef = this.dialog.open(DeletePortfolioConfirmationDialog, {
+      width: '400px',
+      data: { portfolioName: this.portfolio.name }
+    });
 
-            forkJoin(updatePromises).subscribe({
-              next: () => {
-                this.deletePortfolioAfterRemovingRecipes();
-              },
-              error: (error) => {
-                console.error('Error removing recipe associations:', error);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.recipeService.getAll().subscribe({
+          next: allRecipes => {
+            const linked = allRecipes.filter(r => r.portfolioId === this.portfolioId);
+            
+            if (linked.length === 0) {
+              this.deletePortfolioRecord();
+              return;
+            }
+
+            const removals = linked.map(r =>
+              this.recipeService.update(r.id, { ...r, portfolioId: null })
+            );
+            
+            forkJoin(removals).subscribe({
+              next: () => this.deletePortfolioRecord(),
+              error: () => {
                 this.snackBar.open(
                   this.translate.instant('recipes.messages.error_removing'),
                   this.translate.instant('portfolio.actions.cancel'),
@@ -239,32 +223,63 @@ export class PortfolioDetailComponent implements OnInit {
                 );
               }
             });
-          } else {
-            this.deletePortfolioAfterRemovingRecipes();
+          },
+          error: () => {
+            this.snackBar.open(
+              this.translate.instant('recipes.messages.error_loading'),
+              this.translate.instant('portfolio.actions.cancel'),
+              { duration: 3000 }
+            );
           }
-        },
-        error: (error) => {
-          console.error('Error loading recipes:', error);
-          this.snackBar.open(
-            this.translate.instant('recipes.messages.error_loading'),
-            this.translate.instant('portfolio.actions.cancel'),
-            { duration: 3000 }
-          );
-        }
-      });
-    }
-  }
-
-  private deletePortfolioAfterRemovingRecipes(): void {
-    this.portfolioService.delete(this.portfolioId).subscribe({
-      next: () => {
-        this.snackBar.open('Portafolio eliminado correctamente', 'Cerrar', { duration: 3000 });
-        this.router.navigate(['/preparation/recipes']);
-      },
-      error: (error) => {
-        console.error('Error deleting portfolio:', error);
-        this.snackBar.open('Error al eliminar el portafolio', 'Cerrar', { duration: 3000 });
+        });
       }
     });
   }
+
+  private deletePortfolioRecord(): void {
+    this.portfolioService.delete(this.portfolioId).subscribe({
+      next: () => {
+        this.snackBar.open(
+          this.translate.instant('portfolio.messages.deleted'),
+          this.translate.instant('Cerrar'),
+          { duration: 3000 }
+        );
+        this.router.navigate(['/preparation/recipes']);
+      },
+      error: () => {
+        this.snackBar.open(
+          this.translate.instant('portfolio.messages.error_deleting'),
+          this.translate.instant('Cerrar'),
+          { duration: 3000 }
+        );
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'delete-portfolio-confirmation-dialog',
+  template: `
+    <h2 mat-dialog-title>{{ 'portfolio.delete_confirmation_title' | translate }}</h2>
+    <mat-dialog-content>
+      {{ 'portfolio.delete_confirmation_message' | translate: { name: data.portfolioName } }}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button [mat-dialog-close]="false">
+        {{ 'portfolio.actions.cancel' | translate }}
+      </button>
+      <button mat-raised-button color="warn" [mat-dialog-close]="true">
+        {{ 'portfolio.actions.delete' | translate }}
+      </button>
+    </mat-dialog-actions>
+  `,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    TranslateModule
+  ]
+})
+export class DeletePortfolioConfirmationDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { portfolioName: string }) {}
 }

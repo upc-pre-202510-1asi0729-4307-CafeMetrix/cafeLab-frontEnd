@@ -9,8 +9,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { RecipeService } from '../../services/recipe.service';
+import { IngredientService } from '../../services/ingredient.service';
 import { PortfolioService } from '../../services/portfolio.service';
-import { Drink } from '../../models/drink.entity';
+import { Recipe } from '../../models/recipe.entity';
+import { Ingredient } from '../../models/ingredient.entity';
 import { Portfolio } from '../../models/portfolio.entity';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -18,6 +20,7 @@ import {ToolbarComponent} from '../../../public/components/toolbar/toolbar.compo
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -41,7 +44,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Drink | null = null;
+  recipe: Recipe | null = null;
+  ingredients: Ingredient[] = [];
   portfolio: Portfolio | null = null;
   isLoading = true;
   error = false;
@@ -50,6 +54,7 @@ export class RecipeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private recipeService: RecipeService,
+    private ingredientService: IngredientService,
     private portfolioService: PortfolioService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
@@ -71,11 +76,30 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.getById(id).subscribe({
       next: (recipe) => {
         this.recipe = recipe;
-        if (recipe.portfolioId) {
-          this.loadPortfolio(recipe.portfolioId);
-        } else {
-          this.isLoading = false;
-        }
+        
+        // Cargar los ingredientes de la receta
+        this.ingredientService.getByRecipeId(parseInt(id)).subscribe({
+          next: (ingredients) => {
+            this.ingredients = ingredients;
+            
+            // Cargar el portafolio si existe
+            if (recipe.portfolioId) {
+              this.loadPortfolio(recipe.portfolioId);
+            } else {
+              this.isLoading = false;
+            }
+          },
+          error: (err) => {
+            console.error('Error al cargar los ingredientes:', err);
+            this.ingredients = [];
+            
+            if (recipe.portfolioId) {
+              this.loadPortfolio(recipe.portfolioId);
+            } else {
+              this.isLoading = false;
+            }
+          }
+        });
       },
       error: (err) => {
         console.error('Error al cargar la receta:', err);
@@ -104,15 +128,20 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   getNavigationPath(): string {
-    return this.recipe?.portfolioId 
+    return this.recipe?.portfolioId
       ? `/preparation/portfolios/${this.recipe.portfolioId}`
       : '/preparation/recipes';
   }
 
   getNavigationText(): string {
-    return this.recipe?.portfolioId 
+    return this.recipe?.portfolioId
       ? 'NAVIGATION.PORTFOLIO'
       : 'NAVIGATION.DRINKS';
+  }
+
+  editRecipe(): void {
+    if (!this.recipe) return;
+    this.router.navigate(['/preparation/recipes/edit', this.recipe.id]);
   }
 
   deleteRecipe(): void {
@@ -125,7 +154,10 @@ export class RecipeDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.recipeService.delete(this.recipe!.id).subscribe({
+        // Primero eliminar los ingredientes, luego la receta
+        this.ingredientService.deleteByRecipeId(this.recipe!.id).pipe(
+          switchMap(() => this.recipeService.delete(this.recipe!.id))
+        ).subscribe({
           next: () => {
             this.snackBar.open(
               this.translate.instant('recipes.detail.delete_success'),

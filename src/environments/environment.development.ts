@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  serverBaseUrl: 'http://localhost:8080',
+  serverBaseUrl: 'http://localhost:8080/api/v1',
   coffeeLotsEndpointPath: '/coffee-lots',
   suppliersEndpointPath: '/suppliers',
   roastProfileEndpointPath: '/roast-profile',
@@ -9,9 +9,9 @@ export const environment = {
   plansEndPointPath: '/plans',
   usersEndpointPath: '/users',
   cuppingSessionsEndpointPath: '/cupping',
-  recipesEndpointPath: '/api/v1/recipes',
-  portfoliosEndpointPath: '/api/v1/portfolios',
-  ingredientsEndpointPath: '/api/v1/recipes/{recipeId}/ingredients',
+  recipesEndpointPath: '/recipes',
+  portfoliosEndpointPath: '/portfolios',
+  ingredientsEndpointPath: '/recipes/{recipeId}/ingredients',
   contactUsEndpointPath: '/contact-us',
   calibrationsEndpointPath: '/calibrations'
 };

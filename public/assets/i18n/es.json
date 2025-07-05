@@ -673,6 +673,8 @@
     },
     "CONSUMPTION_DIALOG": {
       "TITLE": "Registrar Consumo",
+      "QUANTITY_USED": "Cantidad usada (kg)",
+      "DATE_USED": "Fecha de uso",
       "DATE": "Fecha",
       "LOT": "Lote",
       "FINAL_PRODUCT": "Producto final",
@@ -687,7 +689,8 @@
       "PREVIOUS_MOVEMENTS": "Movimientos anteriores",
       "NO_PREVIOUS_MOVEMENTS": "No hay movimientos anteriores para este lote",
       "CONFIRM": "Confirmar",
-      "CANCEL": "Cancelar"
+      "CANCEL": "Cancelar",
+      "SAVE": "Guardar"
     },
     "CONSUMPTION_TABLE": {
       "TITLE": "Historial de Consumos",

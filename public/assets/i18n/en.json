@@ -452,7 +452,9 @@
       "error_loading": "Error loading portfolio",
       "error_updating": "Error updating portfolio",
       "error_deleting": "Error deleting portfolio"
-    }
+    },
+    "delete_confirmation_title": "Delete Portfolio",
+    "delete_confirmation_message": "Are you sure you want to delete the portfolio '{{name}}'? This action cannot be undone."
   },
   "recipes": {
     "title": "Unassigned Drinks",
@@ -523,7 +525,8 @@
       "success": "Recipe created successfully",
       "error": "Error creating recipe",
       "error_loading_portfolios": "Error loading portfolios",
-      "error_loading_lots": "Error al cargar los lotes"
+      "error_loading_lots": "Error al cargar los lotes",
+      "no_cupping_session": "No cupping session"
     },
     "detail": {
       "basic_info": "Basic Information",
@@ -536,6 +539,13 @@
       "confirm_delete": "Delete",
       "delete_success": "Recipe deleted successfully",
       "delete_error": "Error deleting recipe"
+    },
+    "edit": {
+      "title": "Edit Recipe",
+      "submit": "Save Changes",
+      "success": "Recipe updated successfully",
+      "error_loading_cupping_sessions": "Error loading cupping sessions",
+      "error": "Error updating recipe"
     }
   },
   "CUPPING_SESSIONS": {
@@ -662,17 +672,6 @@
         "ACTIONS": "Actions"
       }
     },
-    "STOCK_STATUS": {
-      "LOW": "Low stock",
-      "OK": "Adequate stock"
-    },
-    "CONSUMPTION_DIALOG": {
-      "TITLE": "Register Consumption",
-      "QUANTITY_USED": "Quantity Used (kg)",
-      "DATE_USED": "Date of Use",
-      "CANCEL": "Cancel",
-      "SAVE": "Save"
-    },
     "GREEN_COFFEE": "Green Coffee",
     "ROASTED_COFFEE": "Roasted Coffee",
     "SELECT_COFFEE_TYPE": "Select coffee type",
@@ -686,6 +685,8 @@
     },
     "CONSUMPTION_DIALOG": {
       "TITLE": "Register Consumption",
+      "QUANTITY_USED": "Quantity Used (kg)",
+      "DATE_USED": "Date of Use",
       "DATE": "Date",
       "LOT": "Lot",
       "FINAL_PRODUCT": "Final product",
@@ -700,7 +701,8 @@
       "PREVIOUS_MOVEMENTS": "Previous movements",
       "NO_PREVIOUS_MOVEMENTS": "No previous movements for this lot",
       "CONFIRM": "Confirm",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "SAVE": "Save"
     },
     "CONSUMPTION_TABLE": {
       "TITLE": "Consumption History",

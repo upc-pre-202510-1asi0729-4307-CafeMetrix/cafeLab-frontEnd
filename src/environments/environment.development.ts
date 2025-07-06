@@ -11,6 +11,7 @@ export const environment = {
   cuppingSessionsEndpointPath: '/cupping',
   recipesEndpointPath: '/recipes',
   portfoliosEndpointPath: '/portfolios',
+  ingredientsEndpointPath: '/recipes/{recipeId}/ingredients',
   contactUsEndpointPath: '/contact-us',
   calibrationsEndpointPath: '/api/v1/calibrations',
   coastEndpointPath: '/api/v1/coast-productions',

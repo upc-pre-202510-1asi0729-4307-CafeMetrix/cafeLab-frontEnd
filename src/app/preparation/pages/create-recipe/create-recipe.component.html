@@ -1,32 +1,27 @@
 <mat-toolbar color="primary">
   <app-toolbar/>
-
 </mat-toolbar>
 
-<!-- Reserva espacio para el navbar -->
 <div style="height: 60px;"></div>
 
 <div class="container">
-  <!-- Breadcrumb -->
   <div class="breadcrumb">
-
     <a routerLink="/preparation/recipes">{{ 'NAVIGATION.DRINKS' | translate }}</a> &gt;
-    <span>{{ 'recipes.creation.title' | translate }}</span>
+    <span>{{ isEditMode ? ('recipes.edit.title' | translate) : ('recipes.creation.title' | translate) }}</span>
   </div>
 
   <div class="recipe-form-card">
-    <!-- Selector de método de extracción -->
     <div class="extraction-method-toggle">
       <div class="toggle-container">
         <button
-          [class.active]="extractionMethod === 'coffee'"
-          (click)="changeExtractionMethod('coffee')"
+          [class.active]="extractionCategory === 'coffee'"
+          (click)="changeExtractionCategory('coffee')"
           class="toggle-button">
           {{ 'recipes.creation.extraction_coffee' | translate }}
         </button>
         <button
-          [class.active]="extractionMethod === 'espresso'"
-          (click)="changeExtractionMethod('espresso')"
+          [class.active]="extractionCategory === 'espresso'"
+          (click)="changeExtractionCategory('espresso')"
           class="toggle-button">
           {{ 'recipes.creation.extraction_espresso' | translate }}
         </button>
@@ -36,61 +31,44 @@
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="form-content">
         <div class="recipe-info-container">
-          <!-- Información básica -->
+
           <div class="basic-info">
             <h3>{{ 'recipes.creation.name' | translate }}</h3>
             <mat-form-field appearance="outline" class="full-width">
-              <input matInput formControlName="name" [placeholder]="'recipes.creation.name_placeholder' | translate">
+              <input
+                matInput
+                formControlName="name"
+                [placeholder]="'recipes.creation.name_placeholder' | translate">
               <mat-error *ngIf="recipeForm.get('name')?.hasError('required')">
                 {{ 'recipes.creation.name_required' | translate }}
               </mat-error>
             </mat-form-field>
 
-            <!-- URL de la imagen -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>{{ 'recipes.creation.upload_image' | translate }}</mat-label>
-              <input matInput formControlName="image" [placeholder]="'recipes.creation.image_placeholder' | translate">
-              <mat-error *ngIf="recipeForm.get('image')?.hasError('required')">
+              <input
+                matInput
+                formControlName="imageUrl"
+                [placeholder]="'recipes.creation.image_placeholder' | translate">
+              <mat-error *ngIf="recipeForm.get('imageUrl')?.hasError('required')">
                 {{ 'recipes.creation.image_required' | translate }}
               </mat-error>
             </mat-form-field>
 
-            <!-- Vista previa de la imagen -->
-            <div class="image-preview" *ngIf="recipeForm.get('image')?.value">
-              <img [src]="recipeForm.get('image')?.value" alt="Vista previa de la imagen">
+            <div class="image-preview" *ngIf="recipeForm.get('imageUrl')?.value">
+              <img [src]="recipeForm.get('imageUrl')?.value" alt="Vista previa de la imagen">
             </div>
           </div>
 
-          <!-- Detalles específicos según el método de extracción -->
           <div class="recipe-details">
-            <!-- Campos comunes para ambos métodos -->
-            <div class="form-row">
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'recipes.creation.lote' | translate }}</mat-label>
-                <mat-select formControlName="lote">
-                  <mat-option *ngFor="let lot of coffeeLots" [value]="lot.lot_name">
-                    {{ lot.lot_name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'recipes.creation.tueste' | translate }}</mat-label>
-                <mat-select formControlName="tueste">
-                  <mat-option *ngFor="let profile of roastProfiles" [value]="profile.name">
-                    {{ profile.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
             <div class="form-row">
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.cata' | translate }}</mat-label>
-                <mat-select formControlName="cata">
-                  <mat-option value="Sesion Cata X">Sesion Cata X</mat-option>
-                  <mat-option value="Sesion Cata Y">Sesion Cata Y</mat-option>
-                  <mat-option value="Sesion Cata Z">Sesion Cata Z</mat-option>
+                <mat-select formControlName="cuppingSessionId">
+                  <mat-option [value]="null">{{ 'recipes.creation.no_cupping_session' | translate }}</mat-option>
+                  <mat-option *ngFor="let session of cuppingSessions" [value]="session.id">
+                    {{ session.nombre }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -98,30 +76,28 @@
                 <mat-label>{{ 'recipes.creation.portfolio' | translate }}</mat-label>
                 <mat-select formControlName="portfolioId">
                   <mat-option [value]="null">{{ 'recipes.creation.no_portfolio' | translate }}</mat-option>
-                  <mat-option *ngFor="let portfolio of portfolios" [value]="portfolio.id">
-                    {{ portfolio.name }}
+                  <mat-option *ngFor="let p of portfolios" [value]="p.id">
+                    {{ p.name }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
 
-            <!-- Método de extracción específico para café -->
-            <div class="form-row" *ngIf="extractionMethod === 'coffee'">
+            <div class="form-row" *ngIf="extractionCategory === 'coffee'">
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.extraction_method' | translate }}</mat-label>
-                <mat-select formControlName="extractionType">
-                  <mat-option *ngFor="let method of extractionMethods" [value]="method.value">
-                    {{ method.label }}
+                <mat-select formControlName="extractionMethod">
+                  <mat-option *ngFor="let m of extractionMethods" [value]="m.value">
+                    {{ m.label }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
 
-            <!-- Molienda y ratio -->
             <div class="form-row">
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.molienda' | translate }}</mat-label>
-                <mat-select formControlName="molienda">
+                <mat-select formControlName="grindSize">
                   <mat-option value="Muy fino">Muy fino</mat-option>
                   <mat-option value="Fino">Fino</mat-option>
                   <mat-option value="Medio">Medio</mat-option>
@@ -132,86 +108,124 @@
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.ratio' | translate }}</mat-label>
                 <mat-select formControlName="ratio">
-                  <mat-option value="1:12">1:12</mat-option>
-                  <mat-option value="1:14">1:14</mat-option>
-                  <mat-option value="1:16">1:16</mat-option>
+                  <mat-option *ngFor="let r of availableRatios" [value]="r.value">
+                    {{ r.label }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
 
-            <!-- Tiempo -->
             <div class="form-row">
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'recipes.creation.tiempo' | translate }}</mat-label>
-                <input matInput formControlName="tiempo" type="text" [placeholder]="'recipes.creation.tiempo_placeholder' | translate">
+                <input
+                  matInput
+                  formControlName="preparationTime"
+                  type="text"
+                  [placeholder]="'recipes.creation.tiempo_placeholder' | translate">
               </mat-form-field>
             </div>
 
-            <!-- Ingredientes -->
             <div class="ingredients-section">
               <h3>{{ 'recipes.creation.ingredientes' | translate }}</h3>
-              <div formArrayName="ingredientes">
-                <div *ngFor="let ingrediente of ingredientes.controls; let i=index" [formGroupName]="i" class="ingredient-row">
-                  <!-- Para método espresso, permitir ingrediente personalizado -->
-                  <mat-form-field appearance="outline" *ngIf="extractionMethod === 'espresso'">
+              <div formArrayName="ingredients">
+                <div
+                  *ngFor="let ing of ingredients.controls; let i = index"
+                  [formGroupName]="i"
+                  class="ingredient-row">
+
+                  <mat-form-field appearance="outline" *ngIf="extractionCategory === 'espresso'">
                     <mat-label>{{ 'recipes.creation.ingrediente' | translate }}</mat-label>
-                    <input matInput formControlName="name" [placeholder]="'recipes.creation.ingrediente' | translate">
+                    <input
+                      matInput
+                      formControlName="name"
+                      [placeholder]="'recipes.creation.ingrediente' | translate">
                   </mat-form-field>
 
-                  <!-- Para método café, mostrar ingredientes fijos -->
-                  <mat-form-field appearance="outline" *ngIf="extractionMethod === 'coffee'">
+                  <mat-form-field appearance="outline" *ngIf="extractionCategory === 'coffee'">
                     <mat-label>{{ 'recipes.creation.ingrediente' | translate }}</mat-label>
-                    <input matInput [value]="ingrediente.get('name')?.value" readonly>
+                    <input
+                      matInput
+                      [value]="ing.get('name')?.value"
+                      readonly>
                   </mat-form-field>
 
                   <mat-form-field appearance="outline">
                     <mat-label>{{ 'recipes.creation.medida' | translate }}</mat-label>
-                    <input matInput formControlName="amount" type="number" min="0">
+                    <input
+                      matInput
+                      formControlName="amount"
+                      type="number"
+                      min="0">
                   </mat-form-field>
 
                   <mat-form-field appearance="outline">
                     <mat-label>Unidad</mat-label>
                     <mat-select formControlName="unit">
-                      <mat-option *ngFor="let unit of availableUnits" [value]="unit.value">
-                        {{ unit.label }}
+                      <mat-option *ngFor="let u of availableUnits" [value]="u.value">
+                        {{ u.label }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
 
-                  <button mat-icon-button type="button" color="warn" (click)="removeIngredient(i)" *ngIf="extractionMethod === 'espresso'">
+                  <button
+                    mat-icon-button
+                    type="button"
+                    color="warn"
+                    (click)="removeIngredient(i)"
+                    *ngIf="extractionCategory === 'espresso'">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
               </div>
 
-              <button mat-stroked-button type="button" class="add-ingredient-btn" (click)="addIngredient()" *ngIf="extractionMethod === 'espresso'">
-                <mat-icon>add</mat-icon> {{ 'recipes.creation.add_ingredient' | translate }}
+              <button
+                mat-stroked-button
+                type="button"
+                class="add-ingredient-btn"
+                (click)="addIngredient()"
+                *ngIf="extractionCategory === 'espresso'">
+                <mat-icon>add</mat-icon>
+                {{ 'recipes.creation.add_ingredient' | translate }}
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Pasos y consejos -->
         <div class="steps-tips-container">
           <div class="form-group">
             <h3>{{ 'recipes.creation.pasos' | translate }}</h3>
             <mat-form-field appearance="outline" class="full-width">
-              <textarea matInput formControlName="pasos" rows="10" [placeholder]="'recipes.creation.pasos_placeholder' | translate"></textarea>
+              <textarea
+                matInput
+                formControlName="steps"
+                rows="10"
+                [placeholder]="'recipes.creation.pasos_placeholder' | translate">
+              </textarea>
             </mat-form-field>
           </div>
 
           <div class="form-group">
             <h3>{{ 'recipes.creation.consejos' | translate }}</h3>
             <mat-form-field appearance="outline" class="full-width">
-              <textarea matInput formControlName="consejos" rows="10" [placeholder]="'recipes.creation.consejos_placeholder' | translate"></textarea>
+              <textarea
+                matInput
+                formControlName="tips"
+                rows="10"
+                [placeholder]="'recipes.creation.consejos_placeholder' | translate">
+              </textarea>
             </mat-form-field>
           </div>
         </div>
 
-        <!-- Botón de guardar -->
-        <div class="  form-actions">
-          <button mat-raised-button color="primary" type="submit" class="submit-button" [disabled]="recipeForm.invalid || isSubmitting">
-            {{ 'recipes.creation.submit' | translate }}
+        <div class="form-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="recipeForm.invalid || isSubmitting"
+            class="submit-button">
+            {{ isEditMode ? ('recipes.edit.submit' | translate) : ('recipes.creation.submit' | translate) }}
           </button>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { RecipeService } from '../../services/recipe.service';
-import { Drink } from '../../models/drink.entity';
+import { Recipe } from '../../models/recipe.entity';
 
 @Component({
   selector: 'app-add-recipe-dialog',
@@ -23,7 +23,7 @@ import { Drink } from '../../models/drink.entity';
   styleUrls: ['./add-recipe-dialog.component.css']
 })
 export class AddRecipeDialogComponent implements OnInit {
-  availableRecipes: Drink[] = [];
+  availableRecipes: Recipe[] = [];
   selectedRecipes: number[] = [];
 
   constructor(
@@ -38,16 +38,16 @@ export class AddRecipeDialogComponent implements OnInit {
 
   loadAvailableRecipes(): void {
     this.recipeService.getAll().subscribe(recipes => {
-      this.availableRecipes = recipes.filter(recipe => !recipe.portfolioId);
+      this.availableRecipes = recipes.filter(r => !r.portfolioId);
     });
   }
 
   toggleRecipeSelection(recipeId: number): void {
-    const index = this.selectedRecipes.indexOf(recipeId);
-    if (index === -1) {
+    const idx = this.selectedRecipes.indexOf(recipeId);
+    if (idx === -1) {
       this.selectedRecipes.push(recipeId);
     } else {
-      this.selectedRecipes.splice(index, 1);
+      this.selectedRecipes.splice(idx, 1);
     }
   }
 

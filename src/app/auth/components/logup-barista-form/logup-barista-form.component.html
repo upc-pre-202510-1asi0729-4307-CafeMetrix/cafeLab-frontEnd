@@ -1,0 +1,66 @@
+<div class="logup-form-container">
+  <h2>{{ 'LOGUP_BARISTA.TITLE' | translate }}</h2>
+  <form class="logup-form" [formGroup]="logupForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.NAME' | translate }}</mat-label>
+      <input matInput type="text" formControlName="name">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'name')">
+        {{ errorMessagesForControl(logupForm, 'name') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.EMAIL' | translate }}</mat-label>
+      <input matInput type="email" formControlName="email">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'email')">
+        {{ errorMessagesForControl(logupForm, 'email') }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="experience-selection">
+      <label class="experience-label">{{ 'LOGUP.EXPERIENCE' | translate }}</label>
+
+      <div class="experience-options">
+        <button type="button"
+                class="experience-button"
+                [ngClass]="{'selected': logupForm.get('experience')?.value === 'initial'}"
+                (click)="selectExperience('initial')">
+          <span class="button-text">{{ 'LOGUP.EXPERIENCE_INITIAL' | translate }}</span>
+          <span class="check-icon" *ngIf="logupForm.get('experience')?.value === 'initial'">✓</span>
+        </button>
+
+        <button type="button"
+                class="experience-button"
+                [ngClass]="{'selected': logupForm.get('experience')?.value === 'intermediate'}"
+                (click)="selectExperience('intermediate')">
+          <span class="button-text">{{ 'LOGUP.EXPERIENCE_INTERMEDIATE' | translate }}</span>
+          <span class="check-icon" *ngIf="logupForm.get('experience')?.value === 'intermediate'">✓</span>
+        </button>
+
+        <button type="button"
+                class="experience-button"
+                [ngClass]="{'selected': logupForm.get('experience')?.value === 'professional'}"
+                (click)="selectExperience('professional')">
+          <span class="button-text">{{ 'LOGUP.EXPERIENCE_PROFESSIONAL' | translate }}</span>
+          <span class="check-icon" *ngIf="logupForm.get('experience')?.value === 'professional'">✓</span>
+        </button>
+      </div>
+
+      <mat-error *ngIf="isInvalidControl(logupForm, 'experience')">
+        {{ errorMessagesForControl(logupForm, 'experience') }}
+      </mat-error>
+    </div>
+
+    <mat-form-field>
+      <mat-label>{{ 'LOGUP.PASSWORD' | translate }}</mat-label>
+      <input matInput type="password" formControlName="password">
+      <mat-error *ngIf="isInvalidControl(logupForm, 'password')">
+        {{ errorMessagesForControl(logupForm, 'password') }}
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ 'LOGUP.SUBMIT' | translate }}
+    </button>
+  </form>
+</div>

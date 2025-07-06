@@ -1,0 +1,45 @@
+.breadcrumb {
+  margin: 16px;
+  font-size: 14px;
+  color: #555;
+}
+
+.comparison-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+.selectors {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tueste-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tueste-label {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.add-button {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.image-placeholder img {
+  width: 100%;
+  max-width: 600px;
+  border: 1px dashed #ccc;
+  padding: 16px;
+}

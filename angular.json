@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cafeLab-frontEnd": {
+    "libraryDefects": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/cafe-lab-front-end",
+            "outputPath": "dist/cafe-lab",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -28,7 +28,11 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+
+
             ],
             "scripts": []
           },
@@ -66,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "cafeLab-frontEnd:build:production"
+              "buildTarget": "libraryDefects:build:production"
             },
             "development": {
-              "buildTarget": "cafeLab-frontEnd:build:development"
+              "buildTarget": "libraryDefects:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,5 +104,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "c2b179d3-7f19-49bb-b836-d8692376e37a"
   }
 }

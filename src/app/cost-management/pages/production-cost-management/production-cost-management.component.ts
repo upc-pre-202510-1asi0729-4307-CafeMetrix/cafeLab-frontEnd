@@ -233,7 +233,7 @@ export class ProductionCostPageComponent implements OnInit {
   }
 
   onCancel = () => {
-    this.router.navigate(['/']);
+    this.goToHome();
   };
 
   onSaveAsDraft(): void {

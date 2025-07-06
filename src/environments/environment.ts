@@ -4,7 +4,7 @@ export const environment = {
   serverBaseUrl: 'http://localhost:8080',
   coffeeLotsEndpointPath: '/api/v1/coffee-lots',
   suppliersEndpointPath: '/api/v1/suppliers',
-  roastProfileEndpointPath: '/api/v1/roast-profiles',
+  roastProfileEndpointPath: '/api/v1/roast-profile',
   coffeesEndpointPath: '/api/v1/coffees',
   defectsEndpointPath: '/api/v1/defects',
   plansEndPointPath: '/plans',

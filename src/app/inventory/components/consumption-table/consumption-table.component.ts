@@ -46,9 +46,9 @@ export class ConsumptionTableComponent {
 
   updateTableData(): void {
     this.tableData = this.consumptionEntries.map(entry => {
-      const lot = this.lots.find(l => l.id === entry.coffeeLotId.toString());
+      const lot = this.lots.find(l => Number(l.id) === Number(entry.coffeeLotId));
       return {
-        id: entry.id,
+        id: entry.id || 0,
         date: new Date(entry.dateUsed).toLocaleDateString(),
         lotName: lot ? lot.lot_name : `Lote ${entry.coffeeLotId}`,
         consumptionKg: entry.quantityUsed,

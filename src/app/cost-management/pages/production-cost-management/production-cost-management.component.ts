@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,11 +16,14 @@ import { StepLotSelectionComponent } from '../../components/step-lot-selection/s
 import { StepDirectCostsComponent } from '../../components/step-direct-costs/step-direct-costs.component';
 import { StepIndirectCostsComponent } from '../../components/step-indirect-costs/step-indirect-costs.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ProductionCostEntity } from "../../model/production-cost.entity";
+import { ProductionCostEntity, ProductionCostCalculation } from "../../model/production-cost.entity";
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatToolbar, MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import { AuthService } from '../../../auth/services/AuthService';
+import { ProductionCostService } from '../../services/production-cost.service';
+import { CoffeeLotService } from '../../../coffee-lot/services/coffee-lot.service';
+import { CoffeeLot } from '../../../coffee-lot/model/coffee-lot.model';
 
 @Component({
   selector: 'app-production-cost-page',
@@ -54,7 +57,7 @@ import { AuthService } from '../../../auth/services/AuthService';
   templateUrl: './production-cost-management.component.html',
   styleUrl: './production-cost-management.component.css'
 })
-export class ProductionCostPageComponent {
+export class ProductionCostPageComponent implements OnInit {
   firstFormGroup!: FormGroup;
   directCostsForm!: FormGroup;
   indirectCostsForm!: FormGroup;
@@ -71,9 +74,12 @@ export class ProductionCostPageComponent {
   recommendations: { message: string; type: 'success' | 'warning' | 'info' }[] = [];
   costSummary: { tipo: string; monto: number }[] = [];
   private totalCost: number | undefined;
-  lots: any[] = [];
+  lots: CoffeeLot[] = [];
+  loading = false;
+  error: string | null = null;
+  currentCalculation: ProductionCostCalculation | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private translate: TranslateService, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private translate: TranslateService, private authService: AuthService, private productionCostService: ProductionCostService, private coffeeLotService: CoffeeLotService) {
     this.firstFormGroup = this.fb.group({
       selectedLot: ['', Validators.required]
     });
@@ -113,6 +119,117 @@ export class ProductionCostPageComponent {
         administrative: [0, [Validators.required, Validators.min(0)]]
       })
     });
+  }
+
+  ngOnInit(): void {
+    this.loadLots();
+  }
+
+  loadLots(): void {
+    this.loading = true;
+    const userId = Number(this.authService.getCurrentUserId());
+    
+    if (!userId || isNaN(userId)) {
+      this.error = 'Usuario no autenticado o ID inválido';
+      this.loading = false;
+      return;
+    }
+
+    this.coffeeLotService.getAll().subscribe({
+      next: (lots: CoffeeLot[]) => {
+        this.lots = lots.filter((lot: CoffeeLot) => Number(lot.userId) === userId);
+        this.loading = false;
+        this.error = null;
+      },
+      error: (err: any) => {
+        console.error('Error loading lots:', err);
+        this.error = 'Error al cargar los lotes';
+        this.loading = false;
+      }
+    });
+  }
+
+  saveProductionCost(): void {
+    if (!this.isFormValid()) {
+      this.error = 'Por favor complete todos los campos requeridos';
+      return;
+    }
+
+    this.isSubmitting = true;
+    const userId = Number(this.authService.getCurrentUserId());
+    const selectedLotId = Number(this.firstFormGroup.value.selectedLot);
+
+    if (!userId || !selectedLotId) {
+      this.error = 'Datos de usuario o lote inválidos';
+      this.isSubmitting = false;
+      return;
+    }
+
+    // Verificar que el lote seleccionado existe y pertenece al usuario
+    const selectedLot = this.lots.find(lot => Number(lot.id) === selectedLotId);
+    if (!selectedLot) {
+      this.error = 'El lote seleccionado no es válido';
+      this.isSubmitting = false;
+      return;
+    }
+
+    // Calcular resumen y generar recomendaciones
+    this.calculateResumen();
+    this.generateRecommendations();
+
+    // Calcular costos usando el servicio
+    const costCalculation = this.productionCostService.calculateProductionCost({
+      coffeeLotId: selectedLotId,
+      coffeeLotName: selectedLot.lot_name,
+      coffeeType: selectedLot.coffee_type,
+      totalKg: this.firstFormGroup.value.rawMaterials?.quantity || 0,
+      rawMaterialsCost: this.rawMaterialTotal,
+      laborCost: this.laborTotal,
+      transportCost: this.transportTotal,
+      storageCost: this.storageTotal,
+      processingCost: this.processingTotal,
+      otherIndirectCosts: this.othersTotal,
+      margin: this.EXPECTED_MARGIN
+    });
+
+    // Mostrar resultados
+    this.isSuccess = true;
+    this.registrationCode = `CP-${new Date().getFullYear()}-${Math.floor(Math.random() * 10000)}`;
+    this.isSubmitting = false;
+    this.error = null;
+    
+    // Guardar el cálculo para el PDF
+    this.currentCalculation = costCalculation;
+  }
+
+  downloadPDF(): void {
+    if (this.currentCalculation) {
+      this.productionCostService.generatePDF(this.currentCalculation);
+    }
+  }
+
+  resetForm(): void {
+    this.isSuccess = false;
+    this.currentCalculation = null;
+    this.registrationCode = '';
+    this.error = null;
+    this.currentStep = 0;
+    
+    // Resetear formularios
+    this.firstFormGroup.reset();
+    this.directCostsForm.reset();
+    this.indirectCostsForm.reset();
+    
+    // Resetear valores por defecto
+    this.directCostsForm.patchValue({
+      labor: { numberOfWorkers: 1 }
+    });
+  }
+
+  private isFormValid(): boolean {
+    return this.firstFormGroup.valid && 
+           this.directCostsForm.valid && 
+           this.indirectCostsForm.valid;
   }
 
   onCancel = () => {
@@ -214,26 +331,41 @@ export class ProductionCostPageComponent {
   }
 
   onSubmit(): void {
-    if (this.firstFormGroup.valid && this.directCostsForm.valid && this.indirectCostsForm.valid) {
-      this.calculateResumen();
-      this.isSubmitting = true;
-      const year = new Date().getFullYear();
-      const random = Math.floor(10000 + Math.random() * 90000);
-      this.registrationCode = `RC-${year}-${random}`;
-      this.generateRecommendations();
-      setTimeout(() => {
-        this.isSubmitting = false;
-        this.isSuccess = true;
-      }, 1000);
-    }
+    this.saveProductionCost();
   }
 
   onExit(): void {
-    this.router.navigate(['/']);
+    this.goToHome();
   }
 
   onPrint(): void {
-    window.print();
+    this.downloadPDF();
+  }
+
+  goToHome(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    switch (user.plan) {
+      case 'barista':
+        this.router.navigate(['/dashboard/barista']);
+        break;
+      case 'owner':
+        this.router.navigate(['/dashboard/owner']);
+        break;
+      case 'full':
+        this.router.navigate(['/dashboard/complete']);
+        break;
+      default:
+        this.router.navigate(['/']);
+    }
+  }
+
+  updateDirectCosts(event: { materiaPrima: number; manoObra: number }): void {
+    this.totalMateriaPrima = event.materiaPrima;
+    this.totalManoObra = event.manoObra;
   }
 
   private generateRecommendations(): void {
@@ -279,36 +411,6 @@ export class ProductionCostPageComponent {
         message: this.translate.instant('COST_MANAGEMENT.RECOMMENDATIONS.ALL_GOOD'),
         type: 'success'
       });
-    }
-  }
-
-  updateDirectCosts(event: { materiaPrima: number; manoObra: number }): void {
-    this.totalMateriaPrima = event.materiaPrima;
-    this.totalManoObra = event.manoObra;
-  }
-
-  goToHome(): void {
-    const user = this.authService.getCurrentUser();
-    if (!user) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    if (user.home) {
-      this.router.navigate([user.home]);
-      return;
-    }
-    switch (user.plan) {
-      case 'barista':
-        this.router.navigate(['/dashboard/barista']);
-        break;
-      case 'owner':
-        this.router.navigate(['/dashboard/owner']);
-        break;
-      case 'full':
-        this.router.navigate(['/dashboard/complete']);
-        break;
-      default:
-        this.router.navigate(['/']);
     }
   }
 }

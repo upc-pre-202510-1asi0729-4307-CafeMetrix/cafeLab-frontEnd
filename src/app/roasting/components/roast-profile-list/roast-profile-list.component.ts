@@ -33,15 +33,17 @@ export class RoastProfileListComponent implements OnInit {
   showProfileDetails: boolean = false;
   showEditModal: boolean = false;
   showRegisterModal: boolean = false;
+  showDeleteModal: boolean = false;
 
   selectedProfile: RoastProfile | null = null;
   editingProfile: RoastProfile | null = null;
+  profileToDelete: RoastProfile | null = null;
 
   newProfile: RoastProfile = {
     name: '',
     type: '',
     duration: 0,
-    lot: '',
+    lot: 0,
     tempStart: 0,
     tempEnd: 0
   };
@@ -73,9 +75,7 @@ export class RoastProfileListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    const userId = this.authService.getCurrentUserId();
-
-    this.roastProfileService.getRoastProfiles()
+    this.roastProfileService.getAll()
       .pipe(
         catchError(err => {
           console.error('Error loading profiles', err);
@@ -85,7 +85,7 @@ export class RoastProfileListComponent implements OnInit {
         finalize(() => this.loading = false)
       )
       .subscribe(profiles => {
-        this.profiles = profiles.filter(profile => profile.user_id === userId);
+        this.profiles = profiles;
       });
   }
 
@@ -97,7 +97,7 @@ export class RoastProfileListComponent implements OnInit {
 
       const userId = this.authService.getCurrentUserId();
 
-      this.roastProfileService.searchRoastProfiles(this.searchQuery, userId)
+      this.roastProfileService.searchRoastProfiles(this.searchQuery)
         .pipe(
           catchError(err => {
             console.error('Error searching profiles', err);
@@ -123,7 +123,7 @@ export class RoastProfileListComponent implements OnInit {
 
     const userId = this.authService.getCurrentUserId();
 
-    this.roastProfileService.filterProfiles(userId, this.showFavoritesOnly, this.sortOrder)
+    this.roastProfileService.filterProfiles(this.showFavoritesOnly, this.sortOrder)
       .pipe(
         catchError(err => {
           console.error('Error filtering profiles', err);
@@ -203,7 +203,7 @@ export class RoastProfileListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.roastProfileService.updateProfile(this.editingProfile)
+    this.roastProfileService.update(this.editingProfile.id!, this.editingProfile)
       .pipe(
         catchError(err => {
           console.error('Error updating profile', err);
@@ -214,7 +214,7 @@ export class RoastProfileListComponent implements OnInit {
           this.loading = false;
         })
       )
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result !== null) {
           this.showEditModal = false;
           this.loadProfiles();
@@ -247,24 +247,69 @@ export class RoastProfileListComponent implements OnInit {
       });
   }
 
+  deleteProfile(profile: RoastProfile): void {
+    if (!profile.id) {
+      this.error = 'Error: No se pudo identificar el perfil a eliminar.';
+      return;
+    }
+
+    this.profileToDelete = profile;
+    this.showDeleteModal = true;
+  }
+
+  confirmDelete(): void {
+    if (!this.profileToDelete?.id) {
+      this.error = 'Error: No se pudo identificar el perfil a eliminar.';
+      return;
+    }
+
+    this.loading = true;
+    this.error = null;
+
+    this.roastProfileService.delete(this.profileToDelete.id)
+      .pipe(
+        catchError(err => {
+          console.error('Error deleting profile', err);
+          this.error = 'Error al eliminar el perfil. Por favor intente nuevamente.';
+          return of(null);
+        }),
+        finalize(() => {
+          this.loading = false;
+          this.showDeleteModal = false;
+          this.profileToDelete = null;
+        })
+      )
+      .subscribe((result: any) => {
+        if (result !== null) {
+          this.loadProfiles();
+        }
+      });
+  }
+
+  cancelDelete(): void {
+    this.showDeleteModal = false;
+    this.profileToDelete = null;
+  }
+
   registerProfile(): void {
     if (!this.profileForm?.valid) {
       this.error = "Por favor, complete todos los campos obligatorios.";
       return;
     }
 
-    const userId = this.authService.getCurrentUserId();
-    if (!userId) {
-      this.error = "Usuario no autenticado.";
+    // Validar que el usuario tenga lotes de café disponibles
+    if (this.coffeeLots.length === 0) {
+      this.error = "Debe tener al menos un lote de café registrado para poder crear un perfil de tueste.";
       return;
     }
 
-    this.newProfile.user_id = userId;
+    // Convertir lot a number
+    this.newProfile.lot = Number(this.newProfile.lot);
 
     this.loading = true;
     this.error = null;
 
-    this.roastProfileService.addProfile(this.newProfile)
+    this.roastProfileService.create(this.newProfile)
       .pipe(
         catchError(err => {
           console.error('Error registering profile', err);
@@ -273,7 +318,7 @@ export class RoastProfileListComponent implements OnInit {
         }),
         finalize(() => this.loading = false)
       )
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result !== null) {
           this.showRegisterModal = false;
           this.resetForm();
@@ -287,7 +332,7 @@ export class RoastProfileListComponent implements OnInit {
       name: '',
       type: '',
       duration: 0,
-      lot: '',
+      lot: 0,
       tempStart: 0,
       tempEnd: 0
     };
@@ -316,7 +361,7 @@ export class RoastProfileListComponent implements OnInit {
   loadCoffeeLots(): void {
     const userId = this.authService.getCurrentUserId();
 
-    this.coffeeLotService.getLots()
+    this.coffeeLotService.getAll()
       .pipe(
         catchError(err => {
           console.error('Error loading coffee lots-page', err);
@@ -324,8 +369,14 @@ export class RoastProfileListComponent implements OnInit {
         })
       )
       .subscribe((lots: CoffeeLot[]) => {
-        this.coffeeLots = lots.filter(lot => lot.user_id === userId);
+        this.coffeeLots = lots;
       });
+  }
+
+  getLotName(lotId: number | undefined): string {
+    if (!lotId) return '';
+    const lot = this.coffeeLots.find(l => l.id === lotId);
+    return lot ? lot.lot_name : '';
   }
   drawRoastCurve(): void {
     if (!this.selectedProfile || !this.roastCurveCanvas) {

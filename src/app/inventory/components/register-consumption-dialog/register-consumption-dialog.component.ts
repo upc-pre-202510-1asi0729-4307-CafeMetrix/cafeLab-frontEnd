@@ -84,7 +84,7 @@ export class RegisterConsumptionDialogComponent implements OnInit {
 
   loadAvailableLots(): void {
     this.loading = true;
-    const userId = this.authService.getCurrentUserId();
+    const userId = Number(this.authService.getCurrentUserId());
 
     this.inventoryService.getCoffeeLots().pipe(
       catchError(err => {
@@ -94,7 +94,7 @@ export class RegisterConsumptionDialogComponent implements OnInit {
     ).subscribe(lots => {
       // Filtrar lotes por estado y usuario
       this.availableLots = lots.filter(lot => 
-        lot.user_id === userId && 
+        Number(lot.userId) === userId && 
         lot.status === this.data.coffeeStatus
       );
       this.loading = false;
@@ -106,7 +106,7 @@ export class RegisterConsumptionDialogComponent implements OnInit {
     const consumptionKg = this.form.get('consumptionKg')?.value || 0;
 
     if (selectedLotId) {
-      const selectedLot = this.availableLots.find(lot => lot.id === selectedLotId);
+      const selectedLot = this.availableLots.find(lot => Number(lot.id) === Number(selectedLotId));
       if (selectedLot) {
         // Calcular peso restante (simplificado - en un caso real se calcularía desde el inventario)
         const remainingWeight = Math.max(0, selectedLot.weight - consumptionKg);
@@ -127,7 +127,7 @@ export class RegisterConsumptionDialogComponent implements OnInit {
     }
   }
 
-  loadPreviousConsumptions(lotId: string): void {
+  loadPreviousConsumptions(lotId: any): void {
     this.inventoryService.getInventoryEntries().pipe(
       catchError(err => {
         console.error('Error loading previous consumptions:', err);
@@ -136,7 +136,7 @@ export class RegisterConsumptionDialogComponent implements OnInit {
     ).subscribe(entries => {
       // Filtrar entradas por lote y ordenar por fecha descendente
       const lotEntries = entries
-        .filter(entry => entry.coffeeLotId.toString() === lotId)
+        .filter(entry => Number(entry.coffeeLotId) === Number(lotId))
         .sort((a, b) => new Date(b.dateUsed).getTime() - new Date(a.dateUsed).getTime())
         .slice(0, 2); // Solo los 2 últimos
 
@@ -150,12 +150,22 @@ export class RegisterConsumptionDialogComponent implements OnInit {
   submit(): void {
     if (this.form.valid) {
       const formValue = this.form.value;
+      const userId = Number(this.authService.getCurrentUserId());
+      const coffeeLotId = parseInt(formValue.lotId);
+      
+      // Validación adicional para coffeeLotId
+      if (!coffeeLotId || coffeeLotId <= 0) {
+        this.error = 'Debe seleccionar un lote válido';
+        return;
+      }
+      
       const payload: InventoryEntry = {
         id: 0,
-        coffeeLotId: parseInt(formValue.lotId),
+        coffeeLotId: coffeeLotId,
         quantityUsed: formValue.consumptionKg,
         dateUsed: formValue.date.toISOString(),
-        finalProduct: formValue.finalProduct
+        finalProduct: formValue.finalProduct,
+        userId: userId
       };
 
       this.dialogRef.close(payload);
@@ -168,7 +178,7 @@ export class RegisterConsumptionDialogComponent implements OnInit {
 
   getSelectedLotName(): string {
     const lotId = this.form.get('lotId')?.value;
-    const lot = this.availableLots.find(l => l.id === lotId);
+    const lot = this.availableLots.find(l => Number(l.id) === Number(lotId));
     return lot ? lot.lot_name : '';
   }
 }

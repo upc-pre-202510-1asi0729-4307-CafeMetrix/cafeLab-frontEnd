@@ -9,6 +9,17 @@
 </nav>
 
 <div class="main-container">
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="loading" class="loading-indicator">
+    <div class="spinner"></div>
+    <p>{{ 'COST_MANAGEMENT.LOADING_LOTS' | translate }}</p>
+  </div>
+
   <!-- Pantalla de éxito -->
   <div *ngIf="isSuccess" class="success-screen">
     <div class="success-message">
@@ -27,17 +38,20 @@
     </div>
 
     <div class="button-container">
+      <button mat-raised-button class="action-button" (click)="resetForm()">
+        {{ 'COST_MANAGEMENT.NEW_CALCULATION' | translate }}
+      </button>
+      <button mat-raised-button class="action-button" (click)="downloadPDF()">
+        {{ 'COST_MANAGEMENT.DOWNLOAD_PDF' | translate }}
+      </button>
       <button mat-raised-button class="action-button" (click)="onExit()">
         {{ 'COST_MANAGEMENT.EXIT' | translate }}
-      </button>
-      <button mat-raised-button class="action-button" (click)="onPrint()">
-        {{ 'COST_MANAGEMENT.PRINT_REPORT' | translate }}
       </button>
     </div>
   </div>
 
   <!-- Formulario paso a paso -->
-  <div *ngIf="!isSuccess">
+  <div *ngIf="!isSuccess && !loading">
     <mat-stepper linear [selectedIndex]="currentStep" (selectionChange)="currentStep = $event.selectedIndex">
       <!-- Paso 1: Selección de lote -->
       <mat-step [stepControl]="firstFormGroup" [completed]="firstFormGroup.valid">
@@ -126,8 +140,8 @@
           <!-- Botones -->
           <div class="button-container">
             <button mat-button matStepperPrevious>{{ 'COST_MANAGEMENT.BACK' | translate }}</button>
-            <button mat-raised-button color="primary" (click)="onSubmit()">
-              {{ 'COST_MANAGEMENT.FINISH_AND_SAVE' | translate }}
+            <button mat-raised-button color="primary" (click)="saveProductionCost()" [disabled]="isSubmitting">
+              {{ isSubmitting ? ('COST_MANAGEMENT.SAVING' | translate) : ('COST_MANAGEMENT.FINISH_AND_SAVE' | translate) }}
             </button>
             <button mat-stroked-button color="accent" (click)="onSaveAsDraft()">
               {{ 'COST_MANAGEMENT.SAVE_DRAFT' | translate }}

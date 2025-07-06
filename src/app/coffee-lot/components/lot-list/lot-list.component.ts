@@ -6,17 +6,10 @@ import { CoffeeLot } from '../../model/coffee-lot.model';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { catchError, finalize, of } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../auth/services/AuthService';
+import { SupplierService } from '../../../supply/services/supplier.service';
+import { Supplier } from '../../../supply/models/supplier.model';
 
-interface Supplier {
-  id: string; // debe ser string para coincidir con supplier_id
-  name: string;
-  email: string;
-  phone: string;
-  location: string;
-  user_id: string;
-}
 @Component({
   selector: 'app-lot-list',
   standalone: true,
@@ -51,8 +44,8 @@ export class LotListComponent implements OnInit {
 
   constructor(
     private lotService: CoffeeLotService,
+    private supplierService: SupplierService,
     private translateService: TranslateService,
-    private http: HttpClient,
     private authService: AuthService
   ) {}
 
@@ -70,52 +63,53 @@ export class LotListComponent implements OnInit {
       weight: 0,
       origin: '',
       certifications: [],
-      supplier_id: '',
-      user_id: '',
+      supplier_id: 0,
+      userId: 0,
       status: ''
     };
   }
 
   loadSuppliers(): void {
-    const userId = this.authService.getCurrentUserId();
-
-    this.http.get<Supplier[]>('https://682697d8397e48c913169c83.mockapi.io/suppliers')
+    this.supplierService.getAll()
       .pipe(
         catchError(err => {
           console.error('Error loading suppliers', err);
+          this.error = 'Error al cargar los proveedores.';
           return of([]);
         })
       )
       .subscribe(suppliers => {
-        this.suppliers = suppliers.filter(s => s.user_id === userId);
+        this.suppliers = suppliers;
       });
   }
 
-
   loadLots(): void {
     this.loading = true;
-    const userId = this.authService.getCurrentUserId();
+    this.error = null;
 
-    this.lotService.getLots()
+    this.lotService.getAll()
       .pipe(
         catchError(err => {
+          console.error('Error loading lots', err);
           this.error = 'Error al cargar los lotes de café.';
           return of([]);
         }),
         finalize(() => this.loading = false)
       )
       .subscribe(lots => {
-        this.lots = lots.filter(lot => lot.user_id === userId);
+        this.lots = lots;
       });
   }
-
 
   searchLots(): void {
     if (this.searchQuery.trim()) {
       this.loading = true;
+      this.error = null;
+
       this.lotService.searchLots(this.searchQuery)
         .pipe(
           catchError(err => {
+            console.error('Error searching lots', err);
             this.error = 'Error al buscar lotes de café.';
             return of([]);
           }),
@@ -130,107 +124,96 @@ export class LotListComponent implements OnInit {
   viewLotDetails(lot: CoffeeLot): void {
     this.selectedLot = { ...lot };
     this.showLotDetails = true;
+    this.error = null;
   }
 
   closeLotDetails(): void {
     this.showLotDetails = false;
     this.selectedLot = null;
+    this.error = null;
   }
 
   editLot(lot: CoffeeLot): void {
     this.editingLot = { ...lot };
     this.showEditModal = true;
     this.showLotDetails = false;
+    this.error = null;
   }
 
   closeEditModal(): void {
     this.showEditModal = false;
-    this.editForm?.resetForm();
+    this.error = null;
+    if (this.editForm) {
+      this.editForm.resetForm();
+    }
   }
 
   registerLot(): void {
-    this.error = null;
-
-    const userId = this.authService.getCurrentUserId();
-    if (!userId) {
-      this.error = "Usuario no autenticado.";
+    if (!this.lotForm?.valid || !this.newLot.lot_name || !this.newLot.coffee_type || 
+        !this.newLot.processing_method || !this.newLot.altitude || !this.newLot.weight || 
+        !this.newLot.origin || !this.newLot.supplier_id || !this.newLot.status) {
+      this.error = "Por favor, complete todos los campos obligatorios.";
       return;
     }
 
-    // Validación: asegurar que haya al menos un proveedor disponible
-    const userSuppliers = this.suppliers.filter(s => s.user_id === userId);
-    if (userSuppliers.length === 0) {
+    // Validar que el usuario tenga proveedores disponibles
+    if (this.suppliers.length === 0) {
       this.error = "Debe tener al menos un proveedor registrado para poder crear un lote.";
       return;
     }
 
-    const requiredFields = [
-      this.newLot.lot_name,
-      this.newLot.coffee_type,
-      this.newLot.processing_method,
-      this.newLot.altitude,
-      this.newLot.weight,
-      this.newLot.origin,
-      this.newLot.supplier_id,
-      this.newLot.status
-    ];
+    this.loading = true;
+    this.error = null;
 
-    if (requiredFields.some(field => !field)) {
-      this.error = "Por favor complete todos los campos obligatorios";
-      return;
-    }
-
-    this.newLot.user_id = userId;
+    this.newLot.userId = Number(this.authService.getCurrentUserId());
     this.newLot.altitude = Number(this.newLot.altitude);
     this.newLot.weight = Number(this.newLot.weight);
 
-    this.lotService.addLot(this.newLot)
-      .subscribe({
-        next: () => {
-          this.loadLots();
+    this.lotService.create(this.newLot)
+      .pipe(
+        catchError(err => {
+          console.error('Error creating lot', err);
+          this.error = 'Error al registrar el lote. Por favor intente nuevamente.';
+          return of(null);
+        }),
+        finalize(() => this.loading = false)
+      )
+      .subscribe((result: any) => {
+        if (result !== null) {
           this.showRegisterModal = false;
-          this.newLot = this.getEmptyLot();
-        },
-        error: (err) => this.error = err.message
+          this.resetForm();
+          this.loadLots();
+        }
       });
   }
-
 
   cancelRegister(): void {
     this.showRegisterModal = false;
     this.resetForm();
   }
 
-
-
-
-
   saveLotChanges(): void {
-    if (
-      !this.editForm?.valid ||
-      !this.editingLot.lot_name ||
-      !this.editingLot.coffee_type ||
-      !this.editingLot.processing_method ||
-      !this.editingLot.altitude ||
-      !this.editingLot.weight||
-      !this.editingLot.origin ||
-      !this.editingLot.supplier_id ||
-      !this.editingLot.status
-    ) {
-      this.error = "Complete todos los campos obligatorios.";
+    if (!this.editForm?.valid || !this.editingLot.id || !this.editingLot.lot_name || 
+        !this.editingLot.coffee_type || !this.editingLot.processing_method || 
+        !this.editingLot.altitude || !this.editingLot.weight || !this.editingLot.origin || 
+        !this.editingLot.supplier_id || !this.editingLot.status) {
+      this.error = "Por favor, complete todos los campos obligatorios.";
       return;
     }
 
     this.loading = true;
-    this.lotService.updateLot(this.editingLot)
+    this.error = null;
+
+    this.lotService.update(this.editingLot.id!, this.editingLot)
       .pipe(
         catchError(err => {
-          this.error = 'Error al actualizar el lote.';
+          console.error('Error updating lot', err);
+          this.error = 'Error al actualizar el lote. Por favor intente nuevamente.';
           return of(null);
         }),
         finalize(() => this.loading = false)
       )
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result !== null) {
           this.showEditModal = false;
           this.loadLots();
@@ -239,11 +222,11 @@ export class LotListComponent implements OnInit {
   }
 
   onSupplierChange(event: Event): void {
-    this.newLot.supplier_id = (event.target as HTMLSelectElement).value;
+    this.newLot.supplier_id = Number((event.target as HTMLSelectElement).value);
   }
 
   onEditSupplierChange(event: Event): void {
-    this.editingLot.supplier_id = (event.target as HTMLSelectElement).value;
+    this.editingLot.supplier_id = Number((event.target as HTMLSelectElement).value);
   }
 
   addCertification(value: string): void {
@@ -268,7 +251,7 @@ export class LotListComponent implements OnInit {
     this.editingLot.certifications.splice(index, 1);
   }
 
-  getSupplierName(id: string | undefined): string {
+  getSupplierName(id: number | undefined): string {
     if (!id) return '';
     const supplier = this.suppliers.find(s => s.id === id);
     return supplier ? supplier.name : '';
@@ -282,11 +265,8 @@ export class LotListComponent implements OnInit {
   }
 
   deleteLot(lot: CoffeeLot): void {
-    const currentUserId = this.authService.getCurrentUserId();
-    
-    // Validar que el usuario actual sea el propietario del lote
-    if (!currentUserId || lot.user_id !== currentUserId) {
-      this.error = 'No tiene permisos para eliminar este lote.';
+    if (!lot.id) {
+      this.error = 'Error: No se pudo identificar el lote a eliminar.';
       return;
     }
 
@@ -301,10 +281,13 @@ export class LotListComponent implements OnInit {
     }
 
     this.loading = true;
-    this.lotService.deleteLot(this.lotToDelete.id)
+    this.error = null;
+
+    this.lotService.delete(this.lotToDelete.id)
       .pipe(
         catchError(err => {
-          this.error = 'Error al eliminar el lote.';
+          console.error('Error deleting lot', err);
+          this.error = 'Error al eliminar el lote. Por favor intente nuevamente.';
           return of(null);
         }),
         finalize(() => {
@@ -313,12 +296,10 @@ export class LotListComponent implements OnInit {
           this.lotToDelete = null;
         })
       )
-      .subscribe(result => {
-        if (result === null) {
-          // Error ya manejado en catchError
-          return;
+      .subscribe((result: any) => {
+        if (result !== null) {
+          this.loadLots();
         }
-        this.loadLots(); // Recargar la lista
       });
   }
 
@@ -329,7 +310,9 @@ export class LotListComponent implements OnInit {
 
   resetForm(): void {
     this.newLot = this.getEmptyLot();
-    this.lotForm?.resetForm();
+    if (this.lotForm) {
+      this.lotForm.resetForm();
+    }
     this.error = null;
   }
 }

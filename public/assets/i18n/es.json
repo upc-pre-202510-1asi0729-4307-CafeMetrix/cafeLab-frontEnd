@@ -22,7 +22,8 @@
       "DEFECT": "Defecto",
       "PERCENTAGE": "Porcentaje"
     },
-    "ADD_DEFECT": "Agregar defecto"
+    "ADD_DEFECT": "Agregar defecto",
+    "NO_DATA": "Sin datos"
   },
   "DEFECT_FILE": {
     "TITLE": "Ficha de defecto",
@@ -45,7 +46,8 @@
     "DEFECT_PERCENTAGE": "Porcentaje",
     "DEFECT_CAUSE": "Posible causa",
     "DEFECT_SOLUTION": "Posible solución",
-    "SAVE": "Guardar datos"
+    "SAVE": "Guardar datos",
+    "CANCEL": "Cancelar"
   },
   "LOGIN": {
     "TITLE": "Iniciar sesión",
@@ -397,7 +399,13 @@
     "curveTitle": "Curva de proceso de tostado",
     "informationTitle": "Informacion:",
     "detailTempStart": "Temperatura inicial",
-    "detailTempEnd": "Temperatura Final"
+    "detailTempEnd": "Temperatura Final",
+    "delete": {
+      "title": "Eliminar Perfil",
+      "message": "Esta seguro de eliminar el perfil: ",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar"
+    }
   },
   "comparison": {
     "tuesteLabel": "Perfil de Tueste",
@@ -585,12 +593,18 @@
     "CONTINUE": "Continuar",
     "CANCEL": "Cancelar",
     "BACK": "Anterior",
-    "FINISH_AND_SAVE": "Finalizar y Guardar",
+    "FINISH_AND_SAVE": "Finalizar",
     "SAVE_DRAFT": "Guardar Borrador",
     "SUCCESS_MESSAGE": "Registro guardado exitosamente",
     "REGISTRATION_CODE": "Código de registro",
     "EXIT": "Salir",
     "PRINT_REPORT": "Imprimir reporte",
+    "NEW_CALCULATION": "Nuevo Cálculo",
+    "DOWNLOAD_PDF": "Descargar PDF",
+    "LOADING_LOTS": "Cargando lotes...",
+    "SAVING": "Guardando...",
+    "CURRENCY": "S/.",
+    "CURRENCY_PER_KG": "S/./kg",
     "SUMMARY_TITLE": "Resumen de costos",
     "SUMMARY_TYPE": "Tipo",
     "SUMMARY_AMOUNT": "Monto (S/.)",

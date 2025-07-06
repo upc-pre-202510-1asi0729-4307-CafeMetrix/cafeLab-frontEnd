@@ -22,7 +22,8 @@
       "DEFECT": "Defect",
       "PERCENTAGE": "Percentage"
     },
-    "ADD_DEFECT": "Add defect"
+    "ADD_DEFECT": "Add defect",
+    "NO_DATA": "No data"
   },
   "DEFECT_FILE": {
     "TITLE": "Defect file",
@@ -45,7 +46,8 @@
     "DEFECT_PERCENTAGE": "Percentage",
     "DEFECT_CAUSE": "Probable cause",
     "DEFECT_SOLUTION": "Probable solution",
-    "SAVE": "Save data"
+    "SAVE": "Save data",
+    "CANCEL": "Cancel"
   },
   "LOGIN": {
     "TITLE": "Log in",
@@ -395,7 +397,13 @@
     "curveTitle": "Roasting process curve",
     "informationTitle": "Information:",
     "detailTempStart": "Initial temperature",
-    "detailTempEnd": "Final Temperature"
+    "detailTempEnd": "Final Temperature",
+    "delete": {
+      "title": "Delete profile",
+      "message": "Do you want to drop this profile: ",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    }
   },
   "comparison": {
     "tuesteLabel": "Roasting profile",
@@ -583,12 +591,18 @@
     "CONTINUE": "Continue",
     "CANCEL": "Cancel",
     "BACK": "Back",
-    "FINISH_AND_SAVE": "Finish and Save",
+    "FINISH_AND_SAVE": "Finish",
     "SAVE_DRAFT": "Save Draft",
     "SUCCESS_MESSAGE": "Record saved successfully",
     "REGISTRATION_CODE": "Registration code",
     "EXIT": "Exit",
     "PRINT_REPORT": "Print report",
+    "NEW_CALCULATION": "New Calculation",
+    "DOWNLOAD_PDF": "Download PDF",
+    "LOADING_LOTS": "Loading lots...",
+    "SAVING": "Saving...",
+    "CURRENCY": "$",
+    "CURRENCY_PER_KG": "$/kg",
     "SUMMARY_TITLE": "Cost Summary",
     "SUMMARY_TYPE": "Type",
     "SUMMARY_AMOUNT": "Amount ($)",

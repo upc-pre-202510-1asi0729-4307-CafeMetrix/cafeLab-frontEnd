@@ -1,9 +1,9 @@
 export interface Supplier {
-  id?: string;
+  id?: number;
   name: string;
   email: string;
   phone: number;
   location: string;
   specialties: string[];
-  user_id: string;
+  userId: number;
 }

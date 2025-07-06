@@ -47,7 +47,14 @@ export abstract class BaseService<T> {
    * @returns An Observable of the created resource
    */
   public create(resource: T): Observable<T> {
-    return this.http.post<T>(this.resourcePath(), JSON.stringify(resource), this.httpOptions)
+    console.log('=== BASE SERVICE CREATE DEBUG ===');
+    console.log('Resource path:', this.resourcePath());
+    console.log('Resource to send:', resource);
+    console.log('JSON stringified:', JSON.stringify(resource));
+    console.log('Resource type:', typeof resource);
+    console.log('=== END BASE SERVICE DEBUG ===');
+    
+    return this.http.post<T>(this.resourcePath(), JSON.stringify(resource))
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -57,7 +64,7 @@ export abstract class BaseService<T> {
    * @returns An Observable of the deletion result
    */
   public delete(id: any): Observable<any> {
-    return this.http.delete(`${this.resourcePath()}/${id}`, this.httpOptions)
+    return this.http.delete(`${this.resourcePath()}/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -65,7 +72,7 @@ export abstract class BaseService<T> {
    * Updates an existing resource
    */
   public update(id: any, resource: T, options?: any): Observable<T> {
-    return this.http.put<T>(`${this.resourcePath()}/${id}`, JSON.stringify(resource), { ...this.httpOptions, ...options })
+    return this.http.put<T>(`${this.resourcePath()}/${id}`, JSON.stringify(resource), options)
       .pipe(
         map(response => response as T),
         retry(2),
@@ -78,7 +85,7 @@ export abstract class BaseService<T> {
    * @returns An Observable array of all resources
    */
   public getAll(): Observable<Array<T>> {
-    return this.http.get<Array<T>>(this.resourcePath(), this.httpOptions)
+    return this.http.get<Array<T>>(this.resourcePath())
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -88,7 +95,7 @@ export abstract class BaseService<T> {
    * @returns An Observable of the requested resource
    */
   public getById(id: any): Observable<T> {
-    return this.http.get<T>(`${this.resourcePath()}/${id}`, this.httpOptions)
+    return this.http.get<T>(`${this.resourcePath()}/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 }

@@ -92,14 +92,14 @@ export class InventaryComponent implements OnInit {
 
   loadData(): void {
     this.loading = true;
-    const userId = this.authService.getCurrentUserId();
-
-    if (!userId) {
-      this.error = 'Usuario no autenticado';
+    const userId = Number(this.authService.getCurrentUserId());
+  
+    if (!userId || isNaN(userId)) {
+      this.error = 'Usuario no autenticado o ID inválido';
       this.loading = false;
       return;
     }
-
+  
     forkJoin({
       lots: this.inventoryService.getCoffeeLots().pipe(
         catchError(err => {
@@ -107,7 +107,7 @@ export class InventaryComponent implements OnInit {
           return of([]);
         })
       ),
-      suppliers: this.supplierService.getSuppliers().pipe(
+      suppliers: this.supplierService.getAll().pipe(
         catchError(err => {
           console.error('Error loading suppliers:', err);
           return of([]);
@@ -121,14 +121,17 @@ export class InventaryComponent implements OnInit {
       )
     }).subscribe({
       next: (data) => {
-        this.lots = data.lots.filter(lot => lot.user_id === userId);
-        this.suppliers = data.suppliers.filter(supplier => supplier.user_id === userId);
-        this.consumptionEntries = data.consumptionEntries;
+        // Usar userId consistentemente
+        this.lots = data.lots.filter(lot => Number(lot.userId) === userId);
+        this.suppliers = data.suppliers.filter((supplier: Supplier) => Number(supplier.userId) === userId);
+        this.consumptionEntries = data.consumptionEntries.filter(entry => Number(entry.userId) === userId);
         this.calculateMetrics();
         this.loading = false;
+        this.error = null; // Limpiar errores previos
       },
       error: (err) => {
-        this.error = 'Error al cargar los datos';
+        console.error('Error loading inventory data:', err);
+        this.error = 'Error al cargar los datos del inventario';
         this.loading = false;
       }
     });
@@ -155,7 +158,7 @@ export class InventaryComponent implements OnInit {
       // Calcular consumo total para este tipo y estado
       const typeConsumption = this.consumptionEntries
         .filter(entry => {
-          const lot = this.lots.find(l => l.id === entry.coffeeLotId.toString());
+          const lot = this.lots.find(l => Number(l.id) === Number(entry.coffeeLotId));
           return lot && lot.coffee_type === type && lot.status === status;
         })
         .reduce((sum, entry) => sum + entry.quantityUsed, 0);
@@ -191,22 +194,41 @@ export class InventaryComponent implements OnInit {
   }
 
   openRegisterConsumptionDialog(status: string): void {
+    // Verificar que haya lotes disponibles antes de abrir el diálogo
+    const availableLots = this.lots.filter(lot => lot.status === status);
+    
+    if (availableLots.length === 0) {
+      this.error = `No hay lotes de café ${status} disponibles para registrar consumo`;
+      return;
+    }
+  
     const dialogRef = this.dialog.open(RegisterConsumptionDialogComponent, {
       width: '90%',
       maxWidth: '1000px',
       panelClass: 'register-consumption-dialog',
       data: { 
         coffeeStatus: status,
-        coffeeType: status === 'green' ? this.greenCoffeeData.selectedType : this.roastedCoffeeData.selectedType
+        coffeeType: status === 'green' ? this.greenCoffeeData.selectedType : this.roastedCoffeeData.selectedType,
+        availableLots: availableLots // Pasar los lotes disponibles
       }
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        // Validar que la entrada sea válida antes de enviarla
+        const entry: InventoryEntry = { ...result };
+        
+        // Validación manual en lugar de usar isValid()
+        if (!this.isValidInventoryEntry(entry)) {
+          this.error = 'Datos de consumo inválidos';
+          return;
+        }
+  
         // Registrar el consumo en el inventario
-        this.inventoryService.addInventoryEntry(result).subscribe({
-          next: (entry) => {
-            console.log('Consumo registrado:', entry);
+        this.inventoryService.addInventoryEntry(entry).subscribe({
+          next: (createdEntry) => {
+            console.log('Consumo registrado:', createdEntry);
+            this.error = null; // Limpiar errores previos
             // Recargar datos para actualizar métricas
             this.loadData();
           },
@@ -217,6 +239,23 @@ export class InventaryComponent implements OnInit {
         });
       }
     });
+  }
+  
+  // Método de validación manual
+  private isValidInventoryEntry(entry: InventoryEntry): boolean {
+    const userId = Number(this.authService.getCurrentUserId());
+    
+    // Verificar que el lote existe y pertenece al usuario
+    const lotExists = this.lots.some(lot => 
+      Number(lot.id) === Number(entry.coffeeLotId) && 
+      Number(lot.userId) === userId
+    );
+    
+    return entry.coffeeLotId > 0 && 
+           entry.quantityUsed > 0 && 
+           (entry.finalProduct?.trim().length ?? 0) > 0 &&
+           Number(entry.userId) === userId &&
+           lotExists;
   }
 
   goToDashboard(): void {

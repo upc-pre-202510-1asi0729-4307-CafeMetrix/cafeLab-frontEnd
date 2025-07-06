@@ -1,22 +1,22 @@
 <div class="metrics-column">
   <mat-card class="metric-card">
     <mat-card-content>
-      <h3>Costo por Kilogramo</h3>
-      <div class="metric-value">S/. {{ costPerKg | number:'1.2-2' }}</div>
+      <h3>{{ 'COST_MANAGEMENT.METRICS_COST_PER_KG' | translate }}</h3>
+      <div class="metric-value">{{ 'COST_MANAGEMENT.CURRENCY' | translate }} {{ costPerKg | number:'1.2-2' }}</div>
     </mat-card-content>
   </mat-card>
 
   <mat-card class="metric-card">
     <mat-card-content>
-      <h3>Margen Potencial</h3>
+      <h3>{{ 'COST_MANAGEMENT.METRICS_POTENTIAL_MARGIN' | translate }}</h3>
       <div class="metric-value">{{ potentialMargin | number:'1.0-1' }}%</div>
     </mat-card-content>
   </mat-card>
 
   <mat-card class="metric-card">
     <mat-card-content>
-      <h3>Precio Sugerido</h3>
-      <div class="metric-value">S/. {{ suggestedPrice | number:'1.2-2' }}/kg</div>
+      <h3>{{ 'COST_MANAGEMENT.METRICS_SUGGESTED_PRICE' | translate }}</h3>
+      <div class="metric-value">{{ 'COST_MANAGEMENT.CURRENCY_PER_KG' | translate }} {{ suggestedPrice | number:'1.2-2' }}</div>
     </mat-card-content>
   </mat-card>
 </div>

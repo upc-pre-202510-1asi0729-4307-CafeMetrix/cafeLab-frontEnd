@@ -1,170 +1,102 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError, of, switchMap, map, tap, catchError } from 'rxjs';
+import { BaseService } from '../../shared/services/base.service';
 import { RoastProfile } from '../models/roast-profile.model';
-
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../auth/services/AuthService';
+import { Observable, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoastProfileService {
-  private apiUrl = 'https://682697d8397e48c913169c83.mockapi.io/roast-profile';
+export class RoastProfileService extends BaseService<RoastProfile> {
+  constructor(private authService: AuthService) {
+    super();
+    this.resourceEndpoint = environment.roastProfileEndpointPath;
+  }
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    })
-  };
-
-  constructor(private http: HttpClient) {}
-
-  /**
-   * Obtener todos los perfiles de tostado
-   */
-  getRoastProfiles(): Observable<RoastProfile[]> {
-    return this.http.get<RoastProfile[]>(this.apiUrl).pipe(
-
-      map(profiles => profiles.map(p => ({
-        ...p,
-        createdAt: new Date(p.createdAt ?? '')
-      }))),
-      catchError(this.handleError)
+  override getAll(): Observable<Array<RoastProfile>> {
+    return super.getAll().pipe(
+      map(profiles => profiles
+        .filter(profile => profile.userId === Number(this.authService.getCurrentUserId()))
+        .map(p => ({
+          ...p,
+          createdAt: new Date(p.createdAt ?? '')
+        }))
+      )
     );
   }
 
-  /**
-   * Buscar perfiles por nombre, tipo o proveedor
-   */
-  searchRoastProfiles(query: string, userId: string): Observable<RoastProfile[]> {
-    return this.getRoastProfiles().pipe(
+  override create(profile: RoastProfile): Observable<RoastProfile> {
+    profile.userId = Number(this.authService.getCurrentUserId());
+    profile.createdAt = new Date().toISOString();
+    profile.isFavorite = false;
+    
+    console.log('=== ROAST PROFILE CREATE DEBUG ===');
+    console.log('Profile to send:', profile);
+    console.log('Current user ID:', this.authService.getCurrentUserId());
+    console.log('User ID as number:', profile.userId);
+    console.log('=== END DEBUG ===');
+    
+    return super.create(profile);
+  }
+
+  override update(id: any, profile: RoastProfile): Observable<RoastProfile> {
+    profile.userId = Number(this.authService.getCurrentUserId());
+    return super.update(id, profile);
+  }
+
+  searchRoastProfiles(query: string): Observable<RoastProfile[]> {
+    return this.getAll().pipe(
       map(profiles => {
         const normalizedQuery = query.toLowerCase().trim();
-        return profiles
-          .filter(profile => profile.user_id === userId) // <--- filtramos por usuario!
-          .filter(profile =>
-            profile.name.toLowerCase().includes(normalizedQuery) ||
-            profile.type.toLowerCase().includes(normalizedQuery) ||
-            profile.lot.toLowerCase().includes(normalizedQuery)
-          );
+        return profiles.filter(profile =>
+          profile.name.toLowerCase().includes(normalizedQuery) ||
+          profile.type.toLowerCase().includes(normalizedQuery) ||
+          profile.lot.toString().includes(normalizedQuery)
+        );
       })
     );
   }
 
-
-  /**
-   * Filtrar por favoritos y ordenar por fecha
-   */
-  filterProfiles(userId: string, showFavoritesOnly: boolean, sortOrder: 'asc' | 'desc'): Observable<RoastProfile[]> {
-    return this.getRoastProfiles().pipe(
+  filterProfiles(showFavoritesOnly: boolean, sortOrder: 'asc' | 'desc'): Observable<RoastProfile[]> {
+    return this.getAll().pipe(
       map(profiles => {
-        // Primero filtrar SOLO por los perfiles del usuario actual
-        let filtered = profiles.filter(p => p.user_id === userId);
+        let filtered = profiles;
 
-        // Luego aplicar filtro de favoritos si corresponde
         if (showFavoritesOnly) {
           filtered = filtered.filter(p => p.isFavorite);
         }
 
-        // Finalmente ordenar por fecha
         return filtered.sort((a, b) => {
           const timeA = new Date(a.createdAt ?? '').getTime();
           const timeB = new Date(b.createdAt ?? '').getTime();
-
           return sortOrder === 'asc' ? timeA - timeB : timeB - timeA;
         });
       })
     );
   }
 
-
-
-  /**
-   * Alternar favorito (mockapi requiere PUT)
-   */
-  toggleFavorite(id: string): Observable<RoastProfile | null> {
-    return this.getProfileById(id).pipe(
-      tap(profile => {
-        if (!profile) throw new Error('Perfil no encontrado');
-      }),
-      map(profile => ({ ...profile!, isFavorite: !profile!.isFavorite })),
-      // Actualiza en MockAPI
-      switchMap(updated =>
-        this.http.put<RoastProfile>(`${this.apiUrl}/${id}`, updated, this.httpOptions)
-      ),
-      catchError(this.handleError)
+  toggleFavorite(id: number): Observable<RoastProfile> {
+    return this.getById(id).pipe(
+      map(profile => ({ ...profile, isFavorite: !profile.isFavorite })),
+      switchMap(updated => this.update(id, updated))
     );
   }
 
-  /**
-   * Obtener perfil por ID
-   */
-  getProfileById(id: string): Observable<RoastProfile | null> {
-    return this.http.get<RoastProfile>(`${this.apiUrl}/${id}`).pipe(
-      map(p => ({ ...p, createdAt: new Date(p.createdAt ?? '') })),
-      catchError(() => of(null)) // si no existe, devuelve null
-    );
-  }
-
-  /**
-   * Crear nuevo perfil
-   */
-  addProfile(profile: Omit<RoastProfile, 'id' | 'createdAt'>): Observable<RoastProfile> {
-    const newProfile: RoastProfile = {
-      ...profile,
-      createdAt: new Date().toISOString(),
-      isFavorite: false
-    };
-
-    return this.http.post<RoastProfile>(this.apiUrl, newProfile, this.httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-
-  /**
-   * Actualizar un perfil existente
-   */
-  updateProfile(profile: RoastProfile): Observable<RoastProfile | null> {
-    return this.http.put<RoastProfile>(`${this.apiUrl}/${profile.id}`, profile, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  /**
-   * Duplicar un perfil
-   */
-  duplicateProfile(id: string): Observable<RoastProfile | null> {
-    return this.getProfileById(id).pipe(
-      tap(profile => {
-        if (!profile) throw new Error('No se pudo duplicar: perfil no encontrado');
-      }),
+  duplicateProfile(id: number): Observable<RoastProfile> {
+    return this.getById(id).pipe(
       map(profile => ({
-        ...profile!,
+        ...profile,
         id: undefined,
-        name: `${profile!.name} (Copia)`,
+        name: `${profile.name} (Copia)`,
         createdAt: new Date().toISOString(),
         isFavorite: false
       })),
-      switchMap(duplicated =>
-        this.http.post<RoastProfile>(this.apiUrl, duplicated, this.httpOptions)
-      ),
-      catchError(this.handleError)
+      switchMap(duplicated => this.create(duplicated))
     );
   }
 
-
-  /**
-   * Manejo de errores
-   */
-  private handleError(error: HttpErrorResponse) {
-    let msg = 'Error desconocido';
-    if (error.error instanceof ErrorEvent) {
-      msg = `Error del cliente: ${error.error.message}`;
-    } else {
-      msg = `Error ${error.status}: ${error.message}`;
-    }
-    console.error('Error API:', msg);
-    return throwError(() => new Error(msg));
+  override delete(id: number): Observable<any> {
+    return super.delete(id);
   }
 }

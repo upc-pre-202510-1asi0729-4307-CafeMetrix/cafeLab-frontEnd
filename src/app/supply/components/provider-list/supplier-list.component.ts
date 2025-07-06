@@ -36,7 +36,7 @@ export class SupplierListComponent implements OnInit {
     phone: 0,
     location: '',
     specialties: [],
-    user_id: ''
+    userId: 0
   };
 
   editingSupplier: Supplier = {
@@ -45,7 +45,7 @@ export class SupplierListComponent implements OnInit {
     phone: 0,
     location: '',
     specialties: [],
-    user_id: ''
+    userId: 0
   };
 
   selectedSupplier: Supplier | null = null;
@@ -67,7 +67,7 @@ export class SupplierListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.supplierService.getSuppliers()
+    this.supplierService.getAll()
       .pipe(
         catchError(err => {
           console.error('Error loading suppliers', err);
@@ -77,9 +77,9 @@ export class SupplierListComponent implements OnInit {
         finalize(() => this.loading = false)
       )
       .subscribe(suppliers => {
-        const currentUserId = this.getCurrentUserId();
-        this.suppliers = suppliers.filter(supplier => supplier.user_id === currentUserId);
-      });  }
+        this.suppliers = suppliers;
+      });
+  }
 
   searchSuppliers(): void {
     if (this.searchQuery.trim()) {
@@ -110,6 +110,7 @@ export class SupplierListComponent implements OnInit {
   closeSupplierDetails(): void {
     this.showSupplierDetails = false;
     this.selectedSupplier = null;
+    this.error = null;
   }
 
   editSupplier(supplier: Supplier): void {
@@ -123,6 +124,7 @@ export class SupplierListComponent implements OnInit {
   closeEditModal(): void {
     this.showEditModal = false;
     this.error = null;
+    this.editingSpecialties = [];
     if (this.editForm) {
       this.editForm.resetForm();
     }
@@ -134,13 +136,20 @@ export class SupplierListComponent implements OnInit {
       return;
     }
 
+    // Validar que el teléfono sea un número válido
+    if (isNaN(this.editingSupplier.phone) || this.editingSupplier.phone <= 0) {
+      this.error = "Por favor, ingrese un número de teléfono válido.";
+      return;
+    }
+
     this.loading = true;
     this.error = null;
 
+    // Asignar las especialidades del array temporal
     this.editingSupplier.specialties = [...this.editingSpecialties];
 
 
-    this.supplierService.updateSupplier(this.editingSupplier)
+    this.supplierService.update(this.editingSupplier.id!, this.editingSupplier)
       .pipe(
         catchError(err => {
           console.error('Error updating supplier', err);
@@ -149,14 +158,14 @@ export class SupplierListComponent implements OnInit {
         }),
         finalize(() => this.loading = false)
       )
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result !== null) {
           this.showEditModal = false;
           this.loadSuppliers();
         }
       });
   }
-  deleteSupplier(id: string): void {
+  deleteSupplier(id: number): void {
     if (!confirm('¿Estás seguro de que deseas eliminar este proveedor?')) {
       return;
     }
@@ -164,7 +173,7 @@ export class SupplierListComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.supplierService.deleteSupplier(id)
+    this.supplierService.delete(id)
       .pipe(
         catchError(err => {
           console.error('Error deleting supplier', err);
@@ -173,7 +182,7 @@ export class SupplierListComponent implements OnInit {
         }),
         finalize(() => this.loading = false)
       )
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result !== null) {
           this.loadSuppliers();
         }
@@ -187,16 +196,22 @@ export class SupplierListComponent implements OnInit {
       return;
     }
 
+    // Validar que el teléfono sea un número válido
+    if (isNaN(this.newSupplier.phone) || this.newSupplier.phone <= 0) {
+      this.error = "Por favor, ingrese un número de teléfono válido.";
+      return;
+    }
+
     this.loading = true;
     this.error = null;
 
-    this.newSupplier.user_id = this.getCurrentUserId();
+    this.newSupplier.userId = Number(this.getCurrentUserId());
 
-    // Elimina elementos vacíos del arreglo
+    // Asignar las especialidades del array temporal
     this.newSupplier.specialties = [...this.newSpecialties];
 
 
-    this.supplierService.addSupplier(this.newSupplier)
+    this.supplierService.create(this.newSupplier)
       .pipe(
         catchError(err => {
           console.error('Error adding supplier', err);
@@ -205,7 +220,7 @@ export class SupplierListComponent implements OnInit {
         }),
         finalize(() => this.loading = false)
       )
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result !== null) {
           this.showRegisterModal = false;
           this.resetForm();
@@ -219,6 +234,10 @@ export class SupplierListComponent implements OnInit {
     if (specialty && this.newSpecialties.length < 4 && !this.newSpecialties.includes(specialty)) {
       this.newSpecialties.push(specialty);
       specialtyInput.value = '';
+    } else if (this.newSpecialties.length >= 4) {
+      this.error = 'Máximo 4 especialidades permitidas.';
+    } else if (this.newSpecialties.includes(specialty)) {
+      this.error = 'Esta especialidad ya está agregada.';
     }
   }
 
@@ -231,16 +250,15 @@ export class SupplierListComponent implements OnInit {
     if (specialty && this.editingSpecialties.length < 4 && !this.editingSpecialties.includes(specialty)) {
       this.editingSpecialties.push(specialty);
       specialtyInput.value = '';
+    } else if (this.editingSpecialties.length >= 4) {
+      this.error = 'Máximo 4 especialidades permitidas.';
+    } else if (this.editingSpecialties.includes(specialty)) {
+      this.error = 'Esta especialidad ya está agregada.';
     }
   }
 
   removeEditSpecialty(index: number): void {
     this.editingSpecialties.splice(index, 1);
-  }
-
-
-  removeSpecialty(index: number): void {
-    this.newSupplier.specialties.splice(index, 1);
   }
 
 
@@ -252,7 +270,7 @@ export class SupplierListComponent implements OnInit {
       phone: 0,
       location: '',
       specialties: [],
-      user_id: ''
+      userId: 0
     };
 
     this.newSpecialties = [];

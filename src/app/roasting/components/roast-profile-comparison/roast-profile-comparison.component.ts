@@ -28,11 +28,9 @@ export class RoastProfileComparisonComponent implements OnInit {
               private translate: TranslateService) {}
 
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUserId();
-
-    this.roastProfileService.getRoastProfiles()
+    this.roastProfileService.getAll()
       .subscribe(profiles => {
-        this.profiles = profiles.filter(profile => profile.user_id === userId);
+        this.profiles = profiles;
       });
   }
 
@@ -60,7 +58,7 @@ export class RoastProfileComparisonComponent implements OnInit {
     const graphHeight = canvas.height - padding * 2;
 
     const selectedProfiles = this.roastSelectors
-      .map(id => this.profiles.find(p => p.id === id))
+      .map(id => this.profiles.find(p => p.id === Number(id)))
       .filter(p => !!p) as RoastProfile[];
 
     if (selectedProfiles.length === 0) return;

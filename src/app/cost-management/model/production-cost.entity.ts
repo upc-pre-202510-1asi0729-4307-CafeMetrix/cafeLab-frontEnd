@@ -1,3 +1,36 @@
+export interface ProductionCostCalculation {
+  // Datos del lote seleccionado
+  coffeeLotId: number;
+  coffeeLotName: string;
+  coffeeType: string;
+  totalKg: number;
+  
+  // Costos directos
+  rawMaterialsCost: number;
+  laborCost: number;
+  
+  // Costos indirectos
+  transportCost: number;
+  storageCost: number;
+  processingCost: number;
+  otherIndirectCosts: number;
+  
+  // Totales calculados
+  totalDirectCost: number;
+  totalIndirectCost: number;
+  totalCost: number;
+  
+  // Métricas calculadas
+  costPerKg: number;
+  margin: number;
+  suggestedPrice: number;
+  potentialMargin: number;
+  
+  // Información del cálculo
+  calculatedAt: string;
+  userId: number;
+}
+
 export class ProductionCostEntity {
   constructor(private cost: any) {}
 

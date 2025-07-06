@@ -5,8 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CoffeeLot} from '../../model/coffee-lot.model';
-import { CoffeeLotService} from '../../services/coffee-lot.service';
+import { CoffeeLot} from '../../../coffee-lot/model/coffee-lot.model';
+import { CoffeeLotService} from '../../../coffee-lot/services/coffee-lot.service';
 import {TranslateModule} from "@ngx-translate/core";
 import { AuthService } from '../../../auth/services/AuthService';
 import { catchError, of } from 'rxjs';
@@ -34,14 +34,20 @@ export class StepLotSelectionComponent implements OnInit {
   lots: CoffeeLot[] = [];
   constructor(private coffeeLotService: CoffeeLotService, private authService: AuthService) {}
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUserId();
-    this.coffeeLotService.getLots().pipe(
+    const userId = Number(this.authService.getCurrentUserId());
+    
+    if (!userId || isNaN(userId)) {
+      console.error('Usuario no autenticado o ID inválido');
+      return;
+    }
+    
+    this.coffeeLotService.getAll().pipe(
       catchError(err => {
         console.error('Error loading lots:', err);
         return of([]);
       })
-    ).subscribe(lots => {
-      this.lots = lots.filter(lot => lot.user_id === userId);
+    ).subscribe((lots: CoffeeLot[]) => {
+      this.lots = lots.filter((lot: CoffeeLot) => Number(lot.userId) === userId);
     });
   }
 }

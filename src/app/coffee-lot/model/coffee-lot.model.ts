@@ -1,5 +1,5 @@
 export interface CoffeeLot {
-  id?: string;
+  id?: number;
   lot_name: string;
   coffee_type: string;
   processing_method: string;
@@ -7,7 +7,7 @@ export interface CoffeeLot {
   weight: number;
   certifications: string[];
   origin: string;
-  supplier_id: string;
-  user_id: string;
+  supplier_id: number;
+  userId: number;
   status: string; // 'green' or 'roasted'
 }

@@ -1,5 +1,5 @@
 export interface RoastProfile {
-  id?: string;
+  id?: number;
   name: string;
   type: string;
   duration: number;
@@ -7,6 +7,6 @@ export interface RoastProfile {
   tempEnd: number;
   isFavorite?: boolean;
   createdAt?: string | Date;
-  lot: string;
-  user_id?: string;
+  lot: number;
+  userId?: number;
 }

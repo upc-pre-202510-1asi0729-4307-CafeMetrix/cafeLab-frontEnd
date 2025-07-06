@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {DecimalPipe} from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-metrics-card',
   standalone: true,
@@ -8,7 +10,8 @@ import {DecimalPipe} from '@angular/common';
   imports: [
     MatCard,
     MatCardContent,
-    DecimalPipe
+    DecimalPipe,
+    TranslateModule
   ],
   styleUrls: ['./metrics-card.component.css']
 })

@@ -26,7 +26,7 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'INVENTORY.CONSUMPTION_DIALOG.LOT' | translate }}</mat-label>
           <mat-select formControlName="lotId" required>
-            <mat-option *ngFor="let lot of availableLots" [value]="lot.id">
+            <mat-option *ngFor="let lot of availableLots" [value]="lot.id || 0" [disabled]="!lot.id">
               {{ lot.lot_name }} ({{ lot.coffee_type }})
             </mat-option>
           </mat-select>

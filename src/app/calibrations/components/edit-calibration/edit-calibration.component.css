@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:500,700&display=swap');
+
+.form-container {
+  background: #f7f6ef;
+  border-radius: 12px;
+  padding: 32px 24px;
+  max-width: 900px;
+  margin: 32px auto;
+  font-family: 'Nunito', sans-serif;
+}
+
+.title {
+  font-size: 24px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: #414535;
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 16px;
+}
+
+.form-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  color: #414535;
+  margin-bottom: 4px;
+}
+
+input, select, textarea, .mat-input-element {
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  background: #fff;
+  color: #414535;
+}
+
+textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.attach-btn {
+  background: #414535;
+  color: #fff;
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  border: none;
+  margin-bottom: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.register-btn {
+  background: #414535;
+  color: #fff;
+  border-radius: 20px;
+  padding: 8px 32px;
+  font-size: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+  border: none;
+  margin: 32px auto 0 auto;
+  display: block;
+  cursor: pointer;
+  box-shadow: 1px 2px 6px #3332;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #618985;
+  margin-top: 4px;
+  font-family: 'Nunito', sans-serif;
+}
+
+@media (max-width: 900px) {
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

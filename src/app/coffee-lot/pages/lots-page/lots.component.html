@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <app-toolbar/>
+
+</mat-toolbar>
+
+<nav class="breadcrumb">
+  <a (click)="goToHome()">{{ 'BREADCRUMB.HOME' | translate }}</a>
+  <span> &gt; </span>
+  <a (click)="refreshLots()">{{ 'BREADCRUMB.COFFEE_LOTS' | translate }}</a>
+</nav>
+
+<app-lot-list></app-lot-list>

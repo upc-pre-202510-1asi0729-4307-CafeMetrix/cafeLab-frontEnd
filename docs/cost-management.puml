@@ -1,0 +1,108 @@
+@startuml
+title Cost Management Bounded Context (Frontend)
+
+' ==== MODEL ====
+package "Model" {
+  class CoffeeLot {
+    +id: string
+    +lot_name: string
+    +coffee_type: string
+    +processing_method: string
+    +altitude: number
+    +weight: number
+    +certifications: string[]
+    +origin: string
+    +supplier_id: string
+    +user_id: string
+    +status: string
+  }
+
+  class ProductionCostEntity {
+    +totalDirectCost: number
+    +totalIndirectCost: number
+    +totalCost: number
+    +costPerKg: number
+    +suggestedPrice: number
+    +potentialMargin: number
+    +constructor(cost: any)
+  }
+}
+
+' ==== SERVICES ====
+package "Services" {
+  class CoffeeLotService {
+    +getLots(): Observable<CoffeeLot[]>
+    +getLotsByUser(userId: string): Observable<CoffeeLot[]>
+  }
+  class LotService {
+    +getLots(): Observable<CoffeeLot[]>
+  }
+}
+
+' ==== COMPONENTS ====
+package "Components" {
+  class MetricsCardComponent {
+    +costPerKg: number
+    +potentialMargin: number
+    +suggestedPrice: number
+  }
+  class RecommendationsCardComponent {
+    +recommendations: Recommendation[]
+  }
+  class StepDirectCostsComponent {
+    +formGroup: FormGroup
+    +totalsCalculated: EventEmitter<{ materiaPrima: number; manoObra: number }>
+    +totalMateriaPrima: number
+    +totalManoObra: number
+    +calculateTotals(): void
+  }
+  class StepIndirectCostsComponent {
+    +formGroup: FormGroup
+    +onCancel: () => void
+    +transportTotal: number
+    +storageTotal: number
+    +processingTotal: number
+    +othersTotal: number
+  }
+  class StepLotSelectionComponent {
+    +formGroup: FormGroup
+    +progressValue: number
+    +onCancel: () => void
+    +lots: CoffeeLot[]
+    +ngOnInit(): void
+  }
+}
+
+' ==== PAGES ====
+package "Pages" {
+  class ProductionCostPageComponent {
+    +firstFormGroup: FormGroup
+    +directCostsForm: FormGroup
+    +indirectCostsForm: FormGroup
+    +currentStep: number
+    +isSuccess: boolean
+    +registrationCode: string
+    +recommendations: Recommendation[]
+    +costSummary: { tipo: string; monto: number }[]
+    +onCancel(): void
+    +onSaveAsDraft(): void
+    +onSubmit(): void
+    +onExit(): void
+    +onPrint(): void
+    +updateDirectCosts(event): void
+    +goToHome(): void
+  }
+}
+
+' ==== RELATIONSHIPS ====
+StepLotSelectionComponent --> CoffeeLotService
+StepLotSelectionComponent --> CoffeeLot
+StepDirectCostsComponent --> ProductionCostPageComponent : "emits totalsCalculated"
+StepIndirectCostsComponent --> ProductionCostPageComponent
+MetricsCardComponent <-- ProductionCostPageComponent
+RecommendationsCardComponent <-- ProductionCostPageComponent
+ProductionCostPageComponent --> ProductionCostEntity
+ProductionCostPageComponent --> CoffeeLotService
+ProductionCostPageComponent --> LotService
+
+@enduml

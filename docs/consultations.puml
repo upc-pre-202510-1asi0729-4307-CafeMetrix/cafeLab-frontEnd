@@ -1,0 +1,181 @@
+@startuml
+title Consultations Bounded Context
+
+' COMPONENTS
+package "Components" {
+  class AddConsultationComponent {
+    - fb: FormBuilder
+    - coffeeService: CoffeeService
+    - defectService: DefectService
+    - router: Router
+    - authService: AuthService
+    - defectForm: FormGroup
+    - defects: Defect[]
+    - coffees: Coffee[]
+    + ngOnInit(): void
+    + onSubmit(): void
+    + onCancel(): void
+  }
+  class ViewConsultationsComponent {
+    - coffeeService: CoffeeService
+    - defectService: DefectService
+    - router: Router
+    - authService: AuthService
+    - defects: Defect[]
+    - coffees: Coffee[]
+    + ngOnInit(): void
+    + onMyCoffees(): void
+    + clearDefects(): void
+    + clearDefectSearch(): void
+    + goToNew(): void
+  }
+  class FileComponent {
+    - activatedRoute: ActivatedRoute
+    - router: Router
+    - defectService: DefectService
+    - coffeeId: string
+    - defectId: string
+    - globalId: string
+    + ngOnInit(): void
+    + showSolution(): void
+    + showDialog(): void
+  }
+}
+
+' PAGES
+package "Pages" {
+  class ViewFileComponent {
+    + constructor()
+  }
+  class ViewNewDefectComponent {
+    + constructor()
+  }
+}
+
+' SERVICES
+package "Services" {
+  class DefectService {
+    - serverBaseUrl: string
+    - resourceEndpoint: string
+    + constructor()
+    + getDefects(): Observable<Defect[]>
+    + saveDefect(defect: Defect): Observable<Defect>
+    + getById(id: number): Observable<Defect>
+  }
+  class CoffeeService {
+    - serverBaseUrl: string
+    - resourceEndpoint: string
+    + constructor()
+    + getCoffees(): Observable<Coffee[]>
+    + saveCoffee(coffee: Coffee): Observable<Coffee>
+  }
+}
+
+' ASSEMBLERS
+package "Assemblers" {
+  class DefectAssembler {
+    + toEntityFromResource(response: DefectResource): Defect
+    + toInfoFromResource(response: DefectResource): Defect
+    + toResourceFromEntity(entity: Defect): DefectResource
+  }
+  class CoffeeAssembler {
+    + toEntityFromResource(response: CoffeeResource): Coffee
+    + toInfoFromResource(response: CoffeeResource): Coffee
+    + toResourceFromEntity(entity: Coffee): CoffeeResource
+  }
+}
+
+' MODEL
+package "Model" {
+  class Defect {
+    + id: string
+    + coffeeId: string
+    + name: string
+    + affectType: string
+    + percentage: number
+    + principalNumber: number
+    + probableCause: string
+    + suggestedSolution: string
+    + userId: string
+    + constructor(defect: DefectInit)
+  }
+  class Coffee {
+    + id: string
+    + name: string
+    + origin: string
+    + variety: string
+    + weight: number
+    + userId: string
+    + constructor(coffee: CoffeeInit)
+  }
+}
+
+' RESPONSES
+package "Responses" {
+  class DefectResource {
+    + id: string
+    + coffeeId: string
+    + name: string
+    + affectType: string
+    + percentage: number
+    + principalNumber: number
+    + probableCause: string
+    + suggestedSolution: string
+    + userId: string
+  }
+  class CoffeeResource {
+    + id: string
+    + name: string
+    + origin: string
+    + variety: string
+    + weight: number
+    + userId: string
+  }
+  class DefectsResponse
+  class CoffeesResponse
+}
+
+' RELATIONSHIPS
+AddConsultationComponent --> CoffeeService
+AddConsultationComponent --> DefectService
+AddConsultationComponent --> Router
+AddConsultationComponent --> AuthService
+AddConsultationComponent --> Defect
+AddConsultationComponent --> Coffee
+
+ViewConsultationsComponent --> CoffeeService
+ViewConsultationsComponent --> DefectService
+ViewConsultationsComponent --> Router
+ViewConsultationsComponent --> AuthService
+ViewConsultationsComponent --> Defect
+ViewConsultationsComponent --> Coffee
+
+FileComponent --> ActivatedRoute
+FileComponent --> Router
+FileComponent --> DefectService
+
+ViewFileComponent --> FileComponent
+ViewNewDefectComponent --> AddConsultationComponent
+
+DefectService --> Defect
+DefectService --> DefectAssembler
+DefectService --> DefectResource
+DefectService --> DefectsResponse
+
+CoffeeService --> Coffee
+CoffeeService --> CoffeeAssembler
+CoffeeService --> CoffeeResource
+CoffeeService --> CoffeesResponse
+
+DefectAssembler --> Defect
+DefectAssembler --> DefectResource
+
+CoffeeAssembler --> Coffee
+CoffeeAssembler --> CoffeeResource
+
+Defect --> Coffee : references
+DefectResource --> CoffeeResource : contains
+DefectsResponse --> DefectResource : contains
+CoffeesResponse --> CoffeeResource : contains
+
+@enduml

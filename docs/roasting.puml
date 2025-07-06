@@ -1,0 +1,92 @@
+@startuml
+title Roasting Bounded Context (Frontend)
+
+' ==== MODEL ====
+package "Models" {
+  class RoastProfile {
+    +id: string
+    +name: string
+    +type: string
+    +duration: number
+    +tempStart: number
+    +tempEnd: number
+    +isFavorite: boolean
+    +createdAt: string | Date
+    +lot: string
+    +user_id: string
+  }
+}
+
+' ==== SERVICES ====
+package "Services" {
+  class RoastProfileService {
+    +getRoastProfiles(): Observable<RoastProfile[]>
+    +searchRoastProfiles(query: string, userId: string): Observable<RoastProfile[]>
+    +filterProfiles(userId: string, showFavoritesOnly: boolean, sortOrder: 'asc'|'desc'): Observable<RoastProfile[]>
+    +toggleFavorite(id: string): Observable<RoastProfile | null>
+    +getProfileById(id: string): Observable<RoastProfile | null>
+    +addProfile(profile): Observable<RoastProfile>
+    +updateProfile(profile: RoastProfile): Observable<RoastProfile | null>
+    +duplicateProfile(id: string): Observable<RoastProfile | null>
+  }
+}
+
+' ==== COMPONENTS ====
+package "Components" {
+  class RoastProfileListComponent {
+    +profiles: RoastProfile[]
+    +coffeeLots: CoffeeLot[]
+    +searchQuery: string
+    +showProfileDetails: boolean
+    +showEditModal: boolean
+    +showRegisterModal: boolean
+    +selectedProfile: RoastProfile
+    +editingProfile: RoastProfile
+    +newProfile: RoastProfile
+    +showFavoritesOnly: boolean
+    +sortOrder: 'asc'|'desc'
+    +ngOnInit(): void
+    +loadProfiles(): void
+    +searchProfiles(): void
+    +applyFilters(): void
+    +toggleFavorite(profile, event): void
+    +viewProfileDetails(profile): void
+    +closeProfileDetails(): void
+    +editProfile(profile): void
+    +closeEditModal(): void
+    +saveProfileChanges(): void
+    +duplicateProfile(profile, event): void
+    +registerProfile(): void
+    +resetForm(): void
+    +toggleShowFavorites(): void
+    +toggleSortOrder(): void
+    +compareProfiles(): void
+    +loadCoffeeLots(): void
+    +drawRoastCurve(): void
+    +goToHome(): void
+    +refreshRoastProfiles(): void
+  }
+  class RoastProfileComparisonComponent {
+    +profiles: RoastProfile[]
+    +roastSelectors: string[]
+    +ngOnInit(): void
+    +addSelector(): void
+    +ngAfterViewChecked(): void
+    +drawComparisonGraph(): void
+  }
+}
+
+' ==== PAGES ====
+package "Pages" {
+  class RoastingPageComponent
+}
+
+' ==== RELATIONSHIPS ====
+RoastProfileListComponent --> RoastProfileService
+RoastProfileListComponent --> RoastProfile
+RoastProfileListComponent --> CoffeeLot
+RoastProfileComparisonComponent --> RoastProfileService
+RoastProfileComparisonComponent --> RoastProfile
+RoastingPageComponent --> RoastProfileListComponent
+
+@enduml

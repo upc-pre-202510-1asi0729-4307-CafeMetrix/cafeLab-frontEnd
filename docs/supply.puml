@@ -1,0 +1,76 @@
+@startuml
+title Supply Bounded Context (Frontend)
+
+' ==== MODEL ====
+package "Models" {
+  class Supplier {
+    +id: string
+    +name: string
+    +email: string
+    +phone: number
+    +location: string
+    +specialties: string[]
+    +user_id: string
+  }
+}
+
+' ==== SERVICES ====
+package "Services" {
+  class SupplierService {
+    +getSuppliers(): Observable<Supplier[]>
+    +addSupplier(supplier: Supplier): Observable<Supplier>
+    +updateSupplier(supplier: Supplier): Observable<Supplier>
+    +deleteSupplier(id: string): Observable<void>
+    +searchSuppliers(query: string): Observable<Supplier[]>
+  }
+}
+
+' ==== COMPONENTS ====
+package "Components" {
+  class SupplierListComponent {
+    +suppliers: Supplier[]
+    +searchQuery: string
+    +showRegisterModal: boolean
+    +showEditModal: boolean
+    +showSupplierDetails: boolean
+    +newSpecialties: string[]
+    +editingSpecialties: string[]
+    +newSupplier: Supplier
+    +editingSupplier: Supplier
+    +selectedSupplier: Supplier
+    +loading: boolean
+    +error: string
+    +ngOnInit(): void
+    +loadSuppliers(): void
+    +searchSuppliers(): void
+    +viewSupplierDetails(supplier: Supplier): void
+    +closeSupplierDetails(): void
+    +editSupplier(supplier: Supplier): void
+    +closeEditModal(): void
+    +saveSupplierChanges(): void
+    +deleteSupplier(id: string): void
+    +registerSupplier(): void
+    +addNewSpecialty(input: HTMLInputElement): void
+    +removeNewSpecialty(index: number): void
+    +addEditSpecialty(input: HTMLInputElement): void
+    +removeEditSpecialty(index: number): void
+    +resetForm(): void
+    +getCurrentUserId(): string
+  }
+}
+
+' ==== PAGES ====
+package "Pages" {
+  class SupplyPageComponent {
+    +ngOnInit(): void
+    +goToHome(): void
+    +refreshSuppliers(): void
+  }
+}
+
+' ==== RELATIONSHIPS ====
+SupplierListComponent --> SupplierService
+SupplierListComponent --> Supplier
+SupplyPageComponent --> SupplierListComponent
+
+@enduml

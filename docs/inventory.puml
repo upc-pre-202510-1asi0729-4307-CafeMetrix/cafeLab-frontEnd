@@ -1,0 +1,93 @@
+@startuml
+title Inventory Bounded Context (Frontend)
+
+' ==== MODEL ====
+package "Model" {
+  class InventoryEntry {
+    +id: number
+    +coffeeLotId: number
+    +quantityUsed: number
+    +dateUsed: string
+    +finalProduct: string
+    +constructor(data: {...})
+  }
+}
+
+' ==== SERVICES ====
+package "Services" {
+  class InventoryService {
+    +getInventoryEntries(): Observable<InventoryEntry[]>
+    +addInventoryEntry(entry: InventoryEntry): Observable<InventoryEntry>
+    +deleteInventoryEntry(id: number): Observable<void>
+    +getCoffeeLots(): Observable<CoffeeLot[]>
+  }
+}
+
+' ==== COMPONENTS ====
+package "Components" {
+  class ConsumptionDetailDialogComponent {
+    +data: ConsumptionDetailData
+    +close(): void
+    +getStatusText(status: string): string
+    +goToDashboard(): void
+  }
+  class ConsumptionTableComponent {
+    +consumptionEntries: InventoryEntry[]
+    +lots: CoffeeLot[]
+    +tableData: ConsumptionTableItem[]
+    +ngOnChanges(): void
+    +updateTableData(): void
+    +viewConsumptionDetail(item: ConsumptionTableItem): void
+  }
+  class RegisterConsumptionDialogComponent {
+    +form: FormGroup
+    +availableLots: CoffeeLot[]
+    +consumptionSummary: ConsumptionSummary
+    +previousConsumptions: PreviousConsumption[]
+    +loading: boolean
+    +error: string
+    +ngOnInit(): void
+    +loadAvailableLots(): void
+    +updateSummary(): void
+    +loadPreviousConsumptions(lotId: string): void
+    +submit(): void
+    +cancel(): void
+    +getSelectedLotName(): string
+  }
+}
+
+' ==== PAGES ====
+package "Pages" {
+  class InventaryComponent {
+    +greenCoffeeData: CoffeeStatusData
+    +roastedCoffeeData: CoffeeStatusData
+    +lots: CoffeeLot[]
+    +suppliers: Supplier[]
+    +consumptionEntries: InventoryEntry[]
+    +loading: boolean
+    +error: string
+    +ngOnInit(): void
+    +loadData(): void
+    +calculateMetrics(): void
+    +calculateStatusMetrics(status: string, data: CoffeeStatusData): void
+    +onTypeChange(status: string, type: string): void
+    +getCurrentMetrics(status: string): CoffeeTypeMetrics
+    +openRegisterConsumptionDialog(status: string): void
+    +goToDashboard(): void
+  }
+}
+
+' ==== RELATIONSHIPS ====
+ConsumptionTableComponent --> InventoryEntry
+ConsumptionTableComponent --> CoffeeLot
+ConsumptionTableComponent --> ConsumptionDetailDialogComponent
+RegisterConsumptionDialogComponent --> InventoryService
+RegisterConsumptionDialogComponent --> CoffeeLot
+RegisterConsumptionDialogComponent --> InventoryEntry
+InventaryComponent --> InventoryService
+InventaryComponent --> RegisterConsumptionDialogComponent
+InventaryComponent --> ConsumptionTableComponent
+InventaryComponent --> InventoryEntry
+InventaryComponent --> CoffeeLot
+
+@enduml

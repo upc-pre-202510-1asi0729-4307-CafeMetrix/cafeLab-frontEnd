@@ -1,0 +1,148 @@
+@startuml
+title Auth Bounded Context (Frontend)
+
+' ==== MODEL ====
+package "Model" {
+  class User {
+    +id: number
+    +name: string
+    +email: string
+    +password: string
+    +role: string
+    +cafeteriaName: string
+    +experience: string
+    +profilePicture: string
+    +paymentMethod: string
+    +isFirstLogin: boolean
+    +plan: string
+    +hasPlan: boolean
+    +home: string
+    +constructor(user: {...})
+  }
+}
+
+' ==== SERVICES ====
+package "Services" {
+  class AuthService {
+    +login(email: string, password: string): Observable<any>
+    +logout(): void
+    +getCurrentUser(): User | null
+    +getCurrentUserId(): string
+    +isLoggedIn(): boolean
+  }
+  class UserService {
+    +login(email: string, password: string): Observable<User>
+    +createProfile(user: User): Observable<User>
+    +updateProfile(profileId: number, updatedProfile: Partial<User>): Observable<User>
+    +getUserById(userId: number): Observable<User>
+    +getAllUsers(): Observable<User[]>
+    +getUserByEmail(email: string): Observable<User>
+  }
+  class TokenService {
+    +setToken(token: string): void
+    +getToken(): string | null
+    +removeToken(): void
+  }
+  class AuthGuard {
+    +canActivate(): boolean | UrlTree
+  }
+  class AuthInterceptor
+}
+
+' ==== COMPONENTS ====
+package "Components" {
+  class EditProfileFormComponent {
+    +editProfileForm: FormGroup
+    +currentUser: User | null
+    +ngOnInit()
+    +onSubmit()
+    +redirectAfterUpdate()
+    +continueToSelectPlan()
+  }
+  class EditProfileSessionComponent {
+    +editProfileForm: FormGroup
+    +currentUser: User | null
+    +ngOnInit()
+    +onSubmit()
+    +goToChangePlan()
+  }
+  class LoginFormComponent {
+    +loginForm: FormGroup
+    +onSubmit()
+    +onRegisterBarista()
+    +onRegisterOwner()
+  }
+  class LogupBaristaFormComponent {
+    +logupForm: FormGroup
+    +onSubmit()
+    +selectExperience(experience: string)
+  }
+  class LogupOwnerFormComponent {
+    +logupForm: FormGroup
+    +onSubmit()
+    +selectExperience(experience: string)
+  }
+}
+
+' ==== PAGES ====
+package "Pages" {
+  class EditProfilePageComponent {
+    +currentUser: User | null
+    +ngOnInit()
+    +showToolbar: boolean
+  }
+  class EditProfileSessionPageComponent {
+    +currentUser: User | null
+    +ngOnInit()
+  }
+  class LoginPageComponent
+  class LoginSuccessPageComponent {
+    +currentUser: User | null
+    +ngOnInit()
+    +onContinue()
+  }
+  class LogupBaristaPageComponent
+  class LogupBaristaSuccessPageComponent {
+    +onContinue()
+  }
+  class LogupOwnerPageComponent
+  class LogupOwnerSuccessPageComponent {
+    +onContinue()
+  }
+}
+
+' ==== RELATIONSHIPS ====
+' Components <-> Services
+EditProfileFormComponent --> UserService
+EditProfileFormComponent --> AuthService
+EditProfileFormComponent --> Router
+EditProfileSessionComponent --> AuthService
+EditProfileSessionComponent --> UserService
+EditProfileSessionComponent --> Router
+LoginFormComponent --> AuthService
+LoginFormComponent --> UserService
+LoginFormComponent --> Router
+LogupBaristaFormComponent --> UserService
+LogupBaristaFormComponent --> Router
+LogupOwnerFormComponent --> UserService
+LogupOwnerFormComponent --> Router
+
+' Pages <-> Components
+EditProfilePageComponent --> EditProfileFormComponent
+EditProfileSessionPageComponent --> EditProfileSessionComponent
+LoginPageComponent --> LoginFormComponent
+LoginSuccessPageComponent --> UserService
+LogupBaristaPageComponent --> LogupBaristaFormComponent
+LogupBaristaSuccessPageComponent --> LogupBaristaFormComponent
+LogupOwnerPageComponent --> LogupOwnerFormComponent
+LogupOwnerSuccessPageComponent --> LogupOwnerFormComponent
+
+' Services <-> Model
+AuthService --> User
+UserService --> User
+
+' Guards/Interceptors
+AuthGuard --> TokenService
+AuthInterceptor --> TokenService
+
+@enduml

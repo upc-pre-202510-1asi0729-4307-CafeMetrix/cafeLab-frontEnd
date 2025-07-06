@@ -1,0 +1,87 @@
+@startuml
+' Class diagram for cupping-sessions (Frontend)
+
+package "Model" {
+  class CuppingSession {
+    +id: string
+    +name: string
+    +origin: string
+    +variety: string
+    +date: string | Date
+    +favorite: boolean
+    +lot: string
+    +roast_profile: string
+    +processing: string
+    +user_id: string
+    +constructor(session: Partial<CuppingSession>)
+  }
+}
+
+package "Services" {
+  class CuppingSessionService {
+    +getAll(): Observable<CuppingSession[]>
+    +getDistinctValues(userId: string): Observable<{origins, varieties, processings}>
+    +search(query: string, userId: string): Observable<CuppingSession[]>
+    +getFavorites(userId: string): Observable<CuppingSession[]>
+    +update(id: string, session: Partial<CuppingSession>): Observable<CuppingSession>
+    +create(session: CuppingSession): Observable<CuppingSession>
+    +toggleFavorite(id: string): Observable<CuppingSession | null>
+    +getById(id: string): Observable<CuppingSession | null>
+    +add(session: Omit<CuppingSession, 'id' | 'date'>): Observable<CuppingSession>
+  }
+}
+
+package "Components" {
+  class DetallesCataComponent {
+    +session: any
+    +evaluation: EvaluacionSensorial
+    +generateHexagon()
+    +openDefectsLibrary()
+    +saveSession()
+  }
+  class FiltroDialogComponent {
+    +filters: {origin, variety, date, processing}
+    +origins: string[]
+    +varieties: string[]
+    +processings: string[]
+    +applyFilters()
+  }
+  class NuevasCataComponent {
+    +newCupping: {name, lotId, profileId}
+    +lots: any[]
+    +profiles: any[]
+    +createSession()
+  }
+  class RegisterConsumptionDialogComponent
+}
+
+package "Pages" {
+  class SesionesCataComponent {
+    +displayedColumns: string[]
+    +searchText: string
+    +showComparison: boolean
+    +showDetail: boolean
+    +selectedSession: CuppingSession | null
+    +sessions: CuppingSession[]
+    +filters: {origin, variety, date, processing}
+    +getFilteredSessions(): CuppingSession[]
+    +toggleFavorite(session: CuppingSession)
+    +showFilters()
+    +viewDetail(session: CuppingSession)
+    +toggleComparison()
+    +startNewCupping()
+  }
+}
+
+' Relationships
+CuppingSessionService --> CuppingSession
+DetallesCataComponent --> CuppingSessionService
+FiltroDialogComponent --> CuppingSessionService
+NuevasCataComponent --> CuppingSessionService
+SesionesCataComponent --> DetallesCataComponent
+SesionesCataComponent --> FiltroDialogComponent
+SesionesCataComponent --> NuevasCataComponent
+SesionesCataComponent --> RegisterConsumptionDialogComponent
+SesionesCataComponent --> CuppingSessionService
+SesionesCataComponent --> CuppingSession
+@enduml

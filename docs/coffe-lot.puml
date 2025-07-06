@@ -1,0 +1,91 @@
+@startuml
+title Coffee Lot Bounded Context (Frontend)
+
+' ==== MODEL ====
+package "Model" {
+  class CoffeeLot {
+    +id: string
+    +lot_name: string
+    +coffee_type: string
+    +processing_method: string
+    +altitude: number
+    +weight: number
+    +certifications: string[]
+    +origin: string
+    +supplier_id: string
+    +user_id: string
+    +status: string
+  }
+}
+
+' ==== SERVICES ====
+package "Services" {
+  class CoffeeLotService {
+    +getLots(): Observable<CoffeeLot[]>
+    +getLotById(id: string): Observable<CoffeeLot>
+    +addLot(lot: CoffeeLot): Observable<CoffeeLot>
+    +updateLot(lot: CoffeeLot): Observable<CoffeeLot>
+    +deleteLot(id: string): Observable<void>
+    +searchLots(query: string): Observable<CoffeeLot[]>
+  }
+}
+
+' ==== COMPONENTS ====
+package "Components" {
+  class LotListComponent {
+    +lots: CoffeeLot[]
+    +suppliers: Supplier[]
+    +searchQuery: string
+    +showRegisterModal: boolean
+    +showEditModal: boolean
+    +showLotDetails: boolean
+    +showDeleteModal: boolean
+    +loading: boolean
+    +error: string | null
+    +newCertification: string
+    +coffeeTypes: string[]
+    +processTypes: string[]
+    +certificationsOptions: string[]
+    +statusOptions: string[]
+    +newLot: CoffeeLot
+    +editingLot: CoffeeLot
+    +selectedLot: CoffeeLot | null
+    +lotToDelete: CoffeeLot | null
+    +ngOnInit(): void
+    +loadLots(): void
+    +loadSuppliers(): void
+    +searchLots(): void
+    +viewLotDetails(lot: CoffeeLot): void
+    +closeLotDetails(): void
+    +editLot(lot: CoffeeLot): void
+    +closeEditModal(): void
+    +registerLot(): void
+    +cancelRegister(): void
+    +saveLotChanges(): void
+    +addCertification(value: string): void
+    +addCertificationToEdit(value: string): void
+    +removeCertification(index: number): void
+    +removeCertificationFromEdit(index: number): void
+    +getSupplierName(id: string): string
+    +getStatusText(status: string): string
+    +deleteLot(lot: CoffeeLot): void
+    +confirmDelete(): void
+    +cancelDelete(): void
+    +resetForm(): void
+  }
+}
+
+' ==== PAGES ====
+package "Pages" {
+  class LotsComponent {
+    +goToHome(): void
+    +refreshLots(): void
+  }
+}
+
+' ==== RELATIONSHIPS ====
+LotListComponent --> CoffeeLotService
+LotListComponent --> CoffeeLot
+LotsComponent --> LotListComponent
+
+@enduml

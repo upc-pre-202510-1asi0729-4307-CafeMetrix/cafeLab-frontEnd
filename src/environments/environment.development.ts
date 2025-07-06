@@ -14,5 +14,5 @@ export const environment = {
   contactUsEndpointPath: '/contact-us',
   calibrationsEndpointPath: '/api/v1/calibrations',
   coastEndpointPath: '/api/v1/coast-productions',
-  inventoryEndpointPath: '/api/v1/inventories'
+  inventoryEndpointPath: '/api/v1/inventory-entries'
 };

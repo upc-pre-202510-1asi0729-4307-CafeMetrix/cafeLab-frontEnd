@@ -5,7 +5,7 @@ import { InventoryEntry } from '../model/inventory-entry.entity';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/services/AuthService';
 import { CoffeeLotService } from '../../coffee-lot/services/coffee-lot.service';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,24 @@ export class InventoryService extends BaseService<InventoryEntry> {
   }
 
   override getAll(): Observable<Array<InventoryEntry>> {
+    console.log('=== INVENTORY SERVICE DEBUG ===');
+    console.log('Current user ID:', this.authService.getCurrentUserId());
+    console.log('Is logged in:', this.authService.isLoggedIn());
+    console.log('Resource endpoint:', this.resourceEndpoint);
+    console.log('Full URL:', this.resourcePath());
+    console.log('=== END INVENTORY SERVICE DEBUG ===');
+    
     return super.getAll().pipe(
       map(entries => entries.filter(entry => entry.userId === Number(this.authService.getCurrentUserId())))
     );
   }
 
   override create(entry: InventoryEntry): Observable<InventoryEntry> {
+    console.log('=== INVENTORY SERVICE CREATE DEBUG ===');
+    console.log('Entry to create:', entry);
+    console.log('Current user ID:', this.authService.getCurrentUserId());
+    console.log('=== END INVENTORY SERVICE CREATE DEBUG ===');
+    
     entry.userId = Number(this.authService.getCurrentUserId());
     return super.create(entry);
   }

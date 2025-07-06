@@ -143,9 +143,7 @@
             <button mat-raised-button color="primary" (click)="saveProductionCost()" [disabled]="isSubmitting">
               {{ isSubmitting ? ('COST_MANAGEMENT.SAVING' | translate) : ('COST_MANAGEMENT.FINISH_AND_SAVE' | translate) }}
             </button>
-            <button mat-stroked-button color="accent" (click)="onSaveAsDraft()">
-              {{ 'COST_MANAGEMENT.SAVE_DRAFT' | translate }}
-            </button>
+
           </div>
         </div>
       </mat-step>

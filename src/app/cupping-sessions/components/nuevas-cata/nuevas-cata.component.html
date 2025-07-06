@@ -8,17 +8,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{ 'CUPPING_SESSIONS.LINKED_LOT_LABEL' | translate }}</mat-label>
-      <mat-select [(ngModel)]="nuevaCata.loteId">
-        <mat-option *ngFor="let lote of lotes" [value]="lote.id">
-          {{lote.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
       <mat-label>{{ 'CUPPING_SESSIONS.ROAST_PROFILE_LABEL' | translate }}</mat-label>
-      <mat-select [(ngModel)]="nuevaCata.perfilId">
+      <mat-select [(ngModel)]="nuevaCata.perfilId" [disabled]="isLoadingProfiles">
+        <mat-option value="" disabled *ngIf="isLoadingProfiles">
+          {{ 'CUPPING_SESSIONS.LOADING_PROFILES' | translate }}
+        </mat-option>
         <mat-option *ngFor="let perfil of perfiles" [value]="perfil.id">
           {{perfil.nombre}}
         </mat-option>

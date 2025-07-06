@@ -61,6 +61,19 @@ table {
   color: #C68F61;
 }
 
+.delete-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.delete-button mat-icon {
+  font-size: 18px;
+}
+
 .new-cata-button-container {
   display: flex;
   justify-content: center;

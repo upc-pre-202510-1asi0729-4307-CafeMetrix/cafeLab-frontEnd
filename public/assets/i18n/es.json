@@ -556,6 +556,7 @@
     "DATE": "Fecha",
     "ORIGIN": "Origen",
     "VARIETY": "Variedad",
+    "ACTIONS": "Acciones",
     "COMPARE": "Comparar Múltiples Catas",
     "RECORD_CUPPING": "Registrar Nueva Cata",
     "FILTER_TITLE": "Filtrar Sesiones",
@@ -566,7 +567,16 @@
     "SESSION_NAME_PLACEHOLDER": "Ingrese el nombre de la sesión",
     "LINKED_LOT_LABEL": "Lote vinculado",
     "ROAST_PROFILE_LABEL": "Perfil de Tueste",
-    "CREATE_BUTTON": "Crear nueva sesión de cata"
+    "LOADING_PROFILES": "Cargando perfiles...",
+    "CREATE_BUTTON": "Crear nueva sesión de cata",
+    "TOGGLE_FAVORITE": "Marcar/Desmarcar como favorito",
+    "VIEW_DETAILS": "Ver detalles",
+    "DELETE_SESSION": "Eliminar sesión",
+    "DELETE_SESSION_TITLE": "Confirmar eliminación",
+    "CONFIRM_DELETE": "¿Está seguro de que desea eliminar la sesión '{{name}}'? Esta acción no se puede deshacer.",
+    "DELETE_SUCCESS": "La sesión '{{name}}' ha sido eliminada exitosamente.",
+    "DELETE_ERROR": "Error al eliminar la sesión. Inténtelo nuevamente.",
+    "CLOSE": "Cerrar"
   },
   "CUPPING_DETAILS": {
     "TITLE": "Evaluación Sensorial",

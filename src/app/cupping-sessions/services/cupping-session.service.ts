@@ -135,6 +135,14 @@ export class CuppingSessionService {
   }
 
   /**
+   * Eliminar sesión
+   */
+  delete(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
    * Manejo de errores
    */
   private handleError(error: any) {

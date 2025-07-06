@@ -7,7 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToolbarComponent } from '../../../public/components/toolbar/toolbar.component';
 import { FormsModule } from '@angular/forms';
 import { FiltroDialogComponent } from '../../components/filtro-dialog/filtro-dialog.component';
@@ -15,7 +16,7 @@ import { NuevasCataComponent } from '../../components/nuevas-cata/nuevas-cata.co
 import { DetallesCataComponent } from '../../components/detalles-cata/detalles-cata.component';
 import { CuppingSessionService } from '../../services/cupping-session.service';
 import { CuppingSession } from '../../model/cupping-session.entity';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
@@ -30,6 +31,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatInputModule,
     MatFormFieldModule,
     MatMenuModule,
+    MatDialogModule,
+    MatSnackBarModule,
     ToolbarComponent,
     FormsModule,
     DetallesCataComponent,
@@ -57,7 +60,9 @@ export class SesionesCataComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private cuppingSessionService: CuppingSessionService
+    private cuppingSessionService: CuppingSessionService,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -137,9 +142,9 @@ export class SesionesCataComponent implements OnInit {
       if (nueva) {
         const nuevaSesion: Omit<CuppingSession, 'id' | 'fecha'> = {
           nombre: nueva.nombre,
-          lote: nueva.loteId,
+          lote: '', // Se eliminó la vinculación con lote específico
           perfil_tueste: nueva.perfilId,
-          origen: 'Por definir', // Estos valores deberían venir del lote/perfil seleccionado
+          origen: 'Por definir', // Estos valores deberían venir del perfil seleccionado
           variedad: 'Por definir',
           procesamiento: 'Lavado',
           favorito: false,
@@ -153,6 +158,57 @@ export class SesionesCataComponent implements OnInit {
             console.error('Error al crear sesión de cata', err);
           }
         });
+      }
+    });
+  }
+
+  confirmarEliminacion(sesion: CuppingSession): void {
+    const confirmMessage = this.translate.instant('CUPPING_SESSIONS.CONFIRM_DELETE', { name: sesion.nombre });
+    const confirmTitle = this.translate.instant('CUPPING_SESSIONS.DELETE_SESSION_TITLE');
+    
+    if (confirm(`${confirmTitle}\n\n${confirmMessage}`)) {
+      this.eliminarSesion(sesion);
+    }
+  }
+
+  private eliminarSesion(sesion: CuppingSession): void {
+    if (!sesion.id) {
+      this.snackBar.open(
+        this.translate.instant('CUPPING_SESSIONS.DELETE_ERROR'),
+        this.translate.instant('CUPPING_SESSIONS.CLOSE'),
+        { duration: 3000 }
+      );
+      return;
+    }
+
+    this.cuppingSessionService.delete(sesion.id).subscribe({
+      next: () => {
+        // Remover la sesión de la lista local
+        const index = this.sesiones.findIndex(s => s.id === sesion.id);
+        if (index !== -1) {
+          this.sesiones.splice(index, 1);
+        }
+        
+        // Mostrar mensaje de éxito
+        this.snackBar.open(
+          this.translate.instant('CUPPING_SESSIONS.DELETE_SUCCESS', { name: sesion.nombre }),
+          this.translate.instant('CUPPING_SESSIONS.CLOSE'),
+          { duration: 3000 }
+        );
+
+        // Si estamos mostrando el detalle de la sesión eliminada, cerrar la vista
+        if (this.mostrarDetalle && this.sesionSeleccionada?.id === sesion.id) {
+          this.mostrarDetalle = false;
+          this.sesionSeleccionada = null;
+        }
+      },
+      error: (err: any) => {
+        console.error('Error al eliminar sesión de cata', err);
+        this.snackBar.open(
+          this.translate.instant('CUPPING_SESSIONS.DELETE_ERROR'),
+          this.translate.instant('CUPPING_SESSIONS.CLOSE'),
+          { duration: 3000 }
+        );
       }
     });
   }

@@ -554,6 +554,7 @@
     "DATE": "Date",
     "ORIGIN": "Origin",
     "VARIETY": "Variety",
+    "ACTIONS": "Actions",
     "COMPARE": "Compare Multiple Cuppings",
     "RECORD_CUPPING": "Record New Cupping",
     "FILTER_TITLE": "Filter Sessions",
@@ -564,7 +565,16 @@
     "SESSION_NAME_PLACEHOLDER": "Enter the session name",
     "LINKED_LOT_LABEL": "Linked lot",
     "ROAST_PROFILE_LABEL": "Roast Profile",
-    "CREATE_BUTTON": "Create new cupping session"
+    "LOADING_PROFILES": "Loading profiles...",
+    "CREATE_BUTTON": "Create new cupping session",
+    "TOGGLE_FAVORITE": "Toggle favorite",
+    "VIEW_DETAILS": "View details",
+    "DELETE_SESSION": "Delete session",
+    "DELETE_SESSION_TITLE": "Confirm deletion",
+    "CONFIRM_DELETE": "Are you sure you want to delete the session '{{name}}'? This action cannot be undone.",
+    "DELETE_SUCCESS": "The session '{{name}}' has been successfully deleted.",
+    "DELETE_ERROR": "Error deleting the session. Please try again.",
+    "CLOSE": "Close"
   },
   "CUPPING_DETAILS": {
     "TITLE": "Sensory Evaluation",
